@@ -1,0 +1,37 @@
+<p>
+Classwatch helps you get in the class you need by notifying you when a seat opens up.
+</p>
+<p>
+<%= form_for(:user, @user, :url => { :controller => "user", :action => "create" }) do |f| %>
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <%= f.label :password %><br />
+    <%= password_field_tag :password %>
+  </div>
+  <div class="field">
+    <%= f.label :password_verify, "Verify Password" %><br />
+    <%= password_field_tag :verify_password %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+or sign in to an existing account
+
+<%= form_tag({:controller => "user", :action => "login" }, :method => "post") do %>
+  <div class="field">
+    <%= label_tag :email %><br />
+    <%= text_field_tag :email %>
+  </div>
+  <div class="field">
+    <%= label_tag :password %><br />
+    <%= password_field_tag :password %>
+  </div>
+  <div class="actions">
+    <%= submit_tag "Login" %>
+  </div>
+<% end %>

@@ -1,4 +1,16 @@
 Classwatch::Application.routes.draw do
+  post "classes/create"
+
+  get "classes/index"
+
+  post "user/create"
+
+  post "user/login"
+
+  get "user/logout"
+
+  get "home/index"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -48,7 +60,7 @@ Classwatch::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => "welcome#index"
+  root :to => "home#index"
 
   # See how all your routes lay out with "rake routes"
 

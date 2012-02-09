@@ -1,0 +1,31 @@
+Your classes:
+
+<table>
+  <% @courses.each do |course| %>
+    <tr>
+      <td><%= course.class_key1 %></td>
+    </tr>
+  <% end %>
+</table>
+
+Add a course:
+<%= form_for :course, @course, :url => { :action => "create" } do |f| %>
+  <div>
+    <%= f.label :institution_id, "Institution" %><br/>
+    <%= collection_select :course, :institution_id, Institution.all, :id, :name %>
+  </div>
+  <div>
+    <%= f.label :class_key1, "Class Key 1" %><br/>
+    <%= f.text_field :class_key1 %>
+  </div>
+  <div>
+    <%= f.label :class_key2, "Class Key 2" %><br/>
+    <%= f.text_field :class_key2 %>
+  </div>
+  <div>
+    <%= f.label :notes, "Notes" %><br />
+    <%= f.text_area :notes %>
+  </div>
+  <%= submit_tag "Add" %>
+
+<% end %>

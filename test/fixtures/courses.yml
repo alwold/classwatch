@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  institution: 
+  user: 
+  class_key1: MyString
+  class_key2: MyString
+  last_notification: 2011-06-12
+  notes: MyText
+
+two:
+  institution: 
+  user: 
+  class_key1: MyString
+  class_key2: MyString
+  last_notification: 2011-06-12
+  notes: MyText

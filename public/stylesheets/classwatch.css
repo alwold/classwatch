@@ -1,0 +1,60 @@
+label {
+	display: block;
+}
+
+#userInfo {
+	float: right;
+	padding: 10px;
+}
+
+
+body {
+	background: -webkit-gradient(linear, left top, left bottom, from(#ccc), to(#eee));
+
+	font-family: sans-serif;
+	margin: 0;
+}
+
+h1, h2 {
+	font-variant: small-caps;
+}
+
+h1 {
+	margin: 0;
+	padding: 10px;
+	background: white;
+	border-bottom: 1px solid gray;
+}
+
+
+#main {
+	background: white;
+	border-radius: 15px;
+	clear: both;
+	width:80%;
+	margin: 20px auto;
+	padding: 20px;
+	border: 1px solid gray;
+}
+
+.left-column {
+	float: left;
+	width: 50%
+}
+
+.right-column {
+	float: right;
+	width: 50%
+}
+
+.clear {
+	clear: both;
+}
+
+.info {
+	color: green;
+}
+
+.error {
+	color: red;
+}

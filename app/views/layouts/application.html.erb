@@ -7,8 +7,18 @@
   <%= csrf_meta_tag %>
 </head>
 <body>
-
-<%= yield %>
-
+  <% if session[:user] %>
+    <div id="userInfo">
+      <p>
+        <%= session[:user] %>
+        <a href="#">Settings</a>
+        <%= link_to "Log out", :controller => "user", :action => "logout" %>
+      </p>
+    </div>
+  <% end %>
+  <h1>Classwatch</h1>
+  <div id="main">
+    <%= yield %>
+  </div>
 </body>
 </html>
