@@ -1,4 +1,6 @@
 Classwatch::Application.routes.draw do
+  devise_for :users
+
   post "classes/create"
 
   get "classes/index"

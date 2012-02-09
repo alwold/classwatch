@@ -6,7 +6,7 @@
   To get started, log in or create an account using the form below.
 </p>
 <p>
-<%= form_for(:user, @user, :url => { :controller => "user", :action => "create" }) do |f| %>
+<%= form_for(User.new, :url => { :controller => "user", :action => "create" }) do |f| %>
   <div class="field">
     <%= f.label :email %>
     <%= f.text_field :email %>
