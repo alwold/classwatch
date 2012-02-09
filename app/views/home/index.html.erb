@@ -1,18 +1,22 @@
 <p>
-Classwatch helps you get in the class you need by notifying you when a seat opens up.
+  Classwatch allows you to monitor a full class at your school and notifies you when a seat
+  opens up, so you can grab it right as it opens up.
+</p>
+<p>
+  To get started, log in or create an account using the form below.
 </p>
 <p>
 <%= form_for(:user, @user, :url => { :controller => "user", :action => "create" }) do |f| %>
   <div class="field">
-    <%= f.label :email %><br />
+    <%= f.label :email %>
     <%= f.text_field :email %>
   </div>
   <div class="field">
-    <%= f.label :password %><br />
+    <%= f.label :password %>
     <%= password_field_tag :password %>
   </div>
   <div class="field">
-    <%= f.label :password_verify, "Verify Password" %><br />
+    <%= f.label :password_verify, "Verify Password" %>
     <%= password_field_tag :verify_password %>
   </div>
   <div class="actions">
@@ -24,11 +28,11 @@ or sign in to an existing account
 
 <%= form_tag({:controller => "user", :action => "login" }, :method => "post") do %>
   <div class="field">
-    <%= label_tag :email %><br />
+    <%= label_tag :email %>
     <%= text_field_tag :email %>
   </div>
   <div class="field">
-    <%= label_tag :password %><br />
+    <%= label_tag :password %>
     <%= password_field_tag :password %>
   </div>
   <div class="actions">
