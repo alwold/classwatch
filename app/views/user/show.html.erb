@@ -1,9 +1,9 @@
 Your classes:
 
 <table>
-  <% @courses.each do |course| %>
+  <% @user.courses.each do |course| %>
     <tr>
-      <td><%= course.class_key1 %></td>
+      <td><%= course.course_number %></td>
     </tr>
   <% end %>
 </table>
