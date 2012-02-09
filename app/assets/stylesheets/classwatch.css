@@ -58,3 +58,7 @@ h1 {
 .error {
 	color: red;
 }
+
+#spinner {
+  display: none;
+}

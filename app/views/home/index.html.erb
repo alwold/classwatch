@@ -1,41 +1,57 @@
-<p>
-  Classwatch allows you to monitor a full class at your school and notifies you when a seat
-  opens up, so you can grab it right as it opens up.
-</p>
-<p>
-  To get started, log in or create an account using the form below.
-</p>
-<p>
-<%= form_for(User.new, :url => { :controller => "user", :action => "create" }) do |f| %>
-  <div class="field">
-    <%= f.label :email %>
-    <%= f.text_field :email %>
-  </div>
-  <div class="field">
-    <%= f.label :password %>
-    <%= password_field_tag :password %>
-  </div>
-  <div class="field">
-    <%= f.label :password_verify, "Verify Password" %>
-    <%= password_field_tag :verify_password %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
-
-or sign in to an existing account
-
-<%= form_tag({:controller => "user", :action => "login" }, :method => "post") do %>
-  <div class="field">
-    <%= label_tag :email %>
-    <%= text_field_tag :email %>
-  </div>
-  <div class="field">
-    <%= label_tag :password %>
-    <%= password_field_tag :password %>
-  </div>
-  <div class="actions">
-    <%= submit_tag "Login" %>
-  </div>
-<% end %>
+<div class="left-column">
+  <% if @courses.length > 0 %>
+    <p>You are watching the following courses</p>
+    <table>
+      <tr>
+        <th>Term</th>
+        <th>Course number</th>
+        <th>Name</th>
+        <th>Schedule</th>
+      </tr>
+      <% @courses.each do |course| %>
+        <tr>
+          <td>term here</td>
+          <td><%= course.course_number %></td>
+          <td>course name</td>
+          <td>course schedule</td>
+          <td><a href="${url}" onclick="return confirm('Are you sure you want to stop watching this class?')">Cancel</a></td>
+        </tr>
+      <% end %>
+    </table>
+  <% else %>
+    You are not currently watching any classes.  Add one below.
+  <% end %>
+  <h2>Add a class</h2>
+  <% if @terms.length > 0 %>
+    <%= form_for Course.new, :url => { :controller => "course", :action => "add" } do |f| %>
+      <%= f.label :term_code, "Term" %>
+      <%= f.select :term_code, @terms %>
+      <%= f.label :course_number, "Course Number" %>
+      <%= f.text_field :course_number %>
+      <%= image_tag "spinner.gif", :id => "spinner" %>
+      <span id="courseName"></span>
+        <p>
+          <%= f.submit "Go" %>
+        </p>
+    <% end %>
+  <% else %>
+      There are no terms available right now.  Terms become available as soon as the schedule is published.
+  <% end %>
+</div>
+<div class="right-column">
+  <h2>Notifications</h2>
+  <% if @notifications.length > 0 %>
+    <table>
+      <% @notifications.each do |notification| %>
+        <tr>
+          <td>${notification.pk.course.courseNumber}</td>
+          <td>${notification.pk.type}</td>
+          <td>${notification.pk.timestamp}</td>
+        </tr>
+      <% end %>
+    </table>
+  <% else %>
+    You have not received any notifications yet.
+  <% end %>
+</div>
+<div class="clear"/>
