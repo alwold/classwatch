@@ -1,9 +1,14 @@
 class ClassesController < ApplicationController
   before_filter :authenticate_user!
   def create
-    @user = User.where("email = ?", current_user.email).first
-    @user.courses.create(params[:course])
-    @user.save
+    user = User.where("email = ?", current_user.email).first
+    course = Course.new(params[:course])
+    course.save
+    user_course = UserCourse.new
+    user_course.user = user
+    user_course.course = course
+    user_course.notified = false
+    user_course.save
     redirect_to :action => "index"
   end
 

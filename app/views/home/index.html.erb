@@ -23,7 +23,7 @@
   <% end %>
   <h2>Add a class</h2>
   <% if @terms.length > 0 %>
-    <%= form_for Course.new, :url => { :controller => "course", :action => "add" } do |f| %>
+    <%= form_for Course.new, :url => { :controller => "classes", :action => "create" } do |f| %>
       <%= f.label :term_code, "Term" %>
       <%= f.select :term_code, @terms %>
       <%= f.label :course_number, "Course Number" %>
