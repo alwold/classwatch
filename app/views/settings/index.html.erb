@@ -1,0 +1,33 @@
+<h2>Settings</h2>
+<%= form_for @user, :url => {:action => :update} do |f| %>
+  <div class="left-column">
+    <%= f.label :email, "Email Address" %>
+    <%= f.text_field :email %>
+
+    <%= f.label :old_password, "Change Password" %>
+    <div>
+      <%= f.password_field :old_password %>
+    </div>
+    <div>
+      <%= f.password_field :password %>
+    </div>
+    <div>
+      <%= f.password_field :confirm_password %>
+    </div>
+    <%= f.label :phone, "Phone" %>
+    <%= f.text_field :phone %>
+
+    <%= f.submit "Save" %>
+  </div>
+  <div class="right-column">
+    Notifications
+    <% @notifiers.each do |notifier| %>
+      <p>
+        <%= f.check_box notifier.type %>
+        <%= f.label notifier.type, notifier.description %>
+      </p>
+    <% end %>
+  </div>
+  <div class="clear"/>
+<% end %>
+

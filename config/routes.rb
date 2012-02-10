@@ -13,6 +13,10 @@ Classwatch::Application.routes.draw do
 
   get "home/index"
 
+  get "settings/index"
+
+  post "settings/update"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
