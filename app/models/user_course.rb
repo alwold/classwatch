@@ -1,5 +1,5 @@
 class UserCourse < ActiveRecord::Base
   set_table_name "user_course"
   belongs_to :user
-  has_one :course
+  belongs_to :course
 end
