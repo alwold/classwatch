@@ -3,7 +3,7 @@ class HomeController < ApplicationController
   def index
     @user = User.where("email = ?", current_user.email).first
     @courses = Course.joins(:users).where(:users => {:user_id => @user})
-    @terms = [["Spring 2012", "2121"]]
+    @terms = Term.get_active_terms.map { |term| [term.name, term.term_code] }
     @notifications = Array.new
   end
 
