@@ -9,7 +9,7 @@ class ClassesController < ApplicationController
     user_course.course = course
     user_course.notified = false
     user_course.save
-    redirect_to :action => "index"
+    redirect_to :controller => "home", :action => "index"
   end
 
   def index
