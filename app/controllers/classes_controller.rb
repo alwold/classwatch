@@ -11,10 +11,4 @@ class ClassesController < ApplicationController
     user_course.save
     redirect_to :controller => "home", :action => "index"
   end
-
-  def index
-    @user = User.where("email = ?", current_user.email).first
-    @courses = Course.joins(:users).where(:users => {:user_id => @user})
-  end
-
 end
