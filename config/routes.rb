@@ -3,7 +3,7 @@ Classwatch::Application.routes.draw do
 
   post "classes/create"
 
-  get "classes/index"
+  delete "classes/delete"
 
   post "user/create"
 

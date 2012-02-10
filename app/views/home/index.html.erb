@@ -14,7 +14,7 @@
           <td><%= course.course_number %></td>
           <td>course name</td>
           <td>course schedule</td>
-          <td><a href="${url}" onclick="return confirm('Are you sure you want to stop watching this class?')">Cancel</a></td>
+          <td><%= link_to "Cancel", {:controller => :classes, :action => :delete, :course_number => course.course_number}, {:method => :delete, :confirm => "Are you sure you want to stop watching this class?"} %></td>
         </tr>
       <% end %>
     </table>

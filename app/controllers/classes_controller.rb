@@ -9,6 +9,15 @@ class ClassesController < ApplicationController
     user_course.course = course
     user_course.notified = false
     user_course.save
-    redirect_to :controller => "home", :action => "index"
+    redirect_to :root
+  end
+
+  def delete
+    user = User.where("email = ?", current_user.email).first
+    courses = UserCourse.joins(:course).where("user_id = ? and course.course_number = ?", user, params[:course_number])
+    courses.each do |course|
+      course.destroy
+    end
+    redirect_to :root
   end
 end
