@@ -8,12 +8,14 @@
         <th>Name</th>
         <th>Schedule</th>
       </tr>
+      <% i = 0 %>
       <% @courses.each do |course| %>
         <tr>
           <td><%= course.term.name %></td>
           <td><%= course.course_number %></td>
-          <td>course name</td>
-          <td>course schedule</td>
+          <td><%= @class_infos[i].name %></td>
+          <td><%= @class_infos[i].schedule %></td>
+          <% i = i + 1 %>
           <td><%= link_to "Cancel", {:controller => :classes, :action => :delete, :course_number => course.course_number}, {:method => :delete, :confirm => "Are you sure you want to stop watching this class?"} %></td>
         </tr>
       <% end %>
