@@ -2,8 +2,8 @@ $(document).ready(function () {
   $("#course_course_number").keyup(function (event) {
     if (event.target.value.length == 5) {
       $("#spinner").show();
-      var term = $("#course_term_code").val();
-      $.ajax({url: "${lookupUrl}/1/"+term+"/"+event.target.value,
+      var term = $("#course_term_id").val();
+      $.ajax({url: "classes/lookup/1/"+term+"/"+event.target.value,
         dataType: "json",
         success: function(classInfo) {
           $("#courseName").html(classInfo.name);

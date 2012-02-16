@@ -26,4 +26,12 @@ class ClassesController < ApplicationController
     end
     redirect_to :root
   end
+
+  def lookup
+    mgr = SPRING_CONTEXT.getBean("classInfoManager")
+    term = Term.find(params[:term_id])
+    class_info = mgr.getClassInfo(params[:institution_id].to_f, term.term_code, params[:course_number])
+    json = { :name => class_info.name }
+    render :json => json
+  end
 end
