@@ -23,8 +23,8 @@
     Notifications
     <% @notifiers.each do |notifier| %>
       <p>
-        <%= f.check_box notifier.type %>
-        <%= f.label notifier.type, notifier.description %>
+        <%= check_box_tag :notifier_type, notifier.type %>
+        <%= f.label :notifier_type, notifier.description %>
       </p>
     <% end %>
   </div>
