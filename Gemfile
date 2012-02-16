@@ -4,8 +4,12 @@ gem 'rails', '3.2.1'
 
 gem 'sqlite3'
 gem 'ruby-hmac'
-#gem 'pg'
-gem 'activerecord-jdbcpostgresql-adapter'
+platforms :jruby do
+  gem 'activerecord-jdbcpostgresql-adapter'
+end
+platforms :ruby do
+  gem 'pg'
+end
 gem 'json'
 
 # Gems used only for assets and not required
@@ -23,8 +27,12 @@ end
 gem 'jquery-rails'
 
 group :development do
-  gem 'ruby-debug'
-#  gem 'ruby-debug19', :require => 'ruby-debug'
+  platforms :jruby do
+    gem 'ruby-debug'
+  end
+  platforms :ruby do
+    gem 'ruby-debug19', :require => 'ruby-debug'
+  end
 end
 
 gem 'devise'
