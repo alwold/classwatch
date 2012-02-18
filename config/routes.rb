@@ -5,6 +5,8 @@ Classwatch::Application.routes.draw do
 
   delete "classes/delete"
 
+  get "classes/lookup/:institution_id/:term_id/:course_number" => "classes#lookup"
+
   post "user/create"
 
   post "user/login"
@@ -15,7 +17,7 @@ Classwatch::Application.routes.draw do
 
   get "settings/index"
 
-  post "settings/update"
+  put "settings/update"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
