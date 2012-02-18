@@ -6,13 +6,13 @@
 
     <%= f.label :old_password, "Change Password" %>
     <div>
-      <%= f.password_field :old_password %>
+      <%= password_field_tag :old_password %>
     </div>
     <div>
-      <%= f.password_field :password %>
+      <%= password_field_tag :password %>
     </div>
     <div>
-      <%= f.password_field :confirm_password %>
+      <%= password_field_tag :confirm_password %>
     </div>
     <%= f.label :phone, "Phone" %>
     <%= f.text_field :phone %>
