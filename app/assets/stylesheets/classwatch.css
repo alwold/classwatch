@@ -55,7 +55,7 @@ h1 {
 	color: green;
 }
 
-.error {
+.error, .alert {
 	color: red;
 }
 
