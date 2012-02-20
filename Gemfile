@@ -37,3 +37,4 @@ end
 
 gem 'devise'
 gem 'warbler'
+gem 'dynamic_form'
