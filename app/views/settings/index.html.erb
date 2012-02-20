@@ -1,6 +1,7 @@
 <h2>Settings</h2>
 <%= form_for @user, :url => {:action => :update} do |f| %>
   <div class="left-column">
+    <%= f.error_messages %>
     <%= f.label :email, "Email Address" %>
     <%= f.text_field :email %>
 
