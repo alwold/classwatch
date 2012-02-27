@@ -5,6 +5,8 @@ class SettingsController < ApplicationController
   def index
     @user = User.find(current_user.id)
     @notifiers = SPRING_CONTEXT.getBeansOfType(com.alwold.classwatch.notification.Notifier.java_class).values
+    @enabled_notifiers = @user.notifier_settings.delete_if { |setting| !setting.enabled }
+    @enabled_notifiers = @enabled_notifiers.map { |setting| setting.type }
   end
 
   def update
@@ -29,6 +31,38 @@ class SettingsController < ApplicationController
       else
         logger.debug "old password incorrect"
         flash[:error] = "Old Password is incorrect"
+      end
+    end
+
+    # look for notifier settings
+    enabled_notifiers = params.keys.delete_if { |key| !key.starts_with?("notifier") || !params[key] }
+    enabled_notifiers = enabled_notifiers.map { |key| key["notifier_".length..-1] }
+
+    # enable newly enabled notifiers
+    enabled_notifiers.each do |notifier|
+      found = false
+      @user.notifier_settings.each do |setting|
+        if setting.type == notifier then
+          setting.enabled = true
+          setting.save
+          found = true
+        end
+      end
+      unless found then
+        setting = NotifierSetting.new
+        setting.user = @user
+        setting.type = notifier
+        setting.enabled = true
+        @user.notifier_settings.push setting
+        setting.save
+      end
+    end
+
+    # disable no longer enabled ones
+    @user.notifier_settings.each do |setting|
+      if setting.enabled && !enabled_notifiers.include?(setting.type) then
+        setting.enabled = false
+        setting.save
       end
     end
 

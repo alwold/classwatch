@@ -24,8 +24,8 @@
     Notifications
     <% @notifiers.each do |notifier| %>
       <p>
-        <%= check_box_tag :notifier_type, notifier.type %>
-        <%= f.label :notifier_type, notifier.description %>
+        <%= check_box_tag "notifier_"+notifier.type, :on, @enabled_notifiers.include?(notifier.type) %>
+        <%= f.label "notifier_"+notifier.type, notifier.description %>
       </p>
     <% end %>
   </div>
