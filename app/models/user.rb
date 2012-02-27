@@ -8,5 +8,6 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
   has_many :user_courses
+  has_many :notifier_settings
   self.primary_key = :user_id
 end
