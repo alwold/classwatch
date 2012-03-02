@@ -9,7 +9,7 @@ class HomeController < ApplicationController
       @class_infos.push(mgr.getClassInfo(1, course.term.term_code, course.course_number))
     end
     @terms = Term.get_active_terms.map { |term| [term.name, term.id] }
-    @notifications = Array.new
+    @notifications = Notification.where("user_id = ?", @user)
   end
 
 end
