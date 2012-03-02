@@ -44,9 +44,9 @@
     <table>
       <% @notifications.each do |notification| %>
         <tr>
-          <td>${notification.pk.course.courseNumber}</td>
-          <td>${notification.pk.type}</td>
-          <td>${notification.pk.timestamp}</td>
+          <td><%= notification.course.course_number %></td>
+          <td><%= notification.type %></td>
+          <td><%= notification.notification_timestamp %></td>
         </tr>
       <% end %>
     </table>
