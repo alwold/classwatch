@@ -5,16 +5,28 @@ class ClassesController < ApplicationController
     # first see if there is an existing course
     course = Course.where("term_id = ? and course_number = ?", params[:course][:term_id], params[:course][:course_number]).first
     if course == nil then
-      course = Course.new(params[:course])
-      course.save
-      # this is here temporarily because of a jruby postgres bug
-      course = Course.where("term_id = ? and course_number = ?", params[:course][:term_id], params[:course][:course_number]).first
+      # TODO test to make sure the course is valid
+      mgr = SPRING_CONTEXT.getBean("classInfoManager")
+      term = Term.find(params[:course][:term_id])
+      # TODO un-hard-code the institution id below
+      status = mgr.get_class_status 1, term.term_code, params[:course][:course_number]
+      if status == com.alwold.classwatch.model.Status::OPEN then
+        course = Course.new(params[:course])
+        course.save
+        # this is here temporarily because of a jruby postgres bug
+        course = Course.where("term_id = ? and course_number = ?", params[:course][:term_id], params[:course][:course_number]).first
+      end
     end
-    user_course = UserCourse.new
-    user_course.user = user
-    user_course.course = course
-    user_course.notified = false
-    user_course.save
+    if course != nil then
+      user_course = UserCourse.new
+      user_course.user = user
+      user_course.course = course
+      user_course.notified = false
+      user_course.save
+    else
+      # TODO indicate course not found
+      flash[:error] = "Course was not found"
+    end
     redirect_to :root
   end
 
