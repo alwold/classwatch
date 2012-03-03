@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
 
   validates :phone, :numericality => true, :length => { :is => 10 }, :if => "!phone.nil?"
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :phone
   has_many :user_courses
   has_many :notifier_settings
   self.primary_key = :user_id
