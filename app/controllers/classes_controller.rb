@@ -5,7 +5,6 @@ class ClassesController < ApplicationController
     # first see if there is an existing course
     course = Course.where("term_id = ? and course_number = ?", params[:course][:term_id], params[:course][:course_number]).first
     if course == nil then
-      # TODO test to make sure the course is valid
       mgr = SPRING_CONTEXT.getBean("classInfoManager")
       term = Term.find(params[:course][:term_id])
       # TODO un-hard-code the institution id below
@@ -24,7 +23,6 @@ class ClassesController < ApplicationController
       user_course.notified = false
       user_course.save
     else
-      # TODO indicate course not found
       flash[:error] = "Course was not found"
     end
     redirect_to :root
