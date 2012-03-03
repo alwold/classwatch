@@ -10,6 +10,8 @@ class HomeController < ApplicationController
     end
     @terms = Term.get_active_terms.map { |term| [term.name, term.id] }
     @notifications = Notification.where("user_id = ?", @user)
+    @notifiers = Hash.new
+    SPRING_CONTEXT.get_beans_of_type(com.alwold.classwatch.notification.Notifier.java_class).values.each { |notifier| @notifiers[notifier.type] = notifier }
   end
 
 end
