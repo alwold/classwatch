@@ -3,8 +3,8 @@
 development:
 #  adapter: sqlite3
 #  database: db/development.sqlite3
-#  adapter: postgresql
-  adapter: jdbcpostgresql
+  adapter: postgresql
+#  adapter: jdbcpostgresql
   encoding: unicode
   database: classwatch
   username: classwatch
