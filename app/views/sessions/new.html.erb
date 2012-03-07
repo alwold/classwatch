@@ -1,17 +1,25 @@
-<h2>Sign in</h2>
+<p>
+  Classwatch allows you to monitor a full class at your school and notifies you when a seat
+  opens up, so you can grab it right as it opens up.
+</p>
+<p>
+  To get started, log in or create an account using the form below.
+</p>
 
 <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email %></div>
+  <%= f.label :email %>
+  <%= f.email_field :email %>
 
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
+  <%= f.label :password %>
+  <%= f.password_field :password %>
 
   <% if devise_mapping.rememberable? -%>
-    <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
+    <p>
+      <%= f.check_box :remember_me %> <%= f.label :remember_me %>
+    </p>
   <% end -%>
 
-  <div><%= f.submit "Sign in" %></div>
+  <%= f.submit "Sign in" %>
 <% end %>
 
 <%= render "links" %>
