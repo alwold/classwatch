@@ -4,4 +4,33 @@ class Course < ActiveRecord::Base
   belongs_to :term
   self.table_name = "course"
   self.primary_key = "course_id"
+
+  # will return nil if course was added, otherwise an error message
+  def Course.add(user, term_id, course_number)
+    course = Course.where("term_id = ? and course_number = ?", term_id, course_number).first
+    if course == nil then
+      mgr = SPRING_CONTEXT.get_bean "classInfoManager"
+      term = Term.find term_id
+      # TODO un-hard-code the institution id below
+      status = mgr.get_class_status 1, term.term_code, course_number
+      if status == com.alwold.classwatch.model.Status::OPEN then
+        course = Course.new
+        course.term = term
+        course.course_number = course_number
+        course.save
+        # this is here temporarily because of a jruby postgres bug
+        course = Course.where("term_id = ? and course_number = ?", term_id, course_number).first
+      end
+    end
+    if course != nil then
+      user_course = UserCourse.new
+      user_course.user = user
+      user_course.course = course
+      user_course.notified = false
+      user_course.save
+      return nil
+    else
+      "Course was not found"
+    end
+  end
 end
