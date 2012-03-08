@@ -12,5 +12,9 @@ Ok, it looks like you're new here.  We just need to verify a few details and you
   <%= collection_select :course, :term_id, @terms, :term_id, :name %>
   <%= f.label :course_number, "Class Numer" %>
   <%= text_field :course, :course_number %>
-  <%= f.submit "Go" %>
+  <%= image_tag "spinner.gif", :id => "spinner" %>
+  <span id="courseName"></span>
+  <p>
+    <%= f.submit "Go" %>
+  </p>
 <% end %>
