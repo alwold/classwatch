@@ -3,7 +3,7 @@ $(document).ready(function () {
     if (event.target.value.length == 5) {
       $("#spinner").show();
       var term = $("#course_term_id").val();
-      $.ajax({url: "classes/lookup/1/"+term+"/"+event.target.value,
+      $.ajax({url: "/classes/lookup/1/"+term+"/"+event.target.value,
         dataType: "json",
         success: function(classInfo) {
           $("#courseName").html(classInfo.name);
