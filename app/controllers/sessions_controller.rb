@@ -5,7 +5,7 @@ class SessionsController < Devise::SessionsController
       @user = User.new
       @user.email = params[:user][:email]
       @user.password = params[:user][:password]
-      @terms = Term.where("school_id = 1")
+      @terms = Term.get_active_terms
       render :register
     else
       super
