@@ -1,5 +1,5 @@
 class ClassesController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :except => :lookup
   def create
     user = User.where("email = ?", current_user.email).first
     error = Course.add user, params[:course][:term_id], params[:course][:course_number]
