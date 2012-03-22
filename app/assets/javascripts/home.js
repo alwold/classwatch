@@ -9,8 +9,12 @@ $(document).ready(function () {
           $("#courseName").html(classInfo.name);
           $("#spinner").hide();
         },
-        error: function() {
-          $("#courseName").html("Error loading class title");
+        error: function(jqXHR, textStatus, errorThrown) {
+          if (jqXHR.status == 404) {
+            $("#courseName").html("Class not found");
+          } else {
+            $("#courseName").html("Error loading class title");
+          }
           $("#spinner").hide();
         }
       });
