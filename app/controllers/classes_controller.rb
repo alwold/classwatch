@@ -20,7 +20,11 @@ class ClassesController < ApplicationController
     mgr = SPRING_CONTEXT.getBean("classInfoManager")
     term = Term.find(params[:term_id])
     class_info = mgr.getClassInfo(params[:institution_id].to_f, term.term_code, params[:course_number])
-    json = { :name => class_info.name }
-    render :json => json
+    if class_info then
+      json = { :name => class_info.name }
+      render :json => json
+    else
+      head :not_found
+    end
   end
 end
