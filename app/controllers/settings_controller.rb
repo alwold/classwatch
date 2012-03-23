@@ -7,6 +7,9 @@ class SettingsController < ApplicationController
     @notifiers = SPRING_CONTEXT.getBeansOfType(com.alwold.classwatch.notification.Notifier.java_class).values
     @enabled_notifiers = @user.notifier_settings.delete_if { |setting| !setting.enabled }
     @enabled_notifiers = @enabled_notifiers.map { |setting| setting.type }
+    if @enabled_notifiers.empty? then
+      @warning = "No notifiers are enabled. You will not receive notifications."
+    end
   end
 
   def update
