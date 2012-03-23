@@ -22,6 +22,7 @@
   </div>
   <div class="right-column">
     Notifications
+    <div class="warning" id="notifier-warnings" style="display:none;"></div>
     <% @notifiers.each do |notifier| %>
       <p>
         <%= check_box_tag "notifier_"+notifier.type, :on, @enabled_notifiers.include?(notifier.type) %>

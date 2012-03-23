@@ -4,7 +4,8 @@ function validateNotifiers() {
     if (element.checked) foundSelected = true;
   });
   if (!foundSelected) {
-    confirm("Disabling all notifiers will prevent you from being notified if a class is available!");
+    $("#notifier-warnings").html("Disabling all notifiers will prevent you from being notified if a class is available!");
+    $("#notifier-warnings").show();
   }
 }
 
