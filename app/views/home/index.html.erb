@@ -2,20 +2,22 @@
   <div class="span6">
     <% if @courses.length > 0 %>
       <p>You are watching the following courses</p>
-      <table>
-        <tr>
-          <th>Term</th>
-          <th>Course number</th>
-          <th>Name</th>
-          <th>Schedule</th>
-        </tr>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Term</th>
+            <th>Course number</th>
+            <th>Name</th>
+            <th>Schedule</th>
+          </tr>
+        </thead>
         <% @courses.zip(@class_infos).each do |course, class_info| %>
           <tr>
             <td><%= course.term.name %></td>
             <td><%= course.course_number %></td>
             <td><%= class_info.name %></td>
             <td><%= class_info.schedule %></td>
-            <td><%= link_to "Cancel", {:controller => :classes, :action => :delete, :course_number => course.course_number}, {:method => :delete, :confirm => "Are you sure you want to stop watching this class?"} %></td>
+            <td><%= link_to "Cancel", {:controller => :classes, :action => :delete, :course_number => course.course_number}, {:method => :delete, :confirm => "Are you sure you want to stop watching this class?", :class => "btn btn-danger"} %></td>
           </tr>
         <% end %>
       </table>
