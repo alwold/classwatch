@@ -2,6 +2,7 @@
 <%= form_for @user, :url => {:action => :update} do |f| %>
   <div class="row">
     <div class="span6">
+      <h3>User Info</h3>
       <%= f.error_messages :header_message => ""  %>
       <%= f.label :email, "Email Address" %>
       <%= f.text_field :email %>
@@ -18,11 +19,9 @@
       </div>
       <%= f.label :phone, "Phone" %>
       <%= f.text_field :phone %>
-
-      <%= f.submit "Save" %>
     </div>
     <div class="span6">
-      Notifications
+      <h3>Notifications</h3>
       <% if @warning then
         style = ""
       else
@@ -34,10 +33,13 @@
       <% @notifiers.each do |notifier| %>
         <p>
           <%= check_box_tag "notifier_"+notifier.type, :on, @enabled_notifiers.include?(notifier.type) %>
-          <%= f.label "notifier_"+notifier.type, notifier.description %>
+          <%= label_tag "notifier_"+notifier.type, notifier.description %>
         </p>
       <% end %>
     </div>
+  </div>
+  <div class="form-actions">
+    <%= f.submit "Save", :class => "btn btn-primary" %>
   </div>
 <% end %>
 
