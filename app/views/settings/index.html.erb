@@ -1,42 +1,43 @@
 <h2>Settings</h2>
 <%= form_for @user, :url => {:action => :update} do |f| %>
-  <div class="left-column">
-    <%= f.error_messages :header_message => ""  %>
-    <%= f.label :email, "Email Address" %>
-    <%= f.text_field :email %>
+  <div class="row">
+    <div class="span6">
+      <%= f.error_messages :header_message => ""  %>
+      <%= f.label :email, "Email Address" %>
+      <%= f.text_field :email %>
 
-    <%= f.label :old_password, "Change Password" %>
-    <div>
-      <%= password_field_tag :old_password %>
-    </div>
-    <div>
-      <%= password_field_tag :password %>
-    </div>
-    <div>
-      <%= password_field_tag :confirm_password %>
-    </div>
-    <%= f.label :phone, "Phone" %>
-    <%= f.text_field :phone %>
+      <%= f.label :old_password, "Change Password" %>
+      <div>
+        <%= password_field_tag :old_password %>
+      </div>
+      <div>
+        <%= password_field_tag :password %>
+      </div>
+      <div>
+        <%= password_field_tag :confirm_password %>
+      </div>
+      <%= f.label :phone, "Phone" %>
+      <%= f.text_field :phone %>
 
-    <%= f.submit "Save" %>
-  </div>
-  <div class="right-column">
-    Notifications
-    <% if @warning then
-      style = ""
-    else
-      style = "display:none;"
-    end %>
-    <div class="warning" id="notifier-warnings" style="<%= style %>">
-      <%= @warning %>
+      <%= f.submit "Save" %>
     </div>
-    <% @notifiers.each do |notifier| %>
-      <p>
-        <%= check_box_tag "notifier_"+notifier.type, :on, @enabled_notifiers.include?(notifier.type) %>
-        <%= f.label "notifier_"+notifier.type, notifier.description %>
-      </p>
-    <% end %>
+    <div class="span6">
+      Notifications
+      <% if @warning then
+        style = ""
+      else
+        style = "display:none;"
+      end %>
+      <div class="warning" id="notifier-warnings" style="<%= style %>">
+        <%= @warning %>
+      </div>
+      <% @notifiers.each do |notifier| %>
+        <p>
+          <%= check_box_tag "notifier_"+notifier.type, :on, @enabled_notifiers.include?(notifier.type) %>
+          <%= f.label "notifier_"+notifier.type, notifier.description %>
+        </p>
+      <% end %>
+    </div>
   </div>
-  <div class="clear"/>
 <% end %>
 
