@@ -10,7 +10,7 @@ body {
 	color: green;
 }
 
-.error, .alert, .errorExplanation {
+.error, .errorExplanation {
 	color: red;
 }
 

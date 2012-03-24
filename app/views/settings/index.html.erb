@@ -28,7 +28,7 @@
       else
         style = "display:none;"
       end %>
-      <div class="warning" id="notifier-warnings" style="<%= style %>">
+      <div class="alert" id="notifier-warnings" style="<%= style %>">
         <%= @warning %>
       </div>
       <% @notifiers.each do |notifier| %>
