@@ -7,17 +7,28 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <% if user_signed_in? %>
-    <div id="userInfo">
-      <p>
-        <%= current_user.email %>
-        <%= link_to "Settings", settings_index_path %>
-        <%= link_to "Log out", destroy_user_session_path, :method => :delete %>
-      </p>
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+        <a class="brand" href="#">Classwatch</a>
+        <div class="nav-collapse">
+          <ul class="nav">
+            <% if user_signed_in? %>
+              <li><%= current_user.email %></li>
+              <li><%= link_to "Settings", settings_index_path %></li>
+              <li><%= link_to "Log out", destroy_user_session_path, :method => :delete %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
     </div>
-  <% end %>
-  <h1><a href="<%= root_path %>">Classwatch</a></h1>
-  <div id="main">
+  </div>
+  <div class="container">
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
     <% if flash[:error] %>

@@ -1,4 +1,5 @@
-<div class="left-column">
+<div class="row">
+  <div class="span4">
   <% if @courses.length > 0 %>
     <p>You are watching the following courses</p>
     <table>
@@ -38,7 +39,7 @@
       There are no terms available right now.  Terms become available as soon as the schedule is published.
   <% end %>
 </div>
-<div class="right-column">
+<div class="span4">
   <h2>Notifications</h2>
   <% if @notifications.length > 0 %>
     <table>
@@ -54,4 +55,5 @@
     You have not received any notifications yet.
   <% end %>
 </div>
-<div class="clear"/>
+</div>
+
