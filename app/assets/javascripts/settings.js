@@ -6,6 +6,8 @@ function validateNotifiers() {
   if (!foundSelected) {
     $("#notifier-warnings").html("Disabling all notifiers will prevent you from being notified if a class is available!");
     $("#notifier-warnings").show();
+  } else {
+    $("#notifier-warnings").hide();
   }
 }
 
