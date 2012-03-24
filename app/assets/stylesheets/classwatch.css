@@ -17,9 +17,3 @@ body {
 #spinner {
   display: none;
 }
-
-.warning {
-  border: 1px solid black;
-  background: yellow;
-  color: black;
-}
