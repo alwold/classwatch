@@ -25,13 +25,13 @@
   </div>
   <div class="container">
     <% if notice then %>
-      <p class="notice"><%= notice %></p>
+      <div class="alert alert-success"><%= notice %></div>
     <% end %>
     <% if alert then %>
-      <p class="alert"><%= alert %></p>
+      <div class="alert"><%= alert %></div>
     <% end %>
     <% if flash[:error] %>
-      <p class="error"><%= flash[:error] %></p>
+      <div class="alert alert-error"><%= flash[:error] %></div>
     <% end %>
     <%= yield %>
   </div>
