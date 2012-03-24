@@ -33,9 +33,9 @@
         <%= f.text_field :course_number %>
         <%= image_tag "spinner.gif", :id => "spinner" %>
         <span id="courseName"></span>
-          <p>
-            <%= f.submit "Go" %>
-          </p>
+        <div class="form-actions">
+          <%= f.submit "Go", :class => "btn btn-primary" %>
+        </div>
       <% end %>
     <% else %>
         There are no terms available right now.  Terms become available as soon as the schedule is published.
