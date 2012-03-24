@@ -24,8 +24,12 @@
     </div>
   </div>
   <div class="container">
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <% if notice then %>
+      <p class="notice"><%= notice %></p>
+    <% end %>
+    <% if alert then %>
+      <p class="alert"><%= alert %></p>
+    <% end %>
     <% if flash[:error] %>
       <p class="error"><%= flash[:error] %></p>
     <% end %>
