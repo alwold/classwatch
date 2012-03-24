@@ -1,59 +1,59 @@
 <div class="row">
   <div class="span6">
-  <% if @courses.length > 0 %>
-    <p>You are watching the following courses</p>
-    <table>
-      <tr>
-        <th>Term</th>
-        <th>Course number</th>
-        <th>Name</th>
-        <th>Schedule</th>
-      </tr>
-      <% @courses.zip(@class_infos).each do |course, class_info| %>
+    <% if @courses.length > 0 %>
+      <p>You are watching the following courses</p>
+      <table>
         <tr>
-          <td><%= course.term.name %></td>
-          <td><%= course.course_number %></td>
-          <td><%= class_info.name %></td>
-          <td><%= class_info.schedule %></td>
-          <td><%= link_to "Cancel", {:controller => :classes, :action => :delete, :course_number => course.course_number}, {:method => :delete, :confirm => "Are you sure you want to stop watching this class?"} %></td>
+          <th>Term</th>
+          <th>Course number</th>
+          <th>Name</th>
+          <th>Schedule</th>
         </tr>
-      <% end %>
-    </table>
-  <% else %>
-    You are not currently watching any classes.  Add one below.
-  <% end %>
-  <h2>Add a class</h2>
-  <% if @terms.length > 0 %>
-    <%= form_for Course.new, :url => { :controller => "classes", :action => "create" } do |f| %>
-      <%= f.label :term_id, "Term" %>
-      <%= f.select :term_id, @terms %>
-      <%= f.label :course_number, "Course Number" %>
-      <%= f.text_field :course_number %>
-      <%= image_tag "spinner.gif", :id => "spinner" %>
-      <span id="courseName"></span>
-        <p>
-          <%= f.submit "Go" %>
-        </p>
+        <% @courses.zip(@class_infos).each do |course, class_info| %>
+          <tr>
+            <td><%= course.term.name %></td>
+            <td><%= course.course_number %></td>
+            <td><%= class_info.name %></td>
+            <td><%= class_info.schedule %></td>
+            <td><%= link_to "Cancel", {:controller => :classes, :action => :delete, :course_number => course.course_number}, {:method => :delete, :confirm => "Are you sure you want to stop watching this class?"} %></td>
+          </tr>
+        <% end %>
+      </table>
+    <% else %>
+      You are not currently watching any classes.  Add one below.
     <% end %>
-  <% else %>
-      There are no terms available right now.  Terms become available as soon as the schedule is published.
-  <% end %>
-</div>
-<div class="span6">
-  <h2>Notifications</h2>
-  <% if @notifications.length > 0 %>
-    <table>
-      <% @notifications.each do |notification| %>
-        <tr>
-          <td><%= notification.course.course_number %></td>
-          <td><%= @notifiers[notification.type].description %></td>
-          <td><%= time_ago_in_words notification.notification_timestamp %> ago</td>
-        </tr>
+    <h2>Add a class</h2>
+    <% if @terms.length > 0 %>
+      <%= form_for Course.new, :url => { :controller => "classes", :action => "create" } do |f| %>
+        <%= f.label :term_id, "Term" %>
+        <%= f.select :term_id, @terms %>
+        <%= f.label :course_number, "Course Number" %>
+        <%= f.text_field :course_number %>
+        <%= image_tag "spinner.gif", :id => "spinner" %>
+        <span id="courseName"></span>
+          <p>
+            <%= f.submit "Go" %>
+          </p>
       <% end %>
-    </table>
-  <% else %>
-    You have not received any notifications yet.
-  <% end %>
-</div>
+    <% else %>
+        There are no terms available right now.  Terms become available as soon as the schedule is published.
+    <% end %>
+  </div>
+  <div class="span6">
+    <h2>Notifications</h2>
+    <% if @notifications.length > 0 %>
+      <table>
+        <% @notifications.each do |notification| %>
+          <tr>
+            <td><%= notification.course.course_number %></td>
+            <td><%= @notifiers[notification.type].description %></td>
+            <td><%= time_ago_in_words notification.notification_timestamp %> ago</td>
+          </tr>
+        <% end %>
+      </table>
+    <% else %>
+      You have not received any notifications yet.
+    <% end %>
+  </div>
 </div>
 
