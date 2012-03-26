@@ -5,6 +5,12 @@
   <%= f.text_field :course_number %>
   <%= image_tag "spinner.gif", :id => "spinner" %>
   <span id="courseName"></span>
+  <% @notifiers.each do |notifier| %>
+    <p>
+      <%= check_box_tag "notifier_"+notifier.type, :on %>
+      <%= label_tag "notifier_"+notifier.type, notifier.description, :class => "checkbox" %>
+    </p>
+  <% end %>
   <div class="form-actions">
     <%= f.submit button_name, :class => "btn btn-primary" %>
   </div>

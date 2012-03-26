@@ -32,5 +32,9 @@ class ClassesController < ApplicationController
   def edit
     @course = Course.find(params[:id])
     @terms = Term.get_active_terms.map { |term| [term.name, term.id] }
+    @notifiers = SPRING_CONTEXT.getBeansOfType(com.alwold.classwatch.notification.Notifier.java_class).values
+  end
+
+  def update
   end
 end
