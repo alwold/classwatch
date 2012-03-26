@@ -101,7 +101,7 @@
              <argument>
                 rm -rf *.war tmp/war
                 jruby -S warble &amp;&amp; \
-                mv *.war target/railsApp.war
+                mv *.war target/classwatch.war
              </argument>
            </arguments>
          </configuration>
