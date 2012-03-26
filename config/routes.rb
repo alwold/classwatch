@@ -1,9 +1,7 @@
 Classwatch::Application.routes.draw do
   devise_for :users, :controllers => { :sessions => "sessions", :registrations => "registrations" }
 
-  post "classes/create"
-
-  delete "classes/delete"
+  resources :classes, :except => [ :new, :index, :show ]
 
   get "classes/lookup/:institution_id/:term_id/:course_number" => "classes#lookup"
 

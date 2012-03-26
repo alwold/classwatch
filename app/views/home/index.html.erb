@@ -1,5 +1,4 @@
-<div class="row">
-  <div class="span6">
+  <div>
     <% if @courses.length > 0 %>
       <p>You are watching the following courses</p>
       <table class="table">
@@ -17,7 +16,8 @@
             <td><%= course.course_number %></td>
             <td><%= class_info.name %></td>
             <td><%= class_info.schedule %></td>
-            <td><%= link_to "Cancel", {:controller => :classes, :action => :delete, :course_number => course.course_number}, {:method => :delete, :confirm => "Are you sure you want to stop watching this class?", :class => "btn btn-danger"} %></td>
+            <td><%= link_to "Edit", edit_class_path(course), :class => "btn" %></td>
+            <td><%= link_to "Cancel", {:controller => :classes, :action => :destroy, :id => course.id}, {:method => :delete, :confirm => "Are you sure you want to stop watching this class?", :class => "btn btn-danger"} %></td>
           </tr>
         <% end %>
       </table>
@@ -41,7 +41,7 @@
         There are no terms available right now.  Terms become available as soon as the schedule is published.
     <% end %>
   </div>
-  <div class="span6">
+  <div>
     <h2>Notifications</h2>
     <% if @notifications.length > 0 %>
       <table>
@@ -57,5 +57,5 @@
       You have not received any notifications yet.
     <% end %>
   </div>
-</div>
+
 

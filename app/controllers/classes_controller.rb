@@ -7,9 +7,10 @@ class ClassesController < ApplicationController
     redirect_to :root
   end
 
-  def delete
+  def destroy
+    # need to ensure the user matches, otherwise anyone could delete any course
     user = User.where("email = ?", current_user.email).first
-    courses = UserCourse.joins(:course).where("user_id = ? and course.course_number = ?", user, params[:course_number])
+    courses = UserCourse.joins(:course).where("user_id = ? and course.course_id = ?", user, params[:id])
     courses.each do |course|
       course.destroy
     end
@@ -26,5 +27,8 @@ class ClassesController < ApplicationController
     else
       head :not_found
     end
+  end
+
+  def edit
   end
 end
