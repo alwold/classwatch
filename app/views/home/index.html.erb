@@ -26,17 +26,7 @@
     <% end %>
     <h2>Add a class</h2>
     <% if @terms.length > 0 %>
-      <%= form_for Course.new, :url => { :controller => "classes", :action => "create" } do |f| %>
-        <%= f.label :term_id, "Term" %>
-        <%= f.select :term_id, @terms %>
-        <%= f.label :course_number, "Course Number" %>
-        <%= f.text_field :course_number %>
-        <%= image_tag "spinner.gif", :id => "spinner" %>
-        <span id="courseName"></span>
-        <div class="form-actions">
-          <%= f.submit "Add", :class => "btn btn-primary" %>
-        </div>
-      <% end %>
+      <%= render(partial: "classes/course", object: Course.new) %>
     <% else %>
         There are no terms available right now.  Terms become available as soon as the schedule is published.
     <% end %>

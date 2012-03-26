@@ -1,0 +1,11 @@
+      <%= form_for course, :url => { :controller => "classes", :action => "create" } do |f| %>
+        <%= f.label :term_id, "Term" %>
+        <%= f.select :term_id, @terms %>
+        <%= f.label :course_number, "Course Number" %>
+        <%= f.text_field :course_number %>
+        <%= image_tag "spinner.gif", :id => "spinner" %>
+        <span id="courseName"></span>
+        <div class="form-actions">
+          <%= f.submit "Add", :class => "btn btn-primary" %>
+        </div>
+      <% end %>
