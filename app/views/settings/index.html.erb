@@ -33,7 +33,7 @@
       <% @notifiers.each do |notifier| %>
         <p>
           <%= check_box_tag "notifier_"+notifier.type, :on, @enabled_notifiers.include?(notifier.type) %>
-          <%= label_tag "notifier_"+notifier.type, notifier.description %>
+          <%= label_tag "notifier_"+notifier.type, notifier.description, :class => "checkbox" %>
         </p>
       <% end %>
     </div>
