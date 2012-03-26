@@ -30,5 +30,7 @@ class ClassesController < ApplicationController
   end
 
   def edit
+    @course = Course.find(params[:id])
+    @terms = Term.get_active_terms.map { |term| [term.name, term.id] }
   end
 end
