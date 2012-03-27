@@ -2,7 +2,13 @@ class ClassesController < ApplicationController
   before_filter :authenticate_user!, :except => :lookup
   def create
     error = Course.add current_user, params[:course][:term_id], params[:course][:course_number]
-    flash[:error] = error if error
+    if error
+      flash[:error] = error
+    else
+      # TODO make sure to add institution once there are several
+      user_course = UserCourse.joins(:course).where("user_id =? and course.term_id = ? and course.course_number = ?", current_user, params[:course][:term_id], params[:course][:course_number]).first
+      reconcile_notifiers(params, user_course)
+    end
     redirect_to :root
   end
 
@@ -42,6 +48,15 @@ class ClassesController < ApplicationController
   def update
     @course = Course.find(params[:id])
     user_course = UserCourse.joins(:course).where("user_id = ? and course.course_id = ?", current_user, @course).first
+
+    reconcile_notifiers params, user_course
+
+    redirect_to :root
+  end
+
+  private
+
+  def reconcile_notifiers(params, user_course)
     # look for notifier settings
     enabled_notifiers = params.keys.delete_if { |key| !key.starts_with?("notifier") || !params[key] }
     enabled_notifiers = enabled_notifiers.map { |key| key["notifier_".length..-1] }
@@ -73,7 +88,6 @@ class ClassesController < ApplicationController
         setting.save
       end
     end
-
-    redirect_to :root
   end
+
 end
