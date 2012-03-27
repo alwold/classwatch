@@ -1,7 +1,9 @@
 Classwatch::Application.routes.draw do
   devise_for :users, :controllers => { :sessions => "sessions", :registrations => "registrations" }
 
-  resources :classes, :except => [ :new, :index, :show ]
+  resources :classes, :except => [ :new, :index, :show ] do
+    get :upgrade, on: :member
+  end
 
   get "classes/lookup/:institution_id/:term_id/:course_number" => "classes#lookup"
 

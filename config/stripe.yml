@@ -1,0 +1,11 @@
+development:
+  publishable_key:
+  secret_key:
+
+test:
+  publishable_key:
+  secret_key:
+
+production:
+  publishable_key:
+  secret_key:

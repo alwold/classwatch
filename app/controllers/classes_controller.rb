@@ -4,12 +4,18 @@ class ClassesController < ApplicationController
     error = Course.add current_user, params[:course][:term_id], params[:course][:course_number]
     if error
       flash[:error] = error
+      redirect_to :root
     else
       # TODO make sure to add institution once there are several
       user_course = UserCourse.joins(:course).where("user_id =? and course.term_id = ? and course.course_number = ?", current_user, params[:course][:term_id], params[:course][:course_number]).first
-      reconcile_notifiers(params, user_course)
+      if reconcile_notifiers(params, user_course) then
+        # user needs to upgrade to enable a notifier
+        redirect_to upgrade_class_path(user_course.course.id)
+      else
+        redirect_to :root
+      end
     end
-    redirect_to :root
+
   end
 
   def destroy
@@ -55,14 +61,21 @@ class ClassesController < ApplicationController
       user_course.save
     end
 
-    reconcile_notifiers params, user_course
+    if reconcile_notifiers params, user_course then
+      redirect_to upgrade_class_path(@course)
+    else
+      redirect_to :root
+    end
+  end
 
-    redirect_to :root
+  def upgrade
   end
 
   private
 
+  # return true if the modification requires an upgrade
   def reconcile_notifiers(params, user_course)
+    requires_upgrade = false
     # look for notifier settings
     enabled_notifiers = params.keys.delete_if { |key| !key.starts_with?("notifier") || !params[key] }
     enabled_notifiers = enabled_notifiers.map { |key| key["notifier_".length..-1] }
@@ -72,18 +85,26 @@ class ClassesController < ApplicationController
       found = false
       user_course.notifier_settings.each do |setting|
         if setting.type == notifier then
-          setting.enabled = true
-          setting.save
+          if notifier == "GVSMS" && !user_course.paid then
+            requires_upgrade = true
+          else
+            setting.enabled = true
+            setting.save
+          end
           found = true
         end
       end
       unless found then
-        setting = NotifierSetting.new
-        setting.user_course = user_course
-        setting.type = notifier
-        setting.enabled = true
-        user_course.notifier_settings.push setting
-        setting.save
+        if notifier == "GVSMS" && !user_course.paid then
+          requires_upgrade = true
+        else
+          setting = NotifierSetting.new
+          setting.user_course = user_course
+          setting.type = notifier
+          setting.enabled = true
+          user_course.notifier_settings.push setting
+          setting.save
+        end
       end
     end
 
@@ -94,6 +115,7 @@ class ClassesController < ApplicationController
         setting.save
       end
     end
+    return requires_upgrade
   end
 
 end
