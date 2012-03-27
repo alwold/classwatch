@@ -1,16 +1,14 @@
 class ClassesController < ApplicationController
   before_filter :authenticate_user!, :except => :lookup
   def create
-    user = User.where("email = ?", current_user.email).first
-    error = Course.add user, params[:course][:term_id], params[:course][:course_number]
+    error = Course.add current_user, params[:course][:term_id], params[:course][:course_number]
     flash[:error] = error if error
     redirect_to :root
   end
 
   def destroy
     # need to ensure the user matches, otherwise anyone could delete any course
-    user = User.where("email = ?", current_user.email).first
-    courses = UserCourse.joins(:course).where("user_id = ? and course.course_id = ?", user, params[:id])
+    courses = UserCourse.joins(:course).where("user_id = ? and course.course_id = ?", current_user, params[:id])
     courses.each do |course|
       course.destroy
     end
@@ -33,8 +31,49 @@ class ClassesController < ApplicationController
     @course = Course.find(params[:id])
     @terms = Term.get_active_terms.map { |term| [term.name, term.id] }
     @notifiers = SPRING_CONTEXT.getBeansOfType(com.alwold.classwatch.notification.Notifier.java_class).values
+    user_course = UserCourse.joins(:course).where("user_id = ? and course.course_id = ?", current_user, @course).first
+    @enabled_notifiers = user_course.notifier_settings.delete_if { |setting| !setting.enabled }
+    @enabled_notifiers = @enabled_notifiers.map { |setting| setting.type }
+    if @enabled_notifiers.empty? then
+      @warning = "No notifiers are enabled. You will not receive notifications."
+    end
   end
 
   def update
+    @course = Course.find(params[:id])
+    user_course = UserCourse.joins(:course).where("user_id = ? and course.course_id = ?", current_user, @course).first
+    # look for notifier settings
+    enabled_notifiers = params.keys.delete_if { |key| !key.starts_with?("notifier") || !params[key] }
+    enabled_notifiers = enabled_notifiers.map { |key| key["notifier_".length..-1] }
+
+    # enable newly enabled notifiers
+    enabled_notifiers.each do |notifier|
+      found = false
+      user_course.notifier_settings.each do |setting|
+        if setting.type == notifier then
+          setting.enabled = true
+          setting.save
+          found = true
+        end
+      end
+      unless found then
+        setting = NotifierSetting.new
+        setting.user_course = user_course
+        setting.type = notifier
+        setting.enabled = true
+        user_course.notifier_settings.push setting
+        setting.save
+      end
+    end
+
+    # disable no longer enabled ones
+    user_course.notifier_settings.each do |setting|
+      if setting.enabled && !enabled_notifiers.include?(setting.type) then
+        setting.enabled = false
+        setting.save
+      end
+    end
+
+    redirect_to :root
   end
 end
