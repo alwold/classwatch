@@ -69,6 +69,21 @@ class ClassesController < ApplicationController
   end
 
   def upgrade
+    @course = Course.find(params[:id])
+  end
+
+  def pay
+    Stripe.api_key = STRIPE_CONFIG['secret_key']
+    token = params[:stripeToken]
+    charge = Stripe::Charge.create(
+      :amount => 100,
+      :currency => "usd",
+      :card => token,
+      :description => "classwatch"
+    )
+    user_course = UserCourse.joins(:course).where("user_id = ? and course.course_id = ?", current_user, params[:id]).first(:readonly => false)
+    user_course.paid = true
+    user_course.save
   end
 
   private

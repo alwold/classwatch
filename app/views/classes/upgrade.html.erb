@@ -43,7 +43,7 @@
   Please enter your credit card information below to ugprade the course.
 </p>
 <div class="payment-errors"></div>
-<form action="" method="POST" id="payment-form">
+<%= form_tag pay_class_path(@course), method: :post, id: "payment-form" do %>
   <div class="form-row">
     <label>Card Number</label>
     <input type="text" size="20" autocomplete="off" class="card-number"/>
@@ -59,4 +59,4 @@
     <input type="text" size="4" class="card-expiry-year"/>
   </div>
   <button type="submit" class="submit-button">Submit Payment</button>
-</form>
+<% end %>

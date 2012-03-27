@@ -6,6 +6,7 @@ gem 'rails', '3.2.1'
 gem 'ruby-hmac'
 platforms :jruby do
   gem 'activerecord-jdbcpostgresql-adapter'
+  gem 'jruby-openssl'
 end
 platforms :ruby do
   gem 'pg'
@@ -40,3 +41,4 @@ end
 gem 'devise'
 gem 'warbler'
 gem 'dynamic_form'
+gem 'stripe'

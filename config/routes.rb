@@ -3,6 +3,7 @@ Classwatch::Application.routes.draw do
 
   resources :classes, :except => [ :new, :index, :show ] do
     get :upgrade, on: :member
+    post :pay, on: :member
   end
 
   get "classes/lookup/:institution_id/:term_id/:course_number" => "classes#lookup"
