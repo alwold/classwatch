@@ -27,6 +27,7 @@ class Course < ActiveRecord::Base
       user_course.user = user
       user_course.course = course
       user_course.notified = false
+      user_course.paid = false
       user_course.save
       return nil
     else
