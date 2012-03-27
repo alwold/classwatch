@@ -47,7 +47,13 @@ class ClassesController < ApplicationController
 
   def update
     @course = Course.find(params[:id])
-    user_course = UserCourse.joins(:course).where("user_id = ? and course.course_id = ?", current_user, @course).first
+    user_course = UserCourse.joins(:course).where("user_id = ? and course.course_id = ?", current_user, @course).first(:readonly => false)
+    if params[:course][:term_id] != user_course.course.term_id || params[:course][:course_number] != user_course.course.course_number then
+      logger.debug "course was changed, updating it"
+      course = Course.find_or_initialize_by_course_number_and_term_id(params[:course][:course_number], params[:course][:term_id])
+      user_course.course = course
+      user_course.save
+    end
 
     reconcile_notifiers params, user_course
 
