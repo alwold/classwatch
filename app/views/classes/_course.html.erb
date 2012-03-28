@@ -7,7 +7,7 @@
   <%= f.text_field :course_number %>
   <%= image_tag "spinner.gif", :id => "spinner" %>
   <span id="courseName"></span>
-  <% @notifiers.each do |notifier| %>
+  <% Notifiers.each_value do |notifier| %>
     <p>
       <%= check_box_tag "notifier_"+notifier.type, :on, @enabled_notifiers.include?(notifier.type) %>
       <%= label_tag "notifier_"+notifier.type, notifier.description, :class => "checkbox" %>

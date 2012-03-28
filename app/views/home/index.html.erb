@@ -16,6 +16,8 @@
             <td><%= course.course_number %></td>
             <td><%= class_info.name %></td>
             <td><%= class_info.schedule %></td>
+            <td><i class="icon-envelope"></i></td>
+            <td><i class="icon-comment"></i></td>
             <td><%= link_to "Edit", edit_class_path(course), :class => "btn" %></td>
             <td><%= link_to "Cancel", {:controller => :classes, :action => :destroy, :id => course.id}, {:method => :delete, :confirm => "Are you sure you want to stop watching this class?", :class => "btn btn-danger"} %></td>
           </tr>
@@ -38,7 +40,7 @@
         <% @notifications.each do |notification| %>
           <tr>
             <td><%= notification.course.course_number %></td>
-            <td><%= @notifiers[notification.type].description %></td>
+            <td><%= Notifiers[notification.type].description %></td>
             <td><%= time_ago_in_words notification.notification_timestamp %> ago</td>
           </tr>
         <% end %>
