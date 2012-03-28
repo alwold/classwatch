@@ -1,0 +1,14 @@
+development:
+  account_sid: 
+  auth_token: 
+  from: +14155999717
+
+test:
+  account_sid: 
+  auth_token: 
+  from: +14155999717
+
+production:
+  account_sid: 
+  auth_token: 
+  from: 
