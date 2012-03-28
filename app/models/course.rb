@@ -1,3 +1,5 @@
+require 'asu_schedule_scraper'
+
 class Course < ActiveRecord::Base
   has_many :users, :through => :user_courses
   has_many :user_courses
@@ -33,5 +35,10 @@ class Course < ActiveRecord::Base
     else
       "Course was not found"
     end
+  end
+
+  def get_class_info
+    scraper = AsuScheduleScraper.new
+    scraper.get_class_info(term.term_code, course_number)
   end
 end

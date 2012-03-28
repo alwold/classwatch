@@ -28,9 +28,11 @@ class ClassesController < ApplicationController
   end
 
   def lookup
-    mgr = SPRING_CONTEXT.getBean("classInfoManager")
     term = Term.find(params[:term_id])
-    class_info = mgr.getClassInfo(params[:institution_id].to_f, term.term_code, params[:course_number])
+    course = Course.new
+    course.course_number = params[:course_number]
+    course.term = term
+    class_info = course.get_class_info
     if class_info then
       json = { :name => class_info.name }
       render :json => json
@@ -70,7 +72,7 @@ class ClassesController < ApplicationController
 
   def upgrade
     @course = Course.find(params[:id])
-    @class_info = SPRING_CONTEXT.get_bean("classInfoManager").get_class_info(@course.term.school.id, @course.term.term_code, @course.course_number)
+    @class_info = @course.get_class_info
     user_course = UserCourse.joins(:course).where("user_id = ? and course.course_id = ?", current_user, @course).first
     if user_course.paid then
       render "already_paid"
