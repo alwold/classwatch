@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/alwold/asu-schedule-scraper.git
+  revision: 30886d3e07be0fbb399323bdbd1ad41582701a60
+  specs:
+    asu-schedule-scraper (0.1)
+      nokogiri
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -77,6 +84,8 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.18)
     multi_json (1.1.0)
+    nokogiri (1.5.2)
+    nokogiri (1.5.2-java)
     orm_adapter (0.0.7)
     pg (0.13.2)
     polyglot (0.3.3)
@@ -157,6 +166,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord-jdbcpostgresql-adapter
+  asu-schedule-scraper!
   bootstrap-sass
   coffee-rails (~> 3.2.1)
   devise
