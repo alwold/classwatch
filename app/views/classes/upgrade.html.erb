@@ -51,13 +51,15 @@
   </div>
   <div class="form-row">
     <label>CVC</label>
-    <input type="text" size="4" autocomplete="off" class="card-cvc"/>
+    <input type="text" size="4" autocomplete="off" class="input-small card-cvc"/>
   </div>
   <div class="form-row">
     <label>Expiration (MM/YYYY)</label>
-    <input type="text" size="2" class="card-expiry-month"/>
+    <input type="text" size="2" class="input-small card-expiry-month"/>
     <span> / </span>
-    <input type="text" size="4" class="card-expiry-year"/>
+    <input type="text" size="4" class="input-small card-expiry-year"/>
   </div>
-  <button type="submit" class="submit-button">Submit Payment</button>
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary submit-button">Submit Payment</button>
+  </div>
 <% end %>
