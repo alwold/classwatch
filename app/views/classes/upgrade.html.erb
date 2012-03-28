@@ -5,14 +5,15 @@
 
     $(document).ready(function() {
       $("#payment-form").submit(function(event) {
+        $(".payment-errors").hide();
         // disable the submit button to prevent repeated clicks
-        $('.submit-button').attr("disabled", "disabled");
+        $(".submit-button").attr("disabled", "disabled");
 
         Stripe.createToken({
-          number: $('.card-number').val(),
-          cvc: $('.card-cvc').val(),
-          exp_month: $('.card-expiry-month').val(),
-          exp_year: $('.card-expiry-year').val()
+          number: $(".card-number").val(),
+          cvc: $(".card-cvc").val(),
+          exp_month: $(".card-expiry-month").val(),
+          exp_year: $(".card-expiry-year").val()
         }, stripeResponseHandler);
 
         // prevent the form from submitting with the default action
@@ -24,6 +25,8 @@
       if (response.error) {
           //show the errors on the form
           $(".payment-errors").html(response.error.message);
+          $(".payment-errors").show();
+          $(".submit-button").removeAttr("disabled");
       } else {
           var form$ = $("#payment-form");
           // token contains id, last4, and card type
@@ -43,7 +46,7 @@
   In order to enable text message notifications, you will need to upgrade this course.  This will cost $1.00.  
   Please enter your credit card information below to ugprade the course.
 </p>
-<div class="payment-errors"></div>
+<div class="alert alert-error payment-errors" style="display:none;"></div>
 <%= form_tag pay_class_path(@course), method: :post, id: "payment-form" do %>
   <div class="form-row">
     <label>Card Number</label>
