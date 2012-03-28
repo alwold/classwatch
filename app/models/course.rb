@@ -38,7 +38,11 @@ class Course < ActiveRecord::Base
   end
 
   def get_class_info
-    scraper = AsuScheduleScraper.new
-    scraper.get_class_info(term.term_code, course_number)
+    logger.debug("get_class_info: #{term.term_code}, #{course_number}")
+    Rails.cache.fetch("class_info_#{term.term_code}_#{course_number}", :expires_in => 5.minutes) do
+      logger.debug("loading from scraper")
+      scraper = AsuScheduleScraper.new
+      scraper.get_class_info(term.term_code, course_number)
+    end
   end
 end
