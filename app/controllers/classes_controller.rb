@@ -70,6 +70,7 @@ class ClassesController < ApplicationController
 
   def upgrade
     @course = Course.find(params[:id])
+    @class_info = SPRING_CONTEXT.get_bean("classInfoManager").get_class_info(@course.term.school.id, @course.term.term_code, @course.course_number)
     user_course = UserCourse.joins(:course).where("user_id = ? and course.course_id = ?", current_user, @course).first
     if user_course.paid then
       render "already_paid"
