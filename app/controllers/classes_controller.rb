@@ -44,7 +44,6 @@ class ClassesController < ApplicationController
   def edit
     @course = Course.find(params[:id])
     @terms = Term.get_active_terms.map { |term| [term.name, term.id] }
-    @notifiers = SPRING_CONTEXT.getBeansOfType(com.alwold.classwatch.notification.Notifier.java_class).values
     user_course = UserCourse.joins(:course).where("user_id = ? and course.course_id = ?", current_user, @course).first
     @enabled_notifiers = user_course.notifier_settings.delete_if { |setting| !setting.enabled }
     @enabled_notifiers = @enabled_notifiers.map { |setting| setting.type }
@@ -114,7 +113,7 @@ class ClassesController < ApplicationController
       found = false
       user_course.notifier_settings.each do |setting|
         if setting.type == notifier then
-          if notifier == "GVSMS" && !user_course.paid then
+          if Notifiers[notifier].premium && !user_course.paid then
             requires_upgrade = true
           else
             setting.enabled = true
@@ -124,7 +123,7 @@ class ClassesController < ApplicationController
         end
       end
       unless found then
-        if notifier == "GVSMS" && !user_course.paid then
+        if Notifiers[notifier].premium && !user_course.paid then
           requires_upgrade = true
         else
           setting = NotifierSetting.new
