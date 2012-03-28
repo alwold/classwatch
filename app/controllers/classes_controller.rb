@@ -91,7 +91,7 @@ class ClassesController < ApplicationController
         :amount => 100,
         :currency => "usd",
         :card => token,
-        :description => "classwatch"
+        :description => "classwatch - " << current_user.email << " - user_course id " << user_course.id.to_s
       )
     end
     user_course.paid = true
