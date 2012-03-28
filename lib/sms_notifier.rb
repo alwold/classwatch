@@ -1,10 +1,12 @@
 class SmsNotifier
   attr_accessor :type
   attr_accessor :description
+  attr_accessor :premium
 
   def initialize
     @type = "SMS"
     @description = "Text Message"
+    @premium = true
     @client = Twilio::REST::Client.new TWILIO_CONFIG['account_sid'], TWILIO_CONFIG['auth_token']
   end
 
