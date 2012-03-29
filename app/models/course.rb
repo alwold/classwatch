@@ -11,17 +11,13 @@ class Course < ActiveRecord::Base
   def Course.add(user, term_id, course_number)
     course = Course.where("term_id = ? and course_number = ?", term_id, course_number).first
     if course == nil then
-      mgr = SPRING_CONTEXT.get_bean "classInfoManager"
       term = Term.find term_id
-      # TODO un-hard-code the institution id below
-      status = mgr.get_class_status 1, term.term_code, course_number
-      if status == com.alwold.classwatch.model.Status::OPEN then
-        course = Course.new
-        course.term = term
-        course.course_number = course_number
+      course = Course.new
+      course.term = term
+      course.course_number = course_number
+      status = course.get_class_status
+      if status == :open then
         course.save
-        # this is here temporarily because of a jruby postgres bug
-        course = Course.where("term_id = ? and course_number = ?", term_id, course_number).first
       end
     end
     if course != nil then
@@ -43,6 +39,13 @@ class Course < ActiveRecord::Base
       logger.debug("loading from scraper")
       scraper = AsuScheduleScraper.new
       scraper.get_class_info(term.term_code, course_number)
+    end
+  end
+
+  def get_class_status
+    Rails.cache.fetch("class_status_#{term.term_code}_#{course_number}", :expires_in => 5.minutes) do
+      scraper = AsuScheduleScraper.new
+      scraper.get_class_status term.term_code, course_number
     end
   end
 end

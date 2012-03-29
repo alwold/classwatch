@@ -2,7 +2,7 @@ class RegistrationsController < Devise::RegistrationsController
   def create
     logger.debug "Got called"
     super
-    if params[:course][:course_number] then
+    if params[:course][:course_number] && !params[:course][:course_number].empty? then
        logger.debug "Found a class, adding"
        user = User.where("email = ?", current_user.email).first
        error = Course.add user, params[:course][:term_id], params[:course][:course_number]
