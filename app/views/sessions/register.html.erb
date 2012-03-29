@@ -1,4 +1,4 @@
-Ok, it looks like you're new here.  We just need to verify a few details and you'll be ready to roll.
+<h2>Ok, it looks like you're new here.  We just need to verify a few details and you'll be ready to roll.</h2>
 	
 <%= form_for User.new, :url => user_registration_url  do |f| %>
   <%= hidden_field :user, :email %>
@@ -14,7 +14,7 @@ Ok, it looks like you're new here.  We just need to verify a few details and you
   <%= text_field :course, :course_number %>
   <%= image_tag "spinner.gif", :id => "spinner" %>
   <span id="courseName"></span>
-  <p>
-    <%= f.submit "Go" %>
-  </p>
+  <div class="form-actions">
+    <%= f.submit "Go", class: "btn btn-primary" %>
+  </div>
 <% end %>
