@@ -2,13 +2,13 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.1'
 
-#gem 'sqlite3'
 gem 'ruby-hmac'
 platforms :jruby do
   gem 'activerecord-jdbcpostgresql-adapter'
   gem 'jruby-openssl'
 end
 platforms :ruby do
+  gem 'sqlite3'
   gem 'pg'
 end
 gem 'json'
