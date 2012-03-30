@@ -1,5 +1,5 @@
   <div>
-    <% if @courses.length > 0 %>
+    <% if @user.user_courses.length > 0 %>
       <p>You are watching the following courses</p>
       <table class="table">
         <thead>
@@ -10,16 +10,22 @@
             <th>Schedule</th>
           </tr>
         </thead>
-        <% @courses.zip(@class_infos).each do |course, class_info| %>
+        <% @user.user_courses.each do |user_course| %>
           <tr>
-            <td><%= course.term.name %></td>
-            <td><%= course.course_number %></td>
-            <td><%= class_info.name %></td>
-            <td><%= class_info.schedule %></td>
-            <td><i class="icon-envelope"></i></td>
-            <td><i class="icon-comment"></i></td>
-            <td><%= link_to "Edit", edit_class_path(course), :class => "btn" %></td>
-            <td><%= link_to "Cancel", {:controller => :classes, :action => :destroy, :id => course.id}, {:method => :delete, :confirm => "Are you sure you want to stop watching this class?", :class => "btn btn-danger"} %></td>
+            <td><%= user_course.course.term.name %></td>
+            <td><%= user_course.course.course_number %></td>
+            <td><%= user_course.course.get_class_info.name %></td>
+            <td><%= user_course.course.get_class_info.schedule %></td>
+            <td>
+              <% if user_course.notifier_enabled?("EMAIL") then %>
+                <i class="icon-envelope"></i>
+              <% end %>
+              <% if user_course.notifier_enabled?("SMS") then %>
+                <i class="icon-comment"></i>
+              <% end %>
+            </td>
+            <td><%= link_to "Edit", edit_class_path(user_course.course), :class => "btn" %></td>
+            <td><%= link_to "Cancel", {:controller => :classes, :action => :destroy, :id => user_course.course.id}, {:method => :delete, :confirm => "Are you sure you want to stop watching this class?", :class => "btn btn-danger"} %></td>
           </tr>
         <% end %>
       </table>
@@ -49,5 +55,3 @@
       You have not received any notifications yet.
     <% end %>
   </div>
-
-
