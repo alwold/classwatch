@@ -4,6 +4,7 @@
       <table class="table">
         <thead>
           <tr>
+            <th></th>
             <th>Term</th>
             <th>Course number</th>
             <th>Name</th>
@@ -12,6 +13,7 @@
         </thead>
         <% @user.user_courses.each do |user_course| %>
           <tr>
+            <td><span class="badge"><%= user_course.notifications.count %></span></td>
             <td><%= user_course.course.term.name %></td>
             <td><%= user_course.course.course_number %></td>
             <td><%= user_course.course.get_class_info.name %></td>

@@ -10,4 +10,8 @@ class UserCourse < ActiveRecord::Base
     end
     return false
   end
+
+  def notifications
+    Notification.where(:user_id => user, :course_id => course)
+  end
 end
