@@ -6,7 +6,7 @@ class UserCourse < ActiveRecord::Base
 
   def notifier_enabled?(type)
     notifier_settings.each do |setting|
-      return true if setting.type == type
+      return true if setting.type == type && setting.enabled
     end
     return false
   end
