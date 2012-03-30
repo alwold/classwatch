@@ -20,23 +20,6 @@
       <%= f.label :phone, "Phone" %>
       <%= f.text_field :phone %>
     </div>
-    <div class="span6">
-      <h3>Notifications</h3>
-      <% if @warning then
-        style = ""
-      else
-        style = "display:none;"
-      end %>
-      <div class="alert" id="notifier-warnings" style="<%= style %>">
-        <%= @warning %>
-      </div>
-      <% @notifiers.each do |notifier| %>
-        <p>
-          <%= check_box_tag "notifier_"+notifier.type, :on, @enabled_notifiers.include?(notifier.type) %>
-          <%= label_tag "notifier_"+notifier.type, notifier.description, :class => "checkbox" %>
-        </p>
-      <% end %>
-    </div>
   </div>
   <div class="form-actions">
     <%= f.submit "Save", :class => "btn btn-primary" %>
