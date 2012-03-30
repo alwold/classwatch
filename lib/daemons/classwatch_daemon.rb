@@ -30,6 +30,8 @@ def check_course(course)
             Rails.logger.error "Caught Exception: " << e.to_s
           end
         end
+        user_course.notified = true
+        user_course.save
       end
     end
   end
