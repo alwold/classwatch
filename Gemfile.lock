@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/alwold/asu-schedule-scraper.git
-  revision: 402c0f5784eb5bf965225d7d53935dd5944dfb52
+  revision: 1e6fa645874ea28e21c89cc523a390dc1ae9000e
   specs:
     asu-schedule-scraper (0.1)
       nokogiri
@@ -54,6 +54,11 @@ GEM
       execjs
     coffee-script-source (1.2.0)
     columnize (0.3.6)
+    daemons (1.1.8)
+    daemons-rails (1.0.0)
+      daemons
+      multi_json (~> 1.0)
+      rails (~> 3.0)
     devise (2.0.4)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.0.3)
@@ -176,6 +181,7 @@ DEPENDENCIES
   asu-schedule-scraper!
   bootstrap-sass
   coffee-rails (~> 3.2.1)
+  daemons-rails
   devise
   dynamic_form
   jquery-rails
