@@ -4,7 +4,7 @@
   <%= f.label :term_id, "Term" %>
   <%= f.select :term_id, @terms %>
   <%= f.label :course_number, "Course Number" %>
-  <%= f.text_field :course, :course_number, "lookup-url" => lookup_class_url(":school_id", ":term_id", ":course_number") %>
+  <%= f.text_field :course_number, "lookup-url" => lookup_class_url(":school_id", ":term_id", ":course_number") %>
   <%= image_tag "spinner.gif", :id => "spinner" %>
   <span id="courseName"></span>
   <% Notifiers.each_value do |notifier| %>
