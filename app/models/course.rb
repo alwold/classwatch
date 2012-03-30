@@ -1,5 +1,3 @@
-require 'asu_schedule_scraper'
-
 class Course < ActiveRecord::Base
   has_many :users, :through => :user_courses
   has_many :user_courses
