@@ -56,15 +56,31 @@
           <h3>Notifications</h3>
         </div>
         <div class="modal-body">
-          <table>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>When</th>
+                <th>Status</th>
+              </tr>
+            </thead>
             <% notifications.each do |notification| %>
               <tr>
-                <td><%= notification.course.course_number %></td>
-                <td><%= Notifiers[notification.type].description %></td>
+                <td>
+                  <% if notification.type == "EMAIL" then %>
+                    <i class="icon-envelope"></i>
+                  <% elsif notification.type == "SMS" then %>
+                    <i class="icon-comment"></i>
+                  <% end %>
+                </td>
                 <td><%= time_ago_in_words notification.notification_timestamp %> ago</td>
+                <td><%= notification.status %></td>
               </tr>
             <% end %>
           </table>
+        </div>
+        <div class="modal-footer">
+          <a href="#" class="btn btn-primary" data-dismiss="modal">Close</a>
         </div>
       </div>
     <% end %>
