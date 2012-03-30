@@ -20,6 +20,7 @@ def check_course(course)
       user_course.notifier_settings.each do |notifier_setting|
         if notifier_setting.enabled then
           Rails.logger.debug "Invoking notifier #{notifier_setting.type}"
+          Rails.logger.debug "Notifier: #{Notifiers[notifier_setting.type]}"
           Notifiers[notifier_setting.type].notify(user_course.user, course, course.get_class_info)
           Rails.logger.debug "Logging notification"
           log_notification(course, user_course.user, notifier_setting.type, "success", nil)
@@ -34,9 +35,9 @@ def log_notification(course, user, type, status, info)
   n.course = course
   n.user = user
   n.type = type
-  n.notification_timestamp = DateTime.new
+  n.notification_timestamp = Time.new
   n.attempts = 1
-  n.last_attempt = DateTime.new
+  n.last_attempt = Time.new
   n.status = status
   n.info = info
   Rails.logger.debug "saving notification"
