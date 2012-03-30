@@ -21,9 +21,14 @@ def check_course(course)
         if notifier_setting.enabled then
           Rails.logger.debug "Invoking notifier #{notifier_setting.type}"
           Rails.logger.debug "Notifier: #{Notifiers[notifier_setting.type]}"
-          Notifiers[notifier_setting.type].notify(user_course.user, course, course.get_class_info)
-          Rails.logger.debug "Logging notification"
-          log_notification(course, user_course.user, notifier_setting.type, "success", nil)
+          begin
+            Notifiers[notifier_setting.type].notify(user_course.user, course, course.get_class_info)
+            Rails.logger.debug "Logging notification"
+            log_notification(course, user_course.user, notifier_setting.type, "success", nil)
+          rescue Exception => e
+            log_notification(course, user_course.user, notifier_setting.type, "failure", "Error during notification: #{e.to_s}")
+            Rails.logger.error "Caught Exception: " << e.to_s
+          end
         end
       end
     end
