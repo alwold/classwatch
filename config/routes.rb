@@ -6,7 +6,7 @@ Classwatch::Application.routes.draw do
     post :pay, on: :member
   end
 
-  get "classes/lookup/:institution_id/:term_id/:course_number" => "classes#lookup"
+  get "classes/lookup/:institution_id/:term_id/:course_number" => "classes#lookup", as: "lookup_class"
 
   post "user/create"
 

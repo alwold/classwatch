@@ -3,7 +3,11 @@ $(document).ready(function () {
     if (event.target.value.length == 5) {
       $("#spinner").show();
       var term = $("#course_term_id").val();
-      $.ajax({url: "/classes/lookup/1/"+term+"/"+event.target.value,
+      var lookupUrl = event.target.attributes["lookup-url"].value;
+      lookupUrl = lookupUrl.replace(":school_id", "1");
+      lookupUrl = lookupUrl.replace(":term_id", term);
+      lookupUrl = lookupUrl.replace(":course_number", event.target.value);
+      $.ajax({url: lookupUrl,
         dataType: "json",
         success: function(classInfo) {
           $("#courseName").html(classInfo.name);
