@@ -13,7 +13,13 @@
         </thead>
         <% @user.user_courses.each do |user_course| %>
           <tr>
-            <td><span class="badge"><%= user_course.notifications.count %></span></td>
+            <td>
+              <% if !user_course.notifications.empty? %>
+                <a class="badge" data-toggle="modal" href="#notifications-modal-<%= user_course.id %>">
+                  <%= user_course.notifications.count %>
+                </a>
+              <% end %>
+            </td>
             <td><%= user_course.course.term.name %></td>
             <td><%= user_course.course.course_number %></td>
             <td><%= user_course.course.get_class_info.name %></td>
@@ -41,19 +47,25 @@
         There are no terms available right now.  Terms become available as soon as the schedule is published.
     <% end %>
   </div>
-  <div>
-    <h2>Notifications</h2>
-    <% if @notifications.length > 0 %>
-      <table>
-        <% @notifications.each do |notification| %>
-          <tr>
-            <td><%= notification.course.course_number %></td>
-            <td><%= Notifiers[notification.type].description %></td>
-            <td><%= time_ago_in_words notification.notification_timestamp %> ago</td>
-          </tr>
-        <% end %>
-      </table>
-    <% else %>
-      You have not received any notifications yet.
+  <% @user.user_courses.each do |user_course| %>
+    <% notifications = user_course.notifications %>
+    <% if !notifications.empty? %>
+      <div class="modal fade" id="notifications-modal-<%= user_course.id %>" style="display:none;">
+        <div class="modal-header">
+          <a class="close" data-dismiss="modal">×</a>
+          <h3>Notifications</h3>
+        </div>
+        <div class="modal-body">
+          <table>
+            <% notifications.each do |notification| %>
+              <tr>
+                <td><%= notification.course.course_number %></td>
+                <td><%= Notifiers[notification.type].description %></td>
+                <td><%= time_ago_in_words notification.notification_timestamp %> ago</td>
+              </tr>
+            <% end %>
+          </table>
+        </div>
+      </div>
     <% end %>
-  </div>
+  <% end %>
