@@ -58,17 +58,31 @@ Signal.trap("TERM") do
   $running = false
 end
 
+transactions = Queue.new
+workers = Array.new
+10.times do
+  t = Thread.new do
+    ::Rails.logger.debug "Worker thread started"
+    while($running) do
+      ::Rails.logger.debug "Waiting for transaction"
+      course = transactions.pop
+      ::Rails.logger.debug "got tx, checking"
+      check_course(course)
+    end
+  end
+  workers.push t
+end
+
 while($running) do
   
-  # Replace this with your code
-  # select distinct c from Course c, in (c.userCourses) uc where uc.notified = ? and c.term.startDate <= current_date and c.term.endDate >= current_date
   Course.joins(:user_courses, :term).where("user_course.notified = ? and term.start_date <= current_date and term.end_date >= current_date", false).uniq.each do |course|
     # in the future this should just queue up the course to be checked in parallel
-    Rails.logger.debug "found a course: #{course.course_number}"
-    check_course(course)
+    ::Rails.logger.debug "found a course: #{course.course_number}"
+    transactions.push course
+    ::Rails.logger.debug "pushed"
   end
-#  Rails.logger.auto_flushing = true
-  Rails.logger.info "This daemon is still running at #{Time.now}.\n"
+#  ::Rails.logger.auto_flushing = true
+  ::Rails.logger.info "This daemon is still running at #{Time.now}.\n"
   
   sleep 10
 end
