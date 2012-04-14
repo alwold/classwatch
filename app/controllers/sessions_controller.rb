@@ -5,7 +5,8 @@ class SessionsController < Devise::SessionsController
       @user = User.new
       @user.email = params[:user][:email]
       @user.password = params[:user][:password]
-      @terms = Term.get_active_terms
+      @terms = Term.get_active_terms.map { |term| [term.name, term.id] }
+      @enabled_notifiers = Array.new
       render :register
     else
       super
