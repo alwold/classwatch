@@ -33,6 +33,7 @@ $(document).ready(function () {
 
   $("#user_phone").change(function (event) {
     try {
+      $("#phone-errors").html("");
       event.target.value = formatPhoneNumber(event.target.value);
     } catch (ex) {
       $("#phone-errors").html(ex.toString());
