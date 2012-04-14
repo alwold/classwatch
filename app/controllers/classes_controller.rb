@@ -10,7 +10,7 @@ class ClassesController < ApplicationController
       flash[:error] = error
       redirect_to :root
     else
-        redirect_to :root
+      redirect_to :root
     end
   end
 
