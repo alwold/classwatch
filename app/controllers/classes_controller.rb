@@ -1,21 +1,17 @@
 class ClassesController < ApplicationController
   before_filter :authenticate_user!, :except => :lookup
   def create
-    error = Course.add current_user, params[:course][:term_id], params[:course][:course_number]
-    if error
+    error = Course.add(current_user, params[:course][:term_id], params[:course][:course_number], params)
+    if error == :requires_upgrade
+      user_course = UserCourse.joins(:course).where("user_id =? and course.term_id = ? and course.course_number = ?", 
+        current_user, params[:course][:term_id], params[:course][:course_number]).first
+      redirect_to upgrade_class_path(user_course.course.id)
+    elsif error
       flash[:error] = error
       redirect_to :root
     else
-      # TODO make sure to add institution once there are several
-      user_course = UserCourse.joins(:course).where("user_id =? and course.term_id = ? and course.course_number = ?", current_user, params[:course][:term_id], params[:course][:course_number]).first
-      if reconcile_notifiers(params, user_course) then
-        # user needs to upgrade to enable a notifier
-        redirect_to upgrade_class_path(user_course.course.id)
-      else
         redirect_to :root
-      end
     end
-
   end
 
   def destroy
@@ -98,52 +94,4 @@ class ClassesController < ApplicationController
     user_course.paid = true
     user_course.save
   end
-
-  private
-
-  # return true if the modification requires an upgrade
-  def reconcile_notifiers(params, user_course)
-    requires_upgrade = false
-    # look for notifier settings
-    enabled_notifiers = params.keys.delete_if { |key| !key.starts_with?("notifier") || !params[key] }
-    enabled_notifiers = enabled_notifiers.map { |key| key["notifier_".length..-1] }
-
-    # enable newly enabled notifiers
-    enabled_notifiers.each do |notifier|
-      found = false
-      user_course.notifier_settings.each do |setting|
-        if setting.type == notifier then
-          if Notifiers[notifier].premium && !user_course.paid then
-            requires_upgrade = true
-          else
-            setting.enabled = true
-            setting.save
-          end
-          found = true
-        end
-      end
-      unless found then
-        if Notifiers[notifier].premium && !user_course.paid then
-          requires_upgrade = true
-        else
-          setting = NotifierSetting.new
-          setting.user_course = user_course
-          setting.type = notifier
-          setting.enabled = true
-          user_course.notifier_settings.push setting
-          setting.save
-        end
-      end
-    end
-
-    # disable no longer enabled ones
-    user_course.notifier_settings.each do |setting|
-      if setting.enabled && !enabled_notifiers.include?(setting.type) then
-        setting.enabled = false
-        setting.save
-      end
-    end
-    return requires_upgrade
-  end
-
 end
