@@ -30,4 +30,29 @@ $(document).ready(function () {
     $("#course_course_number").val("");
     $("#courseName").html("");
   });
+
+  $("#user_phone").change(function (event) {
+    try {
+      event.target.value = formatPhoneNumber(event.target.value);
+    } catch (ex) {
+      $("#phone-errors").html(ex.toString());
+    }
+  });
 });
+
+/**
+ * borrowed from http://blog.stevenlevithan.com/archives/validate-phone-number
+ */
+function formatPhoneNumber(phoneNumber) {
+  if (phoneNumber == "") {
+    return phoneNumber;
+  } else {
+    var regexObj = /^\s*\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})\s*$/;
+	
+    if (regexObj.test(phoneNumber)) {
+      return phoneNumber.replace(regexObj, "$1-$2-$3");
+    } else {
+      throw new Error("The phone number is not valid");
+    }
+  }
+}
