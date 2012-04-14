@@ -8,13 +8,5 @@
   <%= f.label :phone, "Phone number (for text messages)" %>
   <%= f.text_field :phone %>
   <h2>If you'd like to watch a class right away, put in its info below</h2>
-  <%= f.label :term %>
-  <%= collection_select :course, :term_id, @terms, :term_id, :name %>
-  <%= f.label :course_number, "Class Numer" %>
-  <%= text_field :course, :course_number, "lookup-url" => lookup_class_url(":school_id", ":term_id", ":course_number") %>
-  <%= image_tag "spinner.gif", :id => "spinner" %>
-  <span id="courseName"></span>
-  <div class="form-actions">
-    <%= f.submit "Go", class: "btn btn-primary" %>
-  </div>
+  <%= render(partial: "classes/course", object: Course.new, locals: { button_name: "Go", action: :create }) %>
 <% end %>
