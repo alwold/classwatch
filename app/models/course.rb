@@ -15,19 +15,25 @@ class Course < ActiveRecord::Base
       course = Course.new
       course.term = term
       course.course_number = course_number
-      status = course.get_class_status
-      if status == :open then
+      # check if the course exists, then save it
+      if course.get_class_status != nil
         course.save
+      else
+        course = nil
       end
     end
-    if course != nil then
-      user_course = UserCourse.new
-      user_course.user = user
-      user_course.course = course
-      user_course.notified = false
-      user_course.paid = false
-      user_course.save
-      reconcile_notifiers params, user_course
+    if course != nil
+      if course.get_class_status != :open
+        user_course = UserCourse.new
+        user_course.user = user
+        user_course.course = course
+        user_course.notified = false
+        user_course.paid = false
+        user_course.save
+        reconcile_notifiers params, user_course
+      else
+        "Course is already open"
+      end
     else
       "Course was not found"
     end
