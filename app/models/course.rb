@@ -55,8 +55,6 @@ class Course < ActiveRecord::Base
     end
   end
 
-private
-
   # return true if the modification requires an upgrade
   def self.reconcile_notifiers(params, user_course)
     requires_upgrade = false

@@ -58,7 +58,7 @@ class ClassesController < ApplicationController
       user_course.save
     end
 
-    if reconcile_notifiers params, user_course then
+    if Course.reconcile_notifiers params, user_course then
       redirect_to upgrade_class_path(@course)
     else
       redirect_to :root
@@ -71,6 +71,8 @@ class ClassesController < ApplicationController
     user_course = UserCourse.joins(:course).where("user_id = ? and course.course_id = ?", current_user, @course).first
     if user_course.paid then
       render "already_paid"
+    elsif @class_info.nil?
+      render "class_not_found"
     else
       render
     end
