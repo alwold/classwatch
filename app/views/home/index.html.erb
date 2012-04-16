@@ -22,8 +22,8 @@
             </td>
             <td><%= user_course.course.term.name %></td>
             <td><%= user_course.course.course_number %></td>
-            <td><%= user_course.course.get_class_info.name %></td>
-            <td><%= user_course.course.get_class_info.schedule %></td>
+            <td><%= user_course.course.get_class_info.nil? ? "Unknown" : user_course.course.get_class_info.name %></td>
+            <td><%= user_course.course.get_class_info.nil? ? "Unknown" : user_course.course.get_class_info.schedule %></td>
             <td>
               <% if user_course.notifier_enabled?("EMAIL") then %>
                 <i class="icon-envelope"></i>
