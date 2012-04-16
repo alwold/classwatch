@@ -22,7 +22,7 @@ class Course < ActiveRecord::Base
         course = nil
       end
     end
-    if course != nil
+    if course != nil && !course.get_class_status.nil?
       if course.get_class_status != :open
         user_course = UserCourse.new
         user_course.user = user
