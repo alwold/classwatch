@@ -1,4 +1,7 @@
 class RegistrationsController < Devise::RegistrationsController
+  include DeviseHelper
+  include ::ActionView::Helpers::TagHelper
+
   def create
     build_resource
 
@@ -13,7 +16,6 @@ class RegistrationsController < Devise::RegistrationsController
           user = User.where("email = ?", current_user.email).first
           error = Course.add(user, params[:course][:term_id], params[:course][:course_number], params)
           if error == :requires_upgrade
-            # TODO redirect to upgrade page
             user_course = UserCourse.joins(:course).where("user_id =? and course.term_id = ? and course.course_number = ?", 
               current_user, params[:course][:term_id], params[:course][:course_number]).first
             redirect_to upgrade_class_path(user_course.course.id)
@@ -32,7 +34,13 @@ class RegistrationsController < Devise::RegistrationsController
       end
     else
       clean_up_passwords resource
-      respond_with resource
+      # respond_with resource
+      # begin custom code
+      errors = devise_error_messages!
+      logger.debug "errors: " << errors
+      flash[:error] = errors
+      redirect_to new_user_session_path
+      # end custom code
     end
   end
 end
