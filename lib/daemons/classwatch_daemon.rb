@@ -7,33 +7,37 @@ require File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "config",
 
 
 def check_course(course)
-  Rails.logger.debug "checking course"
+  ::Rails.logger.debug "checking course"
   scraper = Scrapers[course.term.school.scraper_type]
-  Rails.logger.debug "scraper: #{scraper}"
+  ::Rails.logger.debug "scraper: #{scraper}"
   status = scraper.get_class_status(course.term.term_code, course.course_number)
-  Rails.logger.debug "status: #{status}"
+  ::Rails.logger.debug "status: #{status}"
   # TODO log status to course_status
-  if status == :open then
-    Rails.logger.info "#{course.course_number} is open!"
-    UserCourse.where(:course_id => course, :notified => false).each do |user_course|
-      Rails.logger.debug "Notifying #{user_course.user.email}"
-      user_course.notifier_settings.each do |notifier_setting|
-        if notifier_setting.enabled then
-          Rails.logger.debug "Invoking notifier #{notifier_setting.type}"
-          Rails.logger.debug "Notifier: #{Notifiers[notifier_setting.type]}"
-          begin
-            Notifiers[notifier_setting.type].notify(user_course.user, course, course.get_class_info)
-            Rails.logger.debug "Logging notification"
-            log_notification(course, user_course.user, notifier_setting.type, "success", nil)
-          rescue Exception => e
-            log_notification(course, user_course.user, notifier_setting.type, "failure", "Error during notification: #{e.to_s}")
-            Rails.logger.error "Caught Exception: " << e.to_s
+  if !status.nil?
+    if status == :open
+      ::Rails.logger.info "#{course.course_number} is open!"
+      UserCourse.where(:course_id => course, :notified => false).each do |user_course|
+        ::Rails.logger.debug "Notifying #{user_course.user.email}"
+        user_course.notifier_settings.each do |notifier_setting|
+          if notifier_setting.enabled then
+            ::Rails.logger.debug "Invoking notifier #{notifier_setting.type}"
+            ::Rails.logger.debug "Notifier: #{Notifiers[notifier_setting.type]}"
+            begin
+              Notifiers[notifier_setting.type].notify(user_course.user, course, course.get_class_info)
+              ::Rails.logger.debug "Logging notification"
+              log_notification(course, user_course.user, notifier_setting.type, "success", nil)
+            rescue Exception => e
+              log_notification(course, user_course.user, notifier_setting.type, "failure", "Error during notification: #{e.to_s}")
+              ::Rails.logger.error "Caught Exception: " << e.to_s
+            end
           end
+          user_course.notified = true
+          user_course.save
         end
-        user_course.notified = true
-        user_course.save
       end
     end
+  else
+    ::Rails.logger.error "Class status came back nil, doesn't exist?"
   end
 end
 
