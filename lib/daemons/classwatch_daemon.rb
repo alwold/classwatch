@@ -12,8 +12,8 @@ def check_course(course)
   ::Rails.logger.debug "scraper: #{scraper}"
   status = scraper.get_class_status(course.term.term_code, course.course_number)
   ::Rails.logger.debug "status: #{status}"
-  # TODO log status to course_status
   if !status.nil?
+    log_status(course, status)
     if status == :open
       ::Rails.logger.info "#{course.course_number} is open!"
       UserCourse.where(:course_id => course, :notified => false).each do |user_course|
@@ -37,7 +37,7 @@ def check_course(course)
       end
     end
   else
-    ::Rails.logger.error "Class status came back nil, doesn't exist?"
+    ::Rails.logger.error 'Class status came back nil, doesn\'t exist?'
   end
 end
 
@@ -51,9 +51,26 @@ def log_notification(course, user, type, status, info)
   n.last_attempt = Time.new
   n.status = status
   n.info = info
-  Rails.logger.debug "saving notification"
+  ::Rails.logger.debug "saving notification"
   n.save
-  Rails.logger.debug "done!"
+  ::Rails.logger.debug "done!"
+end
+
+def log_status(course, status)
+  ::Rails.logger.debug "log status"
+  # check if the latest status is the same as the current
+  cs = CourseStatus.where(course_id: course).order(:status_timestamp).first
+  if !cs.nil? && cs.status == status
+    ::Rails.logger.debug "Status in database is already #{status}, not updating"
+  else
+    ::Rails.logger.debug "Saving status: #{status}"
+    cs = CourseStatus.new
+    cs.course = course
+    cs.status_timestamp = DateTime.now
+    cs.status = status
+    cs.save
+  end
+  ::Rails.logger.debug "log status done"
 end
 
 
@@ -71,7 +88,12 @@ workers = Array.new
       ::Rails.logger.debug "Waiting for transaction"
       course = transactions.pop
       ::Rails.logger.debug "got tx, checking"
-      check_course(course)
+      begin
+        check_course(course)
+      rescue Exception => ex
+        ::Rails.logger.error "Caught exception while checking course: " << ex.to_s
+        ::Rails.logger.debug ex.backtrace.join("\n")
+      end
     end
   end
   workers.push t
