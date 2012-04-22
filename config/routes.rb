@@ -20,6 +20,8 @@ Classwatch::Application.routes.draw do
 
   put "settings/update"
 
+  get "terms/get/:school_id" => "terms#get"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
