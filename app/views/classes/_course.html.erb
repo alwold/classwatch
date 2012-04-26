@@ -2,7 +2,7 @@
   <%= f.label :school_id, "School" %>
   <%= select_tag(:school_id, options_from_collection_for_select(School.all, :id, :name, @course.nil? ? nil : @course.term.school.id), :include_blank => true, "get-terms-url" => get_terms_url(":school_id")) %>
   <div id="school-specific">
-    <a href="https://webapp4.asu.edu/catalog/" target="_blank">Find a Course</a>
+    <a id="schedule-link" href="#" target="_blank">Find a Course</a>
 
     <%= f.label :term_id, "Term" %>
     <%= f.select :term_id, @terms %>

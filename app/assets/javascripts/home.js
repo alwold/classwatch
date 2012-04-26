@@ -53,16 +53,24 @@ $(document).ready(function () {
       lookupUrl = lookupUrl.replace(":school_id", event.target.value);
       $.ajax({url: lookupUrl,
         dataType: "json",
-        success: function(terms) {
-          for (var i = 0; i < terms.length; i++) {
+        success: function(data) {
+          for (var i = 0; i < data['terms'].length; i++) {
             var option = document.createElement("option");
-            option.value = terms[i].term_id;
-            option.text = terms[i].name;
+            option.value = data['terms'][i].term_id;
+            option.text = data['terms'][i].name;
             select.add(option, null);
+          }
+          if (data['school'].schedule_link) {
+            $("#schedule-link").attr("href", data['school'].schedule_link);
+            $("#schedule-link").show();
+          } else {
+            $("#schedule-link").hide();
           }
           $("#school-specific").show();
         },
-        error: function() {}
+        error: function(jqXHR, textStatus, errorThrown) {
+          alert("Error looking up terms: "+errorThrown.toString());
+        }
       });
     } else {
       $("#school-specific").hide();
