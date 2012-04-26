@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120426182823) do
+ActiveRecord::Schema.define(:version => 20120426185612) do
 
   create_table "course", :primary_key => "course_id", :force => true do |t|
     t.string  "course_number", :limit => 15, :null => false
@@ -82,5 +82,19 @@ ActiveRecord::Schema.define(:version => 20120426182823) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+
+  add_foreign_key "course", "term", :name => "course_term_id_fk", :primary_key => "term_id"
+
+  add_foreign_key "course_status", "course", :name => "course_status_course_id_fk", :primary_key => "course_id"
+
+  add_foreign_key "notification", "course", :name => "notification_course_id_fk", :primary_key => "course_id"
+  add_foreign_key "notification", "users", :name => "notification_user_id_fk", :primary_key => "user_id"
+
+  add_foreign_key "notifier_setting", "user_course", :name => "notifier_setting_user_course_id_fk"
+
+  add_foreign_key "term", "school", :name => "term_school_id_fk", :primary_key => "school_id"
+
+  add_foreign_key "user_course", "course", :name => "user_course_course_id_fk", :primary_key => "course_id"
+  add_foreign_key "user_course", "users", :name => "user_course_user_id_fk", :primary_key => "user_id"
 
 end
