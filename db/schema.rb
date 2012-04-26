@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120417035021) do
+ActiveRecord::Schema.define(:version => 20120426182823) do
 
   create_table "course", :primary_key => "course_id", :force => true do |t|
     t.string  "course_number", :limit => 15, :null => false
@@ -44,8 +44,9 @@ ActiveRecord::Schema.define(:version => 20120417035021) do
   end
 
   create_table "school", :primary_key => "school_id", :force => true do |t|
-    t.string "name",         :null => false
-    t.string "scraper_type", :null => false
+    t.string "name",                          :null => false
+    t.string "scraper_type",                  :null => false
+    t.string "schedule_link", :limit => 1024
   end
 
   create_table "term", :primary_key => "term_id", :force => true do |t|
