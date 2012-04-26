@@ -43,30 +43,34 @@ $(document).ready(function () {
   });
 
   $("#school_id").change(function (event) {
-    var lookupUrl = event.target.attributes["get-terms-url"].value;
-    lookupUrl = lookupUrl.replace(":school_id", event.target.value);
-    $.ajax({url: lookupUrl,
-      dataType: "json",
-      success: function(terms) {
-        // remove existing terms
-        var select = $("#course_term_id")[0];
-        while (select.length > 0) {
-          select.remove(0);
-        }
-        for (var i = 0; i < terms.length; i++) {
-          var option = document.createElement("option");
-          option.value = terms[i].term_id;
-          option.text = terms[i].name;
-          select.add(option, null);
-        }
-        $("#school-specific").show();
-      },
-      error: function() {}});
+    // remove existing terms
+    var select = $("#course_term_id")[0];
+    while (select.length > 0) {
+      select.remove(0);
+    }
+    if (event.target.value != "") {
+      var lookupUrl = event.target.attributes["get-terms-url"].value;
+      lookupUrl = lookupUrl.replace(":school_id", event.target.value);
+      $.ajax({url: lookupUrl,
+        dataType: "json",
+        success: function(terms) {
+          for (var i = 0; i < terms.length; i++) {
+            var option = document.createElement("option");
+            option.value = terms[i].term_id;
+            option.text = terms[i].name;
+            select.add(option, null);
+          }
+          $("#school-specific").show();
+        },
+        error: function() {}
+      });
+    } else {
+      $("#school-specific").hide();
+    }
   });
 
-  if ($("#school_id")[0].value != "") {
-    $("#school_id").change();
-  }
+  // trigger the change event in case school is already populated, to set up the term select
+  $("#school_id").change();
 });
 
 /**
