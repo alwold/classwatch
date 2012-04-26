@@ -1,3 +1,5 @@
+"use strict";
+
 $(document).ready(function () {
   $("#course_course_number").keyup(function (event) {
     if (event.target.value.length == 5) {
@@ -38,6 +40,27 @@ $(document).ready(function () {
     } catch (ex) {
       $("#phone-errors").html(ex.toString());
     }
+  });
+
+  $("#course_school_id").change(function (event) {
+    var lookupUrl = event.target.attributes["get-terms-url"].value;
+    lookupUrl = lookupUrl.replace(":school_id", event.target.value);
+    $.ajax({url: lookupUrl,
+      dataType: "json",
+      success: function(terms) {
+        // remove existing terms
+        var select = $("#course_term_id")[0];
+        while (select.length > 0) {
+          select.remove(0);
+        }
+        for (var i = 0; i < terms.length; i++) {
+          var option = document.createElement("option");
+          option.value = terms[i].term_id;
+          option.text = terms[i].name;
+          select.add(option, null);
+        }
+      },
+      error: function() {}});
   });
 });
 

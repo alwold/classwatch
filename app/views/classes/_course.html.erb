@@ -1,6 +1,8 @@
 <a href="https://webapp4.asu.edu/catalog/" target="_blank">Find a Course</a>
 
 <%= form_for course, :url => { :controller => "classes", :action => action } do |f| %>
+  <%= f.label :school_id, "School" %>
+  <%= collection_select(:course, :school_id, School.all, :id, :name, {}, "get-terms-url" => get_terms_url(":school_id")) %>
   <%= f.label :term_id, "Term" %>
   <%= f.select :term_id, @terms %>
   <%= f.label :course_number, "Course Number" %>
