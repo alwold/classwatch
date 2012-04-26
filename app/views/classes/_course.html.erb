@@ -1,26 +1,28 @@
-<a href="https://webapp4.asu.edu/catalog/" target="_blank">Find a Course</a>
-
 <%= form_for course, :url => { :controller => "classes", :action => action } do |f| %>
   <%= f.label :school_id, "School" %>
-  <%= collection_select(:course, :school_id, School.all, :id, :name, {}, "get-terms-url" => get_terms_url(":school_id")) %>
-  <%= f.label :term_id, "Term" %>
-  <%= f.select :term_id, @terms %>
-  <%= f.label :course_number, "Course Number" %>
-  <%= f.text_field :course_number, "lookup-url" => lookup_class_url(":school_id", ":term_id", ":course_number") %>
-  <%= image_tag "spinner.gif", :id => "spinner" %>
-  <span id="courseName"></span>
-  <% Notifiers.each_value do |notifier| %>
-    <p>
-      <label id="notifier_<%= notifier.type %>" class="checkbox">
-        <%= notifier.description %>
-        <% if notifier.premium %>
-          <a href="#" rel="tooltip" title="This type of notification is a premium feature and will require you to upgrade the course for $1.00">$</a>
-        <% end %>
-        <%= check_box_tag "notifier_"+notifier.type, :on, @enabled_notifiers.include?(notifier.type) %>
-      </label>
-    </p>
-  <% end %>
-  <div class="form-actions">
-    <%= f.submit button_name, :class => "btn btn-primary" %>
+  <%= select_tag(:school_id, options_from_collection_for_select(School.all, :id, :name, @course.nil? ? nil : @course.term.school.id), :include_blank => true, "get-terms-url" => get_terms_url(":school_id")) %>
+  <div id="school-specific">
+    <a href="https://webapp4.asu.edu/catalog/" target="_blank">Find a Course</a>
+
+    <%= f.label :term_id, "Term" %>
+    <%= f.select :term_id, @terms %>
+    <%= f.label :course_number, "Course Number" %>
+    <%= f.text_field :course_number, "lookup-url" => lookup_class_url(":school_id", ":term_id", ":course_number") %>
+    <%= image_tag "spinner.gif", :id => "spinner" %>
+    <span id="courseName"></span>
+    <% Notifiers.each_value do |notifier| %>
+      <p>
+        <label id="notifier_<%= notifier.type %>" class="checkbox">
+          <%= notifier.description %>
+          <% if notifier.premium %>
+            <a href="#" rel="tooltip" title="This type of notification is a premium feature and will require you to upgrade the course for $1.00">$</a>
+          <% end %>
+          <%= check_box_tag "notifier_"+notifier.type, :on, @enabled_notifiers.include?(notifier.type) %>
+        </label>
+      </p>
+    <% end %>
+    <div class="form-actions">
+      <%= f.submit button_name, :class => "btn btn-primary" %>
+    </div>
   </div>
 <% end %>

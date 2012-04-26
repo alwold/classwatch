@@ -42,7 +42,7 @@ $(document).ready(function () {
     }
   });
 
-  $("#course_school_id").change(function (event) {
+  $("#school_id").change(function (event) {
     var lookupUrl = event.target.attributes["get-terms-url"].value;
     lookupUrl = lookupUrl.replace(":school_id", event.target.value);
     $.ajax({url: lookupUrl,
@@ -59,9 +59,14 @@ $(document).ready(function () {
           option.text = terms[i].name;
           select.add(option, null);
         }
+        $("#school-specific").show();
       },
       error: function() {}});
   });
+
+  if ($("#school_id")[0].value != "") {
+    $("#school_id").change();
+  }
 });
 
 /**
