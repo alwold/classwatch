@@ -36,6 +36,8 @@ group :development do
   platforms :ruby do
     gem 'ruby-debug19', :require => 'ruby-debug'
   end
+  gem 'foreigner'
+  gem 'immigrant'
 end
 
 gem 'devise'
