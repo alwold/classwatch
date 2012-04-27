@@ -8,7 +8,7 @@ platforms :jruby do
   gem 'jruby-openssl'
 end
 platforms :ruby do
-  gem 'sqlite3'
+#  gem 'sqlite3'
   gem 'pg'
 end
 gem 'json'
