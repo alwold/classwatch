@@ -7,7 +7,7 @@ GIT
 
 GIT
   remote: git://github.com/alwold/mock-schedule-scraper.git
-  revision: c432007ac746eb9c9a530536939ec25c0e26582e
+  revision: 017c55bccc21071a82606fa61d4f2987b9aad648
   specs:
     mock-schedule-scraper (0.1)
 
