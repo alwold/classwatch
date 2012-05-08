@@ -36,8 +36,6 @@ group :development do
   platforms :ruby do
     gem 'ruby-debug19', :require => 'ruby-debug'
   end
-  gem 'foreigner'
-  gem 'immigrant'
 end
 
 # move this to dev later
@@ -51,3 +49,5 @@ gem 'asu-schedule-scraper', :git => 'git://github.com/alwold/asu-schedule-scrape
 gem 'twilio-ruby'
 gem 'daemons-rails'
 gem 'capistrano'
+gem 'foreigner'
+gem 'immigrant'
