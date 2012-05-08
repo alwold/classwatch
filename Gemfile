@@ -38,8 +38,10 @@ group :development do
   end
   gem 'foreigner'
   gem 'immigrant'
-  gem 'mock-schedule-scraper', :git => 'git://github.com/alwold/mock-schedule-scraper.git', :require => 'mock_schedule_scraper'
 end
+
+# move this to dev later
+gem 'mock-schedule-scraper', :git => 'git://github.com/alwold/mock-schedule-scraper.git', :require => 'mock_schedule_scraper'
 
 gem 'devise'
 gem 'warbler'
