@@ -4,8 +4,10 @@ class AddScraperTypeToSchool < ActiveRecord::Migration
       t.string :scraper_type, limit: 15
     end
     s = School.where(:name => "Arizona State University").first
-    s.scraper_type = "ASU"
-    s.save
+    if !s.nil?
+      s.scraper_type = "ASU"
+      s.save
+    end
     change_column :school, :scraper_type, :string, null: false
   end
 
