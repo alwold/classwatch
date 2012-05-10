@@ -1,4 +1,9 @@
 class SessionsController < Devise::SessionsController
+  def new
+    @schools = School.order(:name)
+    super
+  end
+
   def create
     if User.where("email = ?", params[:user][:email]).first == nil
       # kick off registration if the user doesn't exist

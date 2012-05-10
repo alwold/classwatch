@@ -1,5 +1,5 @@
 <p>
-  Classwatch allows you to monitor a full class at your school and notifies you when a seat
+  GetMyClass.com allows you to monitor a full class at your school and notifies you when a seat
   opens up, so you can grab it right as it opens up.
 </p>
 <p>
@@ -24,3 +24,13 @@
 <% end %>
 
 <%= render "links" %>
+
+<h3>Supported Schools</h3>
+<p>
+  The following schools are currently supported by GetMyClass.com:
+  <ul>
+    <% @schools.each do |school| %>
+      <li><%= school.name %></li>
+    <% end %>
+  </ul>
+</p>
