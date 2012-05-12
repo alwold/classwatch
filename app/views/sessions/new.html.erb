@@ -28,9 +28,15 @@
 <h3>Supported Schools</h3>
 <p>
   The following schools are currently supported by GetMyClass.com:
-  <ul>
-    <% @schools.each do |school| %>
-      <li><%= school.name %></li>
-    <% end %>
-  </ul>
+  <% count = @schools.length/3
+     count = count + 1 if @schools.length % 3 != 0
+     count.times do |i| %>
+    <div class="row">
+      <% (i*3..i*3+2).each do |j| %>
+        <% if i*3+j < @schools.length %>
+          <div class="span4"><%= @schools[i*3+j].name %></div>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
 </p>
