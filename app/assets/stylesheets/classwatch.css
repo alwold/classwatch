@@ -17,3 +17,7 @@
 #school-specific {
   display: none;
 }
+
+.center {
+  text-align: center;
+}

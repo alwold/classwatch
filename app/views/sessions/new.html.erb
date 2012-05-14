@@ -25,18 +25,20 @@
 
 <%= render "links" %>
 
-<h3>Supported Schools</h3>
-<p>
-  The following schools are currently supported by GetMyClass.com:
-  <% count = @schools.length/3
-     count = count + 1 if @schools.length % 3 != 0
-     count.times do |i| %>
-    <div class="row">
-      <% (i*3..i*3+2).each do |j| %>
-        <% if i*3+j < @schools.length %>
-          <div class="span4"><%= @schools[i*3+j].name %></div>
+<h3 class="center">Supported Schools</h3>
+<% count = @schools.length/3
+   count = count + 1 if @schools.length % 3 != 0
+   count.times do |i| %>
+  <div class="row">
+    <% (i*3..i*3+2).each do |j| %>
+      <% if i*3+j < @schools.length %>
+        <% if j == 0 %>
+          <div class="span3 offset2">
+        <% else %>
+          <div class="span3">
         <% end %>
+        <%= @schools[i*3+j].name %></div>
       <% end %>
-    </div>
-  <% end %>
-</p>
+    <% end %>
+  </div>
+<% end %>
