@@ -3,7 +3,7 @@ require 'bundler/capistrano'
 set :application, "classwatch"
 set :repository,  "git://github.com/alwold/classwatch.git"
 
-set :rails_env, :development
+#set :rails_env, :development
 set :bundle_without, [:test]
 #set :rake, "#{rake} --trace"
 
