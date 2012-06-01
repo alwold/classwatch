@@ -34,7 +34,7 @@ group :development do
     gem 'ruby-debug'
   end
   platforms :ruby do
-    gem 'ruby-debug19', :require => 'ruby-debug'
+    gem 'debugger'
   end
 end
 
@@ -51,3 +51,4 @@ gem 'daemons-rails'
 gem 'capistrano'
 gem 'foreigner'
 gem 'immigrant'
+gem 'thin'
