@@ -2,15 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.3'
 
-gem 'ruby-hmac'
-platforms :jruby do
-  gem 'activerecord-jdbcpostgresql-adapter'
-  gem 'jruby-openssl'
-end
-platforms :ruby do
-#  gem 'sqlite3'
-  gem 'pg'
-end
+gem 'pg'
 gem 'json'
 
 # Gems used only for assets and not required
@@ -30,12 +22,7 @@ end
 gem 'jquery-rails'
 
 group :development do
-  platforms :jruby do
-    gem 'ruby-debug'
-  end
-  platforms :ruby do
-    gem 'debugger'
-  end
+  gem 'debugger'
 end
 
 # move this to dev later
