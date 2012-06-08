@@ -26,10 +26,10 @@
             <td><%= get_class_info(user_course.course).schedule %></td>
             <td>
               <% if user_course.notifier_enabled?("EMAIL") then %>
-                <i class="icon-envelope"></i>
+                <i class="icon-envelope" title="Email"></i>
               <% end %>
               <% if user_course.notifier_enabled?("SMS") then %>
-                <i class="icon-comment"></i>
+                <i class="icon-comment" title="SMS"></i>
               <% end %>
             </td>
             <td><%= link_to "Edit", edit_class_path(user_course.course), :class => "btn" %></td>
