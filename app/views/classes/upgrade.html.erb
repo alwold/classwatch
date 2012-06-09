@@ -19,6 +19,13 @@
         // prevent the form from submitting with the default action
         return false;
       });
+
+//      $("#cvc-help").popover({ 
+//        html: true,
+//        content: function() {
+//          return $("#cvc-help-content").html();
+//        }
+//      });
     });
 
     function stripeResponseHandler(status, response) {
@@ -53,7 +60,7 @@
     <input type="text" size="20" autocomplete="off" class="card-number"/>
   </div>
   <div class="form-row">
-    <label>CVC</label>
+    <label>CVC <a id="cvc-help" data-toggle="modal" href="#cvc-help-content" title="CVC Help">?</a></label>
     <input type="text" size="4" autocomplete="off" class="input-small card-cvc"/>
   </div>
   <div class="form-row">
@@ -67,3 +74,34 @@
     <%= link_to "Cancel", root_url, class: "btn" %>
   </div>
 <% end %>
+<div class="modal hide" id="cvc-help-content">
+  <div class="modal-header">
+    <h3>CVC Help</h3>
+  </div>
+  <div class="modal-body">
+    <p>
+      The CVC is a code on your credit card used as an additional security measure to protect against
+      fraud.  It can be found in one of the following locations:
+    </p>
+    <h3>Visa/Mastercard</h3>
+    <p>On the back of the card, on or near the signature panel.</p>
+    <p>
+      <img src="<%= asset_path "upgrade/CVC2SampleVisaNew.png" %>"/>
+    </p>
+    <p class="attribution">
+      <a href="http://creativecommons.org/licenses/by-sa/3.0/deed.en" target="_blank">
+        <img src="<%= asset_path "upgrade/creativecommons.png" %>"/>
+      </a>
+      by <a href="http://en.wikipedia.org/wiki/User:Airodyssey" target="_blank">Sergio Ortega</a>
+    </p>
+    <h3>American Express</h3>
+    <p>On the front of the card, towards the right hand side, above the card number.</p>
+    <img src="<%= asset_path "upgrade/CIDSampleAmex.png" %>"/>
+    <p class="attribution">
+      <a href="http://creativecommons.org/licenses/by-sa/3.0/deed.en" target="_blank">
+        <img src="<%= asset_path "upgrade/creativecommons.png" %>"/>
+      </a>
+      by <a href="http://en.wikipedia.org/wiki/User:Airodyssey" target="_blank">Sergio Ortega</a>
+    </p>
+  </div>
+</div>
