@@ -57,17 +57,17 @@
 <%= form_tag pay_class_path(@course), method: :post, id: "payment-form" do %>
   <div class="form-row">
     <label>Card Number</label>
-    <input type="text" size="20" autocomplete="off" class="card-number"/>
+    <input type="text" size="20" autocomplete="off" class="card-number" value="<%= "4242424242424242" if Rails.env == "development" %>"/>
   </div>
   <div class="form-row">
     <label>CVC <a id="cvc-help" data-toggle="modal" href="#cvc-help-content" title="CVC Help">?</a></label>
-    <input type="text" size="4" autocomplete="off" class="input-small card-cvc"/>
+    <input type="text" size="4" autocomplete="off" class="input-small card-cvc" value="<%= "123" if Rails.env == "development" %>"/>
   </div>
   <div class="form-row">
     <label>Expiration (MM/YYYY)</label>
-    <input type="text" size="2" class="input-small card-expiry-month"/>
+    <input type="text" size="2" class="input-small card-expiry-month" value="<%= Date.today.month if Rails.env == "development" %>"/>
     <span> / </span>
-    <input type="text" size="4" class="input-small card-expiry-year"/>
+    <input type="text" size="4" class="input-small card-expiry-year" value="<%= Date.today.year+1 if Rails.env == "development" %>"/>
   </div>
   <div class="form-actions">
     <button type="submit" class="btn btn-primary submit-button">Submit Payment</button>
