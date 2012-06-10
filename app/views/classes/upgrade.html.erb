@@ -19,13 +19,6 @@
         // prevent the form from submitting with the default action
         return false;
       });
-
-//      $("#cvc-help").popover({ 
-//        html: true,
-//        content: function() {
-//          return $("#cvc-help-content").html();
-//        }
-//      });
     });
 
     function stripeResponseHandler(status, response) {
@@ -47,10 +40,10 @@
   </script>
 <% end %>
 
-<h2>Upgrade Course</h2>
+<h2>Upgrade Course Notifications</h2>
 <p><%= @class_info.name %> <%= @class_info.schedule %></p>
 <p>
-  In order to enable text message notifications, you will need to upgrade this course.  This will cost $1.00.  
+  In order to enable text message notifications, you will need to upgrade the notifications this course.  This will cost $1.00.  
   Please enter your credit card information below to ugprade the course.
 </p>
 <div class="alert alert-error payment-errors" style="display:none;"></div>
