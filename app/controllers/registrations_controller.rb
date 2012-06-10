@@ -11,7 +11,7 @@ class RegistrationsController < Devise::RegistrationsController
         sign_in(resource_name, resource)
         # begin custom code
         redirected = false
-        if params[:course][:course_number] && !params[:course][:course_number].empty? then
+        if !params[:course].nil? && params[:course][:course_number] && !params[:course][:course_number].empty? then
           logger.debug "Found a class, adding"
           user = User.where("email = ?", current_user.email).first
           error = Course.add(user, params[:course][:term_id], params[:course][:course_number], params)
@@ -34,13 +34,7 @@ class RegistrationsController < Devise::RegistrationsController
       end
     else
       clean_up_passwords resource
-      # respond_with resource
-      # begin custom code
-      errors = devise_error_messages!
-      logger.debug "errors: " << errors
-      flash[:error] = errors
-      redirect_to new_user_session_path
-      # end custom code
+      respond_with resource
     end
   end
 end
