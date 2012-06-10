@@ -2,6 +2,11 @@ class RegistrationsController < Devise::RegistrationsController
   include DeviseHelper
   include ::ActionView::Helpers::TagHelper
 
+  def new
+    @enabled_notifiers = Array.new
+    super
+  end
+
   def create
     build_resource
 
