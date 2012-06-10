@@ -92,8 +92,29 @@ class ClassesController < ApplicationController
         :card => token,
         :description => "classwatch - " << current_user.email << " - user_course id " << user_course.id.to_s
       )
+      user_course.paid = true
+      user_course.save
+      # turn on premium notifiers
+      # TODO keep track of which ones they wanted instead of turning them all on?
+      Notifiers.each do |key, notifier|
+        if notifier.premium
+          found_notifier = false
+          user_course.notifier_settings.each do |setting|
+            if setting.type == key
+              found_notifier = true
+              setting.enabled = true
+              setting.save
+            end
+          end
+          if !found_notifier
+            setting = NotifierSetting.new
+            setting.type = key
+            setting.user_course = user_course
+            setting.enabled = true
+            setting.save
+          end
+        end
+      end
     end
-    user_course.paid = true
-    user_course.save
   end
 end
