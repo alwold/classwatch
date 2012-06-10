@@ -5,7 +5,7 @@
     <a id="schedule-link" href="#" target="_blank">Find a Course</a>
 
     <%= f.label :term_id, "Term" %>
-    <%= f.select :term_id, @terms %>
+    <%= f.select :term_id, Term.get_active_terms.map { |term| [term.name, term.id] } %>
     <%= f.label :course_number, "Course Number" %>
     <%= f.text_field :course_number, "lookup-url" => lookup_class_url(":school_id", ":term_id", ":course_number") %>
     <%= image_tag "spinner.gif", :id => "spinner" %>
@@ -21,8 +21,10 @@
         </label>
       </p>
     <% end %>
-    <div class="form-actions">
-      <%= f.submit button_name, :class => "btn btn-primary" %>
-    </div>
+    <% if !button_name.nil? %>
+      <div class="form-actions">
+        <%= f.submit button_name, :class => "btn btn-primary" %>
+      </div>
+    <% end %>
   </div>
 <% end %>
