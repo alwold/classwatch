@@ -32,8 +32,10 @@
                 <i class="icon-comment" title="SMS"></i>
               <% end %>
             </td>
-            <td><%= link_to "Edit", edit_class_path(user_course.course), :class => "btn" %></td>
-            <td><%= link_to "Cancel", {:controller => :classes, :action => :destroy, :id => user_course.course.id}, {:method => :delete, :confirm => "Are you sure you want to stop watching this class?", :class => "btn btn-danger"} %></td>
+            <td>
+              <%= link_to "Edit", edit_class_path(user_course.course), :class => "btn" %>
+              <%= link_to "Cancel", {:controller => :classes, :action => :destroy, :id => user_course.course.id}, {:method => :delete, :confirm => "Are you sure you want to stop watching this class?", :class => "btn btn-danger"} %>
+            </td>
           </tr>
         <% end %>
       </table>
