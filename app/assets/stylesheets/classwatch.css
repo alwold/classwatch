@@ -25,3 +25,11 @@
 .attribution {
   font-size: 8pt;
 }
+
+.class-table {
+  width: auto;
+}
+
+.class-table .notifier-icons {
+  padding-left: 50px;
+}

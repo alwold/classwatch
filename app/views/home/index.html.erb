@@ -1,7 +1,7 @@
   <div>
     <% if @user.user_courses.length > 0 %>
       <p>You are watching the following courses</p>
-      <table class="table">
+      <table class="table class-table">
         <thead>
           <tr>
             <th></th>
@@ -24,7 +24,7 @@
             <td><%= user_course.course.course_number %></td>
             <td><%= get_class_info(user_course.course).name %></td>
             <td><%= get_class_info(user_course.course).schedule %></td>
-            <td>
+            <td class="notifier-icons">
               <% if user_course.notifier_enabled?("EMAIL") then %>
                 <i class="icon-envelope" title="Email"></i>
               <% end %>
