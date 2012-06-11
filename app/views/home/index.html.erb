@@ -1,49 +1,56 @@
-<div>
-  <% if @user %>
-    <% if @user.user_courses.length > 0 %>
-      <p>You are watching the following courses</p>
-      <table class="table class-table">
-        <thead>
-          <tr>
-            <th></th>
-            <th>Term</th>
-            <th>Course number</th>
-            <th>Name</th>
-            <th>Schedule</th>
-          </tr>
-        </thead>
-        <% @user.user_courses.each do |user_course| %>
-          <tr>
-            <td>
-              <% if !user_course.notifications.empty? %>
-                <a class="badge" data-toggle="modal" href="#notifications-modal-<%= user_course.id %>">
-                  <%= user_course.notifications.count %>
-                </a>
-              <% end %>
-            </td>
-            <td><%= user_course.course.term.name %></td>
-            <td><%= user_course.course.course_number %></td>
-            <td><%= get_class_info(user_course.course).name %></td>
-            <td><%= get_class_info(user_course.course).schedule %></td>
-            <td class="notifier-icons">
-              <% if user_course.notifier_enabled?("EMAIL") then %>
-                <i class="icon-envelope" title="Email"></i>
-              <% end %>
-              <% if user_course.notifier_enabled?("SMS") then %>
-                <i class="icon-comment" title="SMS"></i>
-              <% end %>
-            </td>
-            <td>
-              <%= link_to "Edit", edit_class_path(user_course.course), :class => "btn" %>
-              <%= link_to "Cancel", {:controller => :classes, :action => :destroy, :id => user_course.course.id}, {:method => :delete, :confirm => "Are you sure you want to stop watching this class?", :class => "btn btn-danger"} %>
-            </td>
-          </tr>
-        <% end %>
-      </table>
-    <% else %>
-      You are not currently watching any classes.  Add one below.
-    <% end %>
+<% if @user %>
+  <% if @user.user_courses.length > 0 %>
+    <p>You are watching the following courses</p>
+    <table class="table class-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Term</th>
+          <th>Course number</th>
+          <th>Name</th>
+          <th>Schedule</th>
+        </tr>
+      </thead>
+      <% @user.user_courses.each do |user_course| %>
+        <tr>
+          <td>
+            <% if !user_course.notifications.empty? %>
+              <a class="badge" data-toggle="modal" href="#notifications-modal-<%= user_course.id %>">
+                <%= user_course.notifications.count %>
+              </a>
+            <% end %>
+          </td>
+          <td><%= user_course.course.term.name %></td>
+          <td><%= user_course.course.course_number %></td>
+          <td><%= get_class_info(user_course.course).name %></td>
+          <td><%= get_class_info(user_course.course).schedule %></td>
+          <td class="notifier-icons">
+            <% if user_course.notifier_enabled?("EMAIL") then %>
+              <i class="icon-envelope" title="Email"></i>
+            <% end %>
+            <% if user_course.notifier_enabled?("SMS") then %>
+              <i class="icon-comment" title="SMS"></i>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to "Edit", edit_class_path(user_course.course), :class => "btn" %>
+            <%= link_to "Cancel", {:controller => :classes, :action => :destroy, :id => user_course.course.id}, {:method => :delete, :confirm => "Are you sure you want to stop watching this class?", :class => "btn btn-danger"} %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
   <% else %>
+    You are not currently watching any classes.  Add one below.
+  <% end %>
+  <h2>Add a class</h2>
+  <% if @terms.length > 0 %>
+    <%= render(partial: "classes/course", object: Course.new, locals: { button_name: "Add", action: :create }) %>
+  <% else %>
+    There are no terms available right now.  Terms become available as soon as the schedule is published.
+  <% end %>
+<% else %>
+  <div class="hero-unit">
+   <h1>Get the class you need.</h1>
     <p>
       GetMyClass.com allows you to monitor a full class at your school and notifies you when a seat
       opens up, so you can grab it right as it opens up.
@@ -51,14 +58,14 @@
     <p>
       To get started, enter your class information below:
     </p>
-  <% end %>
+  </div>
   <h2>Add a class</h2>
   <% if @terms.length > 0 %>
     <%= render(partial: "classes/course", object: Course.new, locals: { button_name: "Add", action: :create }) %>
   <% else %>
-      There are no terms available right now.  Terms become available as soon as the schedule is published.
+    There are no terms available right now.  Terms become available as soon as the schedule is published.
   <% end %>
-</div>
+<% end %>
 <% if @user %>
   <% @user.user_courses.each do |user_course| %>
     <% notifications = user_course.notifications %>
@@ -99,11 +106,12 @@
     <% end %>
   <% end %>
 <% else %>
-  <h3 class="center">Supported Schools</h3>
+  <div class="offset2 span8">
+    <h3>Supported Schools</h3>
+  </div>
     <% count = @schools.length/3
        count = count + 1 if @schools.length % 3 != 0
        count.times do |i| %>
-      <div class="row">
         <% (i*3..i*3+2).each do |j| %>
           <% if i*3+j < @schools.length %>
             <% if j == 0 %>
@@ -114,6 +122,5 @@
             <%= @schools[i*3+j].name %></div>
           <% end %>
         <% end %>
-      </div>
     <% end %>
 <% end %>
