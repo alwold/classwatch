@@ -1,10 +1,4 @@
-<p>
-  GetMyClass.com allows you to monitor a full class at your school and notifies you when a seat
-  opens up, so you can grab it right as it opens up.
-</p>
-<p>
-  To get started, log in or create an account using the form below.
-</p>
+<h2>Sign in</h2>
 
 <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
   <%= f.label :email %>
@@ -19,26 +13,10 @@
     </p>
   <% end -%>
 
-  <%= f.submit "Sign in", :class => "btn btn-primary" %>
+  <div class="form-actions">
+    <%= f.submit "Sign in", :class => "btn btn-primary" %>
+  </div>
 
 <% end %>
 
 <%= render "devise/shared/links" %>
-
-<h3 class="center">Supported Schools</h3>
-<% count = @schools.length/3
-   count = count + 1 if @schools.length % 3 != 0
-   count.times do |i| %>
-  <div class="row">
-    <% (i*3..i*3+2).each do |j| %>
-      <% if i*3+j < @schools.length %>
-        <% if j == 0 %>
-          <div class="span3 offset2">
-        <% else %>
-          <div class="span3">
-        <% end %>
-        <%= @schools[i*3+j].name %></div>
-      <% end %>
-    <% end %>
-  </div>
-<% end %>
