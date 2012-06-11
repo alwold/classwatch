@@ -1,4 +1,5 @@
-  <div>
+<div>
+  <% if @user %>
     <% if @user.user_courses.length > 0 %>
       <p>You are watching the following courses</p>
       <table class="table class-table">
@@ -42,13 +43,23 @@
     <% else %>
       You are not currently watching any classes.  Add one below.
     <% end %>
-    <h2>Add a class</h2>
-    <% if @terms.length > 0 %>
-      <%= render(partial: "classes/course", object: Course.new, locals: { button_name: "Add", action: :create }) %>
-    <% else %>
-        There are no terms available right now.  Terms become available as soon as the schedule is published.
-    <% end %>
-  </div>
+  <% else %>
+    <p>
+      GetMyClass.com allows you to monitor a full class at your school and notifies you when a seat
+      opens up, so you can grab it right as it opens up.
+    </p>
+    <p>
+      To get started, enter your class information below:
+    </p>
+  <% end %>
+  <h2>Add a class</h2>
+  <% if @terms.length > 0 %>
+    <%= render(partial: "classes/course", object: Course.new, locals: { button_name: "Add", action: :create }) %>
+  <% else %>
+      There are no terms available right now.  Terms become available as soon as the schedule is published.
+  <% end %>
+</div>
+<% if @user %>
   <% @user.user_courses.each do |user_course| %>
     <% notifications = user_course.notifications %>
     <% if !notifications.empty? %>
@@ -87,3 +98,22 @@
       </div>
     <% end %>
   <% end %>
+<% else %>
+  <h3 class="center">Supported Schools</h3>
+    <% count = @schools.length/3
+       count = count + 1 if @schools.length % 3 != 0
+       count.times do |i| %>
+      <div class="row">
+        <% (i*3..i*3+2).each do |j| %>
+          <% if i*3+j < @schools.length %>
+            <% if j == 0 %>
+              <div class="span3 offset2">
+            <% else %>
+              <div class="span3">
+            <% end %>
+            <%= @schools[i*3+j].name %></div>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+<% end %>

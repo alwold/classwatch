@@ -1,17 +1,37 @@
 class ClassesController < ApplicationController
-  before_filter :authenticate_user!, :except => :lookup
+  before_filter :authenticate_user!, :except => [:lookup, :create]
   def create
-    error = Course.add(current_user, params[:course][:term_id], params[:course][:course_number], params)
-    if error == :requires_upgrade
-      user_course = UserCourse.joins(:course).where("user_id =? and course.term_id = ? and course.course_number = ?", 
-        current_user, params[:course][:term_id], params[:course][:course_number]).first
-      redirect_to upgrade_class_path(user_course.course.id)
-    elsif error
-      flash[:error] = error
-      redirect_to :root
+    if user_signed_in?
+      do_create(params[:course][:term_id], params[:course][:course_number], params)
     else
-      redirect_to :root
+      # stash in the session for later
+      session[:course_to_add] = {
+        :term_id => params[:course][:term_id],
+        :course_number => params[:course][:course_number],
+        :params => params
+      }
+      redirect_to new_user_session_path
     end
+  end
+
+  def create_from_session
+    course = session[:course_to_add]
+    session[:course_to_add] = nil
+    do_create(course[:term_id], course[:course_number], course[:params])
+  end
+
+  def do_create(term_id, course_number, params)
+      error = Course.add(current_user, term_id, course_number, params)
+      if error == :requires_upgrade
+        user_course = UserCourse.joins(:course).where("user_id =? and course.term_id = ? and course.course_number = ?", 
+          current_user, params[:course][:term_id], params[:course][:course_number]).first
+        redirect_to upgrade_class_path(user_course.course.id)
+      elsif error
+        flash[:error] = error
+        redirect_to :root
+      else
+        redirect_to :root
+      end
   end
 
   def destroy
