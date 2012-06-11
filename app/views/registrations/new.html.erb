@@ -15,9 +15,6 @@
   <%= f.label :phone, "Phone number (for text messages)" %>
   <%= f.text_field :phone %>
   <span id="phone-errors"></span>
-  <h2>If you'd like to watch a class right away, put in its info below</h2>
-  <%= render(partial: "classes/course", object: Course.new, locals: { button_name: "Go", action: :create }) %>
-
   <div><%= f.submit "Sign up" %></div>
 <% end %>
 
