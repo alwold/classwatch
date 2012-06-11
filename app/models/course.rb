@@ -24,13 +24,18 @@ class Course < ActiveRecord::Base
     end
     if course != nil && !course.get_class_status.nil?
       if course.get_class_status != :open
-        user_course = UserCourse.new
-        user_course.user = user
-        user_course.course = course
-        user_course.notified = false
-        user_course.paid = false
-        user_course.save
-        reconcile_notifiers params, user_course
+        existing = UserCourse.where("course_id = ? and user_id = ?", course.id, user.id).first
+        if existing
+          "You are already watching this course"
+        else 
+          user_course = UserCourse.new
+          user_course.user = user
+          user_course.course = course
+          user_course.notified = false
+          user_course.paid = false
+          user_course.save
+          reconcile_notifiers params, user_course
+        end
       else
         "Course is already open"
       end
