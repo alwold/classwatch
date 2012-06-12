@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/alwold/asu-schedule-scraper.git
-  revision: 238db0c06f64353560939a670b121efbfbb16d52
+  revision: 9a62f78c592c32a83f9779cf8a858067cbf550a2
   specs:
     asu-schedule-scraper (0.1)
       nokogiri
