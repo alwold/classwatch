@@ -110,6 +110,6 @@ while($running) do
 #  ::Rails.logger.auto_flushing = true
   ::Rails.logger.info "This daemon is still running at #{Time.now}.\n"
   
-  sleep 10
+  sleep 300
 end
 
