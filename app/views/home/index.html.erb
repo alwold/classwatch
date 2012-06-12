@@ -88,9 +88,9 @@
               <tr>
                 <td>
                   <% if notification.type == "EMAIL" then %>
-                    <i class="icon-envelope"></i>
+                    <i class="icon-envelope" title="Email"></i>
                   <% elsif notification.type == "SMS" then %>
-                    <i class="icon-comment"></i>
+                    <i class="icon-comment" title="SMS"></i>
                   <% end %>
                 </td>
                 <td><%= time_ago_in_words notification.notification_timestamp %> ago</td>
