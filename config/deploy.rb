@@ -25,6 +25,8 @@ default_run_options[:pty] = true
 #after "deploy:update_code","deploy:config_symlink"
 before "deploy:assets:precompile", "deploy:config_symlink"
 
+after "deploy:update", "deploy:restart"
+
 # If you are using Passenger mod_rails uncomment this:
 namespace :deploy do
    task :start do ; end
@@ -38,5 +40,3 @@ namespace :deploy do
       run "cp #{shared_path}/../../classwatch-private/stripe.yml #{release_path}/config/stripe.yml"
    end
 end
-
-
