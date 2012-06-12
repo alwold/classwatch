@@ -26,10 +26,10 @@
           <td><%= get_class_info(user_course.course).schedule %></td>
           <td class="notifier-icons">
             <% if user_course.notifier_enabled?("EMAIL") then %>
-              <i class="icon-envelope" title="Email"></i>
+              <i class="icon-envelope" title="Email notifications enabled"></i>
             <% end %>
             <% if user_course.notifier_enabled?("SMS") then %>
-              <i class="icon-comment" title="SMS"></i>
+              <i class="icon-comment" title="SMS notifications enabled"></i>
             <% end %>
           </td>
           <td>
