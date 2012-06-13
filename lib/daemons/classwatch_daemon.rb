@@ -50,7 +50,7 @@ def log_notification(course, user, type, status, info)
   n.attempts = 1
   n.last_attempt = Time.new
   n.status = status
-  n.info = info
+  n.info = info[0..254]
   ::Rails.logger.debug "saving notification"
   n.save
   ::Rails.logger.debug "done!"
@@ -101,7 +101,10 @@ end
 
 while($running) do
   
-  Course.joins(:user_courses, :term).where("user_course.notified = ? and term.start_date <= current_date and term.end_date >= current_date", false).uniq.each do |course|
+  Course.joins(:user_courses, :term)
+    .where("user_course.notified = ? and term.start_date <= current_date and term.end_date >= current_date", false)
+    .uniq.each do |course|
+
     # in the future this should just queue up the course to be checked in parallel
     ::Rails.logger.debug "found a course: #{course.course_number}"
     transactions.push course
@@ -110,6 +113,6 @@ while($running) do
 #  ::Rails.logger.auto_flushing = true
   ::Rails.logger.info "This daemon is still running at #{Time.now}.\n"
   
-  sleep 300
+  sleep 120
 end
 
