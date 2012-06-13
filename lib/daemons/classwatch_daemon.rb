@@ -60,7 +60,7 @@ def log_status(course, status)
   ::Rails.logger.debug "log status"
   # check if the latest status is the same as the current
   cs = CourseStatus.where(course_id: course).order(:status_timestamp).first
-  if !cs.nil? && cs.status == status
+  if !cs.nil? && cs.status == status.to_s
     ::Rails.logger.debug "Status in database is already #{status}, not updating"
   else
     ::Rails.logger.debug "Saving status: #{status}"
