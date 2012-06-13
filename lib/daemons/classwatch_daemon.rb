@@ -99,20 +99,24 @@ workers = Array.new
   workers.push t
 end
 
+# number of seconds between testing for availability
+test_interval = 120
+last_run = 0
 while($running) do
-  
-  Course.joins(:user_courses, :term)
-    .where("user_course.notified = ? and term.start_date <= current_date and term.end_date >= current_date", false)
-    .uniq.each do |course|
+  if Time.now.to_i - last_run > test_interval
+    last_run = Time.now.to_i
+    Course.joins(:user_courses, :term)
+      .where("user_course.notified = ? and term.start_date <= current_date and term.end_date >= current_date", false)
+      .uniq.each do |course|
 
-    # in the future this should just queue up the course to be checked in parallel
-    ::Rails.logger.debug "found a course: #{course.course_number}"
-    transactions.push course
-    ::Rails.logger.debug "pushed"
+      # in the future this should just queue up the course to be checked in parallel
+      ::Rails.logger.debug "found a course: #{course.course_number}"
+      transactions.push course
+      ::Rails.logger.debug "pushed"
+    end
+    ::Rails.logger.info "This daemon is still running at #{Time.now}.\n"
   end
-#  ::Rails.logger.auto_flushing = true
-  ::Rails.logger.info "This daemon is still running at #{Time.now}.\n"
   
-  sleep 120
+  sleep 5
 end
 
