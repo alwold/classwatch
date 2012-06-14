@@ -37,9 +37,11 @@ class Course < ActiveRecord::Base
           reconcile_notifiers params, user_course
         end
       else
-        "Course is already open"
+        "Course (#{course.get_class_info.nil? ? "unknown" : course.get_class_info.name}) is already open"
       end
     else
+logger.debug "course.nil? " << course.nil?
+logger.debug "course.get_class_status.nil? " << course.get_class_status.nil?
       "Course was not found"
     end
   end
