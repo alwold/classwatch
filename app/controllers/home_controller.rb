@@ -6,6 +6,9 @@ class HomeController < ApplicationController
       end
       @user = User.where("email = ?", current_user.email).first
       @notifications = Notification.where("user_id = ?", @user)
+    else
+      # if they hit the home page unauthenticated, clear out any old courses they were gonna add
+      session[:course_to_add] = nil
     end
     @schools = School.order(:name)
     @terms = Term.get_active_terms.map { |term| [term.name, term.id] }
