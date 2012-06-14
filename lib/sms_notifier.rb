@@ -11,10 +11,13 @@ class SmsNotifier
   end
 
   def notify(user, course, class_info)
+    # "Your class () is now available" is 30 characters
+    # SMS max is 160 7-bit chars, 140 8-bit
+    short_name = class_info.name[0..100]
     @client.account.sms.messages.create(
       from: TWILIO_CONFIG['from'],
       to: user.phone,
-      body: "Your class (#{course.course_number}) is now available."
+      body: "Your class (#{course.course_number} #{short_name}) is now available"
     )
   end
 
