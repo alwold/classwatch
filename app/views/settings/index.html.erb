@@ -7,19 +7,23 @@
       <%= f.label :email, "Email Address" %>
       <%= f.text_field :email %>
 
-      <%= f.label :old_password, "Change Password" %>
-      <div>
-        <%= password_field_tag :old_password %>
-      </div>
-      <div>
-        <%= password_field_tag :password %>
-      </div>
-      <div>
-        <%= password_field_tag :confirm_password %>
-      </div>
       <%= f.label :phone, "Phone" %>
       <%= f.text_field :phone %>
       <span id="phone-errors"></span>
+
+      <h3>Change Password</h3>
+      <%= f.label :old_password, "Old Password" %>
+      <div>
+        <%= password_field_tag :old_password %>
+      </div>
+      <%= f.label :password, "New Password" %>
+      <div>
+        <%= password_field_tag :password %>
+      </div>
+      <%= f.label :confirm_password, "Confirm" %>
+      <div>
+        <%= password_field_tag :confirm_password %>
+      </div>
     </div>
   </div>
   <div class="form-actions">
