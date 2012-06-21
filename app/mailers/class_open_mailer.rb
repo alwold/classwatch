@@ -5,6 +5,6 @@ class ClassOpenMailer < ActionMailer::Base
     @school = course.term.school.name
     @course_number = course.course_number
     @class_info = class_info
-    mail(:to => user.email, :subject => "Your class")
+    mail(:to => user.email, :subject => "Your class, #{@class_info.name} (#{@course_number}), is now available!")
   end
 end
