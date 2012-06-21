@@ -1,5 +1,5 @@
 class ClassOpenMailer < ActionMailer::Base
-  default :from => "alwold@gmail.com"
+  default :from => "info@getmyclass.com"
 
   def class_open_email(user, course, class_info)
     @school = course.term.school.name
