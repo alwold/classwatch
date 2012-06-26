@@ -11,6 +11,13 @@ GIT
   specs:
     mock-schedule-scraper (0.1)
 
+GIT
+  remote: git://github.com/alwold/yc-schedule-scraper.git
+  revision: 7ebb9b25d19c9c0ac1d176b082377f40d1a9eb68
+  specs:
+    yc-schedule-scraper (0.1)
+      nokogiri
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -224,3 +231,4 @@ DEPENDENCIES
   twitter-bootstrap-rails (= 2.0.8)
   uglifier (>= 1.0.3)
   warbler
+  yc-schedule-scraper!
