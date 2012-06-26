@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120626221451) do
+ActiveRecord::Schema.define(:version => 20120626223057) do
 
   create_table "course", :primary_key => "course_id", :force => true do |t|
     t.string  "course_number", :limit => 15, :null => false
@@ -167,9 +167,11 @@ ActiveRecord::Schema.define(:version => 20120626221451) do
   add_index "refinery_users", ["id"], :name => "index_refinery_users_on_id"
 
   create_table "school", :primary_key => "school_id", :force => true do |t|
-    t.string "name",                          :null => false
-    t.string "scraper_type",                  :null => false
-    t.string "schedule_link", :limit => 1024
+    t.string "name",                               :null => false
+    t.string "scraper_type",                       :null => false
+    t.string "schedule_link",      :limit => 1024
+    t.string "help_file"
+    t.string "course_number_name"
   end
 
   create_table "seo_meta", :force => true do |t|

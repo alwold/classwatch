@@ -66,6 +66,17 @@ $(document).ready(function () {
           } else {
             $("#schedule-link").hide();
           }
+          if (data['school'].course_number_name) {
+            $("#course-number-name").html(data['school'].course_number_name);
+          } else {
+            $("#course-number-name").html("Course Number");
+          }
+          if (data['school'].help_file) {
+            $("#course-number-help-content").load("/help/"+data['school'].help_file+".html");
+            $("#course-number-help-button").show();
+          } else {
+            $("#course-number-help-button").hide();
+          }
           $("#school-specific").show();
         },
         error: function(jqXHR, textStatus, errorThrown) {

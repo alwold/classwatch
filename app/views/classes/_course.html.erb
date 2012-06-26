@@ -6,7 +6,12 @@
 
     <%= f.label :term_id, "Term" %>
     <%= f.select :term_id, Term.get_active_terms.map { |term| [term.name, term.id] } %>
-    <%= f.label :course_number, "Course Number" %>
+    <label for="course_course_number">
+      <span id="course-number-name">Course Number</span>
+      <span id="course-number-help-button" class="hide">
+	<a href="#course-number-help" data-toggle="modal">?</a>
+      </span>
+    </label>
     <%= f.text_field :course_number, "lookup-url" => lookup_class_url(":school_id", ":term_id", ":course_number") %>
     <%= image_tag "spinner.gif", :id => "spinner" %>
     <span id="courseName"></span>
@@ -26,5 +31,15 @@
         <%= f.submit button_name, :class => "btn btn-primary" %>
       </div>
     <% end %>
+  </div>
+  <div id="course-number-help" class="modal hide">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">×</button>
+      <h3>Help</h3>
+    </div>
+    <div class="modal-body" id="course-number-help-content"></div>
+    <div class="modal-footer">
+      <a href="#" class="btn" data-dismiss="modal">Close</a>
+    </div>
   </div>
 <% end %>
