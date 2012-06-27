@@ -109,18 +109,22 @@
   <div class="offset2 span8">
     <h3>Supported Schools</h3>
   </div>
-    <% count = @schools.length/3
-       count = count + 1 if @schools.length % 3 != 0
-       count.times do |i| %>
-        <% (i*3..i*3+2).each do |j| %>
-          <% if i*3+j < @schools.length %>
-            <% if j == 0 %>
-              <div class="span3 offset2">
-            <% else %>
-              <div class="span3">
-            <% end %>
-            <%= @schools[i*3+j].name %></div>
-          <% end %>
+  <% count = @schools.length/3
+     count = count + 1 if @schools.length % 3 != 0
+     count.times do |i| %>
+    <% (i*3..i*3+2).each do |j| %>
+      <% if i*3+j < @schools.length %>
+        <% if j == 0 %>
+          <div class="span3 offset2">
+        <% else %>
+          <div class="span3">
         <% end %>
+        <%= @schools[i*3+j].name %></div>
+      <% end %>
     <% end %>
+  <% end %>
+  <div class="offset2 span8 alert request-school">
+    Don't see your school here? Contact <a href="mailto:support@GetMyClass.com">support@GetMyClass.com</a>
+    and let us know you want your school added!
+  </div>
 <% end %>
