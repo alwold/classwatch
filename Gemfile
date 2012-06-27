@@ -30,7 +30,6 @@ gem 'mock-schedule-scraper', :git => 'git://github.com/alwold/mock-schedule-scra
 
 gem 'devise'
 gem 'warbler'
-gem 'dynamic_form'
 gem 'stripe'
 gem 'asu-schedule-scraper', :git => 'git://github.com/alwold/asu-schedule-scraper.git', :require => 'asu_schedule_scraper'
 gem 'yc-schedule-scraper', :git => 'git://github.com/alwold/yc-schedule-scraper.git', :require => 'yc_schedule_scraper'

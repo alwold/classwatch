@@ -84,7 +84,6 @@ GEM
       orm_adapter (~> 0.0.7)
       railties (~> 3.1)
       warden (~> 1.1.1)
-    dynamic_form (1.1.4)
     erubis (2.7.0)
     eventmachine (0.12.10)
     eventmachine (0.12.10-java)
@@ -215,7 +214,6 @@ DEPENDENCIES
   daemons-rails
   debugger
   devise
-  dynamic_form
   foreigner
   immigrant
   jquery-rails
