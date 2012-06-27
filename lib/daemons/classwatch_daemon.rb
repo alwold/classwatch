@@ -28,7 +28,7 @@ def check_course(course)
               log_notification(course, user_course.user, notifier_setting.type, "success", nil)
             rescue Exception => e
               log_notification(course, user_course.user, notifier_setting.type, "failure", "Error during notification: #{e.to_s}")
-              ::Rails.logger.error "Error during notification: " << e.to_s << "\n" e.backtrace.join("\n")
+              ::Rails.logger.error "Error during notification: " << e.to_s << "\n" << e.backtrace.join("\n")
             end
           end
           user_course.notified = true
