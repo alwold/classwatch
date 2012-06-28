@@ -28,6 +28,7 @@ def check_course(course)
               log_notification(course, user_course.user, notifier_setting.type, "success", nil)
             rescue Exception => e
               log_notification(course, user_course.user, notifier_setting.type, "failure", "Error during notification: #{e.to_s}")
+              ExceptionNotifier::Notifier.background_exception_notification(e)
               ::Rails.logger.error "Error during notification: " << e.to_s << "\n" << e.backtrace.join("\n")
             end
           end
@@ -91,6 +92,7 @@ workers = Array.new
       begin
         check_course(course)
       rescue Exception => ex
+        ExceptionNotifier::Notifier.background_exception_notification(ex)
         ::Rails.logger.error "Caught exception while checking course: " << ex.to_s
         ::Rails.logger.error ex.backtrace.join("\n")
       end

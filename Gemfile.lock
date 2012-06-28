@@ -87,6 +87,7 @@ GEM
     erubis (2.7.0)
     eventmachine (0.12.10)
     eventmachine (0.12.10-java)
+    exception_notifier (1.0.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
     foreigner (1.1.6)
@@ -214,6 +215,7 @@ DEPENDENCIES
   daemons-rails
   debugger
   devise
+  exception_notifier
   foreigner
   immigrant
   jquery-rails
