@@ -106,25 +106,30 @@
     <% end %>
   <% end %>
 <% else %>
-  <div class="offset2 span8">
+  <div class="center">
     <h3>Supported Schools</h3>
-  </div>
+    <table class="schools-table">
   <% count = @schools.length/3
      count = count + 1 if @schools.length % 3 != 0
      count.times do |i| %>
     <% (i*3..i*3+2).each do |j| %>
       <% if i*3+j < @schools.length %>
         <% if j == 0 %>
-          <div class="span3 offset2">
+          <tr><td>
         <% else %>
-          <div class="span3">
+          <td>
         <% end %>
-        <%= @schools[i*3+j].name %></div>
+        <%= @schools[i*3+j].name %></td>
+        <% if j == 2 || i == @schools.length-1 %>
+          </tr>
+        <% end %>
       <% end %>
     <% end %>
   <% end %>
-  <div class="offset2 span8 alert request-school">
+  </table>
+  <div class="alert request-school">
     Don't see your school here? Contact <a href="mailto:support@GetMyClass.com">support@GetMyClass.com</a>
     and let us know you want your school added!
   </div>
+</div>
 <% end %>

@@ -35,5 +35,18 @@
 }
 
 .request-school {
+  margin-left: auto;
+  margin-right: auto;
   margin-top: 20px;
+  width: 80%;
+}
+
+.schools-table {
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%%;
+}
+
+.schools-table td {
+  width: 33%;
 }
