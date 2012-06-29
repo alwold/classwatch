@@ -92,6 +92,7 @@ GEM
       multi_json (~> 1.0)
     foreigner (1.1.6)
       activerecord (>= 3.0.0)
+    high_voltage (1.1.1)
     highline (1.6.12)
     hike (1.2.1)
     i18n (0.6.0)
@@ -217,6 +218,7 @@ DEPENDENCIES
   devise
   exception_notifier
   foreigner
+  high_voltage
   immigrant
   jquery-rails
   json
