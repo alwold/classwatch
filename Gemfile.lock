@@ -13,7 +13,7 @@ GIT
 
 GIT
   remote: git://github.com/alwold/yc-schedule-scraper.git
-  revision: 7ebb9b25d19c9c0ac1d176b082377f40d1a9eb68
+  revision: 07b62d79602a2b6491dab2eb7791e5d458d7de9a
   specs:
     yc-schedule-scraper (0.1)
       nokogiri
