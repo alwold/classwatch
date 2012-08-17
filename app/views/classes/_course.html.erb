@@ -20,7 +20,7 @@
         <label id="notifier_<%= notifier.type %>" class="checkbox">
           <%= notifier.description %>
           <% if notifier.premium %>
-            <a href="#" rel="tooltip" title="This type of notification is a premium feature and will require you to upgrade the course for $1.00">$</a>
+            <a href="#" rel="tooltip" title="This type of notification is a premium feature and will require you to upgrade the course for $2.99">$</a>
           <% end %>
           <%= check_box_tag "notifier_"+notifier.type, :on, @enabled_notifiers.include?(notifier.type) %>
         </label>

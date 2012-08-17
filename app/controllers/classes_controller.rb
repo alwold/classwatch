@@ -107,7 +107,7 @@ class ClassesController < ApplicationController
       Stripe.api_key = STRIPE_CONFIG['secret_key']
       token = params[:stripeToken]
       charge = Stripe::Charge.create(
-        :amount => 100,
+        :amount => 299,
         :currency => "usd",
         :card => token,
         :description => "classwatch - " << current_user.email << " - user_course id " << user_course.id.to_s
