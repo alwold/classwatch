@@ -31,7 +31,7 @@ class SettingsController < ApplicationController
 
     if @user.save then
       if password_changed then
-        sign_in user, :bypass => true
+        sign_in @user, :bypass => true
       end
       redirect_to :action => :index
     else
