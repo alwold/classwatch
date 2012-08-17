@@ -18,8 +18,12 @@ def check_course(course)
       ::Rails.logger.info "#{course.course_number} is open!"
       UserCourse.where(:course_id => course, :notified => false).each do |user_course|
         ::Rails.logger.debug "Notifying #{user_course.user.email}"
+        errors = false
         user_course.notifier_settings.each do |notifier_setting|
-          if notifier_setting.enabled then
+          # check if there has already been a successful notification
+          if notifier_setting.enabled && 
+            Notification.where(:course_id => course, :user_id => user_course.user, :status => :success, :type => notifier_setting.type).empty?
+
             ::Rails.logger.debug "Invoking notifier #{notifier_setting.type}"
             ::Rails.logger.debug "Notifier: #{Notifiers[notifier_setting.type]}"
             begin
@@ -27,12 +31,15 @@ def check_course(course)
               ::Rails.logger.debug "Logging notification"
               log_notification(course, user_course.user, notifier_setting.type, "success", nil)
             rescue Exception => e
+              errors = true
               log_notification(course, user_course.user, notifier_setting.type, "failure", "Error during notification: #{e.to_s}")
               ExceptionNotifier::Notifier.background_exception_notification(e)
               ::Rails.logger.error "Error during notification: " << e.to_s << "\n" << e.backtrace.join("\n")
             end
           end
-          user_course.notified = true
+          # if there were any errors, just consider them not notified
+          # XXX this could result in a notification storm if one notifier is consistently failing
+          user_course.notified = !errors
           user_course.save
         end
       end
