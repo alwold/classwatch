@@ -44,16 +44,19 @@ class ClassesController < ApplicationController
   end
 
   def lookup
-    term = Term.find(params[:term_id])
-    course = Course.new
-    course.course_number = params[:course_number]
-    course.term = term
-    class_info = course.get_class_info
-    if class_info then
-      json = { :name => class_info.name }
-      render :json => json
+    if params[:course_number] !~ /^\d{5}$/
+      render :json => { :error => "Course number should be a five digit number" }
     else
-      head :not_found
+      term = Term.find(params[:term_id])
+      course = Course.new
+      course.course_number = params[:course_number]
+      course.term = term
+      class_info = course.get_class_info
+      if class_info then
+        render :json => { :name => class_info.name }
+      else
+        head :not_found
+      end
     end
   end
 

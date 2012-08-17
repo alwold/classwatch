@@ -12,7 +12,11 @@ $(document).ready(function () {
       $.ajax({url: lookupUrl,
         dataType: "json",
         success: function(classInfo) {
-          $("#courseName").html(classInfo.name);
+          if (classInfo.name) {
+            $("#courseName").html(classInfo.name);
+          } else if (classInfo.error) {
+            $("#courseName").html(classInfo.error);
+          }
           $("#spinner").hide();
         },
         error: function(jqXHR, textStatus, errorThrown) {

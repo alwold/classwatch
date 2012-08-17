@@ -9,6 +9,9 @@ class Course < ActiveRecord::Base
   # or an error message string if there was an error
   # or nil if course was added with no errors
   def self.add(user, term_id, course_number, params)
+    if course_number !~ /^\d{5}$/
+      return "Course number should be a five digit number"
+    end
     course = Course.where("term_id = ? and course_number = ?", term_id, course_number).first
     if course == nil then
       term = Term.find term_id
