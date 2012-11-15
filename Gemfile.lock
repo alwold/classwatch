@@ -18,6 +18,13 @@ GIT
     yc-schedule-scraper (0.1)
       nokogiri
 
+GIT
+  remote: git@github.com:alwold/uoregon-schedule-scraper.git
+  revision: 19581982497247ddfbca704f8788ff45f7222456
+  specs:
+    uoregon-schedule-scraper (0.1)
+      nokogiri
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -233,5 +240,6 @@ DEPENDENCIES
   twilio-ruby
   twitter-bootstrap-rails (= 2.0.8)
   uglifier (>= 1.0.3)
+  uoregon-schedule-scraper!
   warbler
   yc-schedule-scraper!
