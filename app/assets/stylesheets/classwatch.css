@@ -48,5 +48,6 @@
 }
 
 .schools-table td {
+  padding: 20px;
   width: 33%;
 }

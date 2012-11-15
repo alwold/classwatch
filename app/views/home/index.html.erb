@@ -109,10 +109,11 @@
   <div class="center">
     <h3>Supported Schools</h3>
     <table class="schools-table">
-  <% count = @schools.length/3
-     count = count + 1 if @schools.length % 3 != 0
-     count.times do |i| %>
-    <% (i*3..i*3+2).each do |j| %>
+  <% row_count = @schools.length/3
+     row_count = row_count + 1 if @schools.length % 3 != 0
+     logger.debug "row_count = #{row_count}"
+     row_count.times do |i| %>
+    <% (0..2).each do |j| %>
       <% if i*3+j < @schools.length %>
         <% if j == 0 %>
           <tr><td>
