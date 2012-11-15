@@ -6,6 +6,8 @@ class Term < ActiveRecord::Base
 
   belongs_to :school
 
+  validates_presence_of :school
+
   def self.get_active_terms(school_id = nil)
     if school_id.nil?
       Term.where("start_date <= :now and end_date >= :now", { :now => Date.today })
