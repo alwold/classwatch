@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.9'
+gem 'rails', '3.2.11'
 
 gem 'pg'
 gem 'json'
@@ -22,7 +22,7 @@ end
 gem 'jquery-rails'
 
 group :development do
-  gem 'debugger'
+#  gem 'debugger'
 end
 
 # move this to dev later
