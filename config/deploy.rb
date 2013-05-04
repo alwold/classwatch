@@ -23,7 +23,7 @@ role :db,  "alwold.com", :primary => true # This is where Rails migrations will 
 default_run_options[:pty] = true
 
 #after "deploy:update_code","deploy:config_symlink"
-before "deploy:assets:precompile", "deploy:config_symlink"
+before "deploy:assets:precompile", "deploy:symlink_db"
 
 after "deploy:update", "deploy:restart"
 
