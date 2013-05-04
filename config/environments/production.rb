@@ -51,6 +51,9 @@ Classwatch::Application.configure do
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
   config.action_mailer.default_url_options = { :host => "getmyclass.com", :protocol => "https" }
+  config.action_mailer.smtp_settings = {
+    :enable_starttls_auto => false
+  }
 
   # Enable threaded mode
   # config.threadsafe!
