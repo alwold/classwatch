@@ -34,9 +34,9 @@ namespace :deploy do
    task :restart, :roles => :app, :except => { :no_release => true } do
      run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
    end
-   task :config_symlink do
-      run "cp #{shared_path}/../../classwatch-private/database.yml #{release_path}/config/database.yml"
-      run "cp #{shared_path}/../../classwatch-private/twilio.yml #{release_path}/config/twilio.yml"
-      run "cp #{shared_path}/../../classwatch-private/stripe.yml #{release_path}/config/stripe.yml"
+   task :symlink_db, :roles => :app do
+      run "ln -nfs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml"
+      run "ln -nfs #{deploy_to}/shared/config/twilio.yml #{release_path}/config/twilio.yml"
+      run "ln -nfs #{deploy_to}/shared/config/stripe.yml #{release_path}/config/stripe.yml"
    end
 end
