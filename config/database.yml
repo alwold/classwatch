@@ -9,7 +9,7 @@ development:
   database: classwatch
   username: classwatch
   password: sp1ffy
-  pool: 15
+  pool: 5
   timeout: 5000
   host: /tmp
 
