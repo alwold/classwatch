@@ -22,7 +22,7 @@ end
 gem 'jquery-rails'
 
 group :development do
-#  gem 'debugger'
+  gem 'debugger'
 end
 
 # move this to dev later
