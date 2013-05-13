@@ -1,5 +1,7 @@
 class AddYavapaiCollege < ActiveRecord::Migration
   def up
+    School.reset_column_information
+    Term.reset_column_information
     s = School.new
     s.name = "Yavapai College"
     s.scraper_type = "YC"

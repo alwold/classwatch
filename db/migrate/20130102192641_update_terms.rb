@@ -1,5 +1,7 @@
 class UpdateTerms < ActiveRecord::Migration
   def up
+    School.reset_column_information
+    Term.reset_column_information
     school = School.where(:name => "Yavapai College").first
     term = Term.new
     term.term_code = "201310"

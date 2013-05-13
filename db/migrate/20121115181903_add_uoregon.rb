@@ -1,5 +1,7 @@
 class AddUoregon < ActiveRecord::Migration
   def up
+    School.reset_column_information
+    Term.reset_column_information
     s = School.new
     s.name = "University of Oregon"
     s.scraper_type = "UOREGON"
