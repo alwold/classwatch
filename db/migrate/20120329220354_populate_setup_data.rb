@@ -1,5 +1,7 @@
 class PopulateSetupData < ActiveRecord::Migration
   def up
+    School.reset_column_information
+    Term.reset_column_information
     s = School.new
     s.name = "Arizona State University"
     s.save

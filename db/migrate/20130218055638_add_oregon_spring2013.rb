@@ -1,5 +1,7 @@
 class AddOregonSpring2013 < ActiveRecord::Migration
   def up
+    School.reset_column_information
+    Term.reset_column_information
     school = School.where(:name => "University of Oregon").first
     term = Term.new
     term.term_code = "201203"
