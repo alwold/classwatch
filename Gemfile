@@ -23,13 +23,12 @@ gem 'jquery-rails'
 
 group :development do
   gem 'debugger'
+  gem 'thin'
+  gem 'capistrano'
+  gem 'mock-schedule-scraper', :git => 'git://github.com/alwold/mock-schedule-scraper.git', :require => 'mock_schedule_scraper'
 end
 
-# move this to dev later
-gem 'mock-schedule-scraper', :git => 'git://github.com/alwold/mock-schedule-scraper.git', :require => 'mock_schedule_scraper'
-
 gem 'devise'
-gem 'warbler'
 gem 'stripe'
 gem 'asu-schedule-scraper', :git => 'git://github.com/alwold/asu-schedule-scraper.git', :require => 'asu_schedule_scraper'
 gem 'yc-schedule-scraper', :git => 'git://github.com/alwold/yc-schedule-scraper.git', :require => 'yc_schedule_scraper'
@@ -38,9 +37,7 @@ gem 'uoregon-schedule-scraper', :git => 'git://github.com/alwold/uoregon-schedul
 # gem 'uoregon-schedule-scraper', :path => '/Users/alwold/uoregon-schedule-scraper', :require => 'uoregon_schedule_scraper'
 gem 'twilio-ruby'
 gem 'daemons-rails'
-gem 'capistrano'
 gem 'foreigner'
 gem 'immigrant'
-gem 'thin'
 gem 'exception_notification'
 gem 'high_voltage'
