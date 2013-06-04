@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130602064300) do
+ActiveRecord::Schema.define(:version => 20130604041312) do
 
   create_table "course", :primary_key => "course_id", :force => true do |t|
     t.string  "course_number", :limit => 15, :null => false
@@ -44,11 +44,13 @@ ActiveRecord::Schema.define(:version => 20130602064300) do
   end
 
   create_table "school", :primary_key => "school_id", :force => true do |t|
-    t.string "name",                               :null => false
-    t.string "scraper_type",                       :null => false
-    t.string "schedule_link",      :limit => 1024
+    t.string "name",                          :null => false
+    t.string "scraper_type",                  :null => false
+    t.string "schedule_link", :limit => 1024
     t.string "help_file"
-    t.string "course_number_name"
+    t.string "input_1_name"
+    t.string "input_2_name"
+    t.string "input_3_name"
   end
 
   create_table "term", :primary_key => "term_id", :force => true do |t|
