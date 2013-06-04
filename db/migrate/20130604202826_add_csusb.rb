@@ -6,6 +6,9 @@ class AddCsusb < ActiveRecord::Migration
     s.name = "CSU San Bernardino"
     s.scraper_type = "CSUSB"
     s.schedule_link = "http://info001.csusb.edu/schedule/astra/schedule.jsp"
+    s.input_1_name = "Course Abbreviation"
+    s.input_2_name = "Course Number"
+    s.input_3_name = "Class Number"
     s.save!
 
     t = Term.new
@@ -20,6 +23,6 @@ class AddCsusb < ActiveRecord::Migration
   def down
     s = School.where(:name => "CSU San Bernardino").first
     Term.where(:school_id => s).delete_all
-    s.delete_all
+    s.delete
   end
 end
