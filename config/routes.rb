@@ -8,7 +8,9 @@ Classwatch::Application.routes.draw do
 
   get "classes/create_from_session" => "classes#create_from_session", as: "create_class_from_session"
 
-  get "classes/lookup/:institution_id/:term_id/:course_number" => "classes#lookup", as: "lookup_class"
+  get "classes/lookup/:institution_id/:term_id/:input_1" => "classes#lookup", as: "lookup_class"
+  get "classes/lookup/:institution_id/:term_id/:input_1/:input_2" => "classes#lookup"
+  get "classes/lookup/:institution_id/:term_id/:input_1/:input_2/:input_3" => "classes#lookup"
 
   post "user/create"
 
