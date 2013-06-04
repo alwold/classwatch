@@ -48,27 +48,34 @@ class Course < ActiveRecord::Base
   end
 
   def get_class_info
-    logger.debug("get_class_info: #{term.term_code}, #{course_number}")
-    Rails.cache.fetch("class_info_#{term.term_code}_#{course_number}", :expires_in => 5.minutes) do
-      logger.debug("loading from scraper")
+    logger.debug("get_class_info: #{term.term_code}, #{input_1}, #{input_2}, #{input_3}")
+    cache_key = "class_info_#{term.term_code}_#{input_1}"
+    cache_key << "_#{input_2}" if input_2
+    cache_key << "_#{input_3}" if input_3
+    Rails.cache.fetch(cache_key, :expires_in => 5.minutes) do
       scraper = Scrapers[term.school.scraper_type]
       if scraper.nil?
         logger.error("Missing scraper: #{term.school.scraper_type}");
         nil
       else
-        scraper.get_class_info(term.term_code, course_number)
+        inputs = Array.new
+        inputs.push input_1
+        inputs.push input_2 if input_2
+        inputs.push input_3 if input_3
+        info = scraper.get_class_info(term.term_code, *inputs)
+        info
       end
     end
   end
 
   def get_class_status
-    Rails.cache.fetch("class_status_#{term.term_code}_#{course_number}", :expires_in => 5.minutes) do
+    Rails.cache.fetch("class_status_#{term.term_code}_#{input_1}", :expires_in => 5.minutes) do
       scraper = Scrapers[term.school.scraper_type]
       if scraper.nil?
         logger.error("Missing scraper: #{term.school.scraper_type}");
         nil
       else
-        scraper.get_class_status term.term_code, course_number
+        scraper.get_class_status term.term_code, input_1
       end
     end
   end
