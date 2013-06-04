@@ -10,12 +10,16 @@ def check_course(course)
   ::Rails.logger.debug "checking course"
   scraper = Scrapers[course.term.school.scraper_type]
   ::Rails.logger.debug "scraper: #{scraper}"
-  status = scraper.get_class_status(course.term.term_code, course.course_number)
+  inputs = Array.new
+  inputs << course.input_1
+  inputs << course.input_2 if course.input_2
+  inputs << course.input_3 if course.input_3
+  status = scraper.get_class_status(course.term.term_code, *inputs)
   ::Rails.logger.debug "status: #{status}"
   if !status.nil?
     log_status(course, status)
     if status == :open
-      ::Rails.logger.info "#{course.course_number} is open!"
+      ::Rails.logger.info "#{course.input_1}, #{course.input_2}, #{course.input_3} is open!"
       UserCourse.where(:course_id => course, :notified => false).each do |user_course|
         ::Rails.logger.debug "Notifying #{user_course.user.email}"
         errors = false
@@ -119,7 +123,7 @@ while($running) do
       .uniq.each do |course|
 
       # in the future this should just queue up the course to be checked in parallel
-      ::Rails.logger.debug "found a course: #{course.course_number}"
+      ::Rails.logger.debug "found a course: #{course.input_1}, #{course.input_2}, #{course.input_3}"
       transactions.push course
       ::Rails.logger.debug "pushed"
     end
