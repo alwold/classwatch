@@ -17,7 +17,7 @@ class SmsNotifier
     @client.account.sms.messages.create(
       from: TWILIO_CONFIG['from'],
       to: user.phone,
-      body: "Your class (#{course.course_number} #{short_name}) is now available"
+      body: "Your class (#{short_name}) is now available"
     )
   end
 
