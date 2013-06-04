@@ -6,7 +6,7 @@
         <tr>
           <th></th>
           <th>Term</th>
-          <th>Course number</th>
+          <th>Course info</th>
           <th>Name</th>
           <th>Schedule</th>
         </tr>
@@ -21,7 +21,11 @@
             <% end %>
           </td>
           <td><%= user_course.course.term.name %></td>
-          <td><%= user_course.course.input_1 %></td>
+          <td>
+            <%= user_course.course.input_1 %>
+            <%= user_course.course.input_2 %>
+            <%= user_course.course.input_3 %>
+          </td>
           <td><%= get_class_info(user_course.course).name %></td>
           <td><%= get_class_info(user_course.course).schedule %></td>
           <td class="notifier-icons">
