@@ -6,6 +6,7 @@
 
     <%= f.label :term_id, "Term" %>
     <%= f.select :term_id, Term.get_active_terms.map { |term| [term.name, term.id] } %>
+
     <label for="course_input_1">
       <span id="input-1-name">Course Number</span>
       <span id="course-number-help-button" class="hide">
@@ -13,9 +14,23 @@
       </span>
     </label>
     <%= f.text_field :input_1, "lookup-url" => lookup_class_url(":school_id", ":term_id", ":inputs") %>
-    <!-- TODO add more fields, hidden by default -->
     <%= image_tag "spinner.gif", :id => "spinner" %>
     <span id="courseName"></span>
+
+    <div id="input-2-container" style="display: none;">
+      <label for="course_input_2">
+        <span id="input-2-name"></span>
+      </label>
+      <%= f.text_field :input_2 %>
+    </div>
+
+    <div id="input-3-container" style="display: none;">
+      <label for="course_input_3">
+        <span id="input-3-name"></span>
+      </label>
+      <%= f.text_field :input_3 %>
+    </div>
+
     <% Notifiers.each_value do |notifier| %>
       <p>
         <label id="notifier_<%= notifier.type %>" class="checkbox">

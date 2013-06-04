@@ -1,14 +1,29 @@
 "use strict";
 
 $(document).ready(function () {
-  $("#course_input_1").keyup(function (event) {
-    if (event.target.value.length == 5) {
+  // TODO the change event only triggers when the person goes out of field, etc. - not ideal
+  $("#course_input_1,#course_input_2,#course_input_3").change(function (event) {
+    var complete = true;
+    var inputs;
+    $("#course_input_1,#course_input_2,#course_input_3").each(function(index, element) {
+      if (element.parentElement.style.display !== "none") {
+        if (inputs) {
+          inputs += "/"+element.value;
+        } else {
+          inputs = element.value;
+        }
+        if (!element.value) {
+          complete = false;
+        }
+      }
+    });
+    if (complete) {
       $("#spinner").show();
       var term = $("#course_term_id").val();
-      var lookupUrl = event.target.attributes["lookup-url"].value;
+      var lookupUrl = $("#course_input_1").attr("lookup-url");
       lookupUrl = lookupUrl.replace(":school_id", "1");
       lookupUrl = lookupUrl.replace(":term_id", term);
-      lookupUrl = lookupUrl.replace(":inputs", event.target.value);
+      lookupUrl = lookupUrl.replace(":inputs", inputs);
       $.ajax({url: lookupUrl,
         dataType: "json",
         success: function(classInfo) {
@@ -34,6 +49,8 @@ $(document).ready(function () {
   });
   $("course_term_code").change(function (event) {
     $("#course_input_1").val("");
+    $("#course_input_2").val("");
+    $("#course_input_3").val("");
     $("#courseName").html("");
   });
 
@@ -47,6 +64,10 @@ $(document).ready(function () {
   });
 
   $("#school_id").change(function (event) {
+    $("#course_input_1").val("");
+    $("#course_input_2").val("");
+    $("#course_input_3").val("");
+    $("#courseName").html("");
     // remove existing terms
     var select = $("#course_term_id")[0];
     while (select.length > 0) {
@@ -74,6 +95,18 @@ $(document).ready(function () {
             $("#input-1-name").html(data['school'].input_1_name);
           } else {
             $("#input-1-name").html("Course Number");
+          }
+          if (data['school'].input_2_name) {
+            $("#input-2-container").show();
+            $("#input-2-name").html(data['school'].input_2_name);
+          } else {
+            $("#input-2-container").hide();
+          }
+          if (data['school'].input_3_name) {
+            $("#input-3-container").show();
+            $("#input-3-name").html(data['school'].input_3_name);
+          } else {
+            $("#input-3-container").hide();
           }
           if (data['school'].help_file) {
             $("#course-number-help-content").load("/help/"+data['school'].help_file+".html");
