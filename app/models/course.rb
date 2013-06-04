@@ -8,16 +8,13 @@ class Course < ActiveRecord::Base
   # will return :requires_upgrade if the course was added, but user needs to upgrade to enable specified notifiers
   # or an error message string if there was an error
   # or nil if course was added with no errors
-  def self.add(user, term_id, course_number, params)
-    if course_number !~ /^\d{5}$/
-      return "Course number should be a five digit number"
-    end
-    course = Course.where("term_id = ? and course_number = ?", term_id, course_number).first
+  def self.add(user, term_id, input_1, params)
+    course = Course.where("term_id = ? and input_1 = ?", term_id, input_1).first
     if course == nil then
       term = Term.find term_id
       course = Course.new
       course.term = term
-      course.course_number = course_number
+      course.input_1 = input_1
       # check if the course exists, then save it
       if course.get_class_status != nil
         course.save
