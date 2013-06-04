@@ -2,12 +2,14 @@ class ClassesController < ApplicationController
   before_filter :authenticate_user!, :except => [:lookup, :create]
   def create
     if user_signed_in?
-      do_create(params[:course][:term_id], params[:course][:input_1], params)
+      do_create(params[:course][:term_id], params[:course][:input_1], params[:course][:input_2], params[:course][:input_3], params)
     else
       # stash in the session for later
       session[:course_to_add] = {
         :term_id => params[:course][:term_id],
         :input_1 => params[:course][:input_1],
+        :input_2 => params[:course][:input_2],
+        :input_3 => params[:course][:input_3],
         :params => params
       }
       redirect_to new_user_session_path
@@ -17,11 +19,11 @@ class ClassesController < ApplicationController
   def create_from_session
     course = session[:course_to_add]
     session[:course_to_add] = nil
-    do_create(course[:term_id], course[:input_1], course[:params])
+    do_create(course[:term_id], course[:input_1], course[:input_2], course[:input_3], course[:params])
   end
 
-  def do_create(term_id, input_1, params)
-      error = Course.add(current_user, term_id, input_1, params)
+  def do_create(term_id, input_1, input_2, input_3, params)
+      error = Course.add(current_user, term_id, input_1, input_2, input_3, params)
       if error == :requires_upgrade
         user_course = UserCourse.joins(:course).where("user_id =? and course.term_id = ? and course.input_1 = ?", 
           current_user, params[:course][:term_id], params[:course][:input_1]).first

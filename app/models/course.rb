@@ -8,13 +8,21 @@ class Course < ActiveRecord::Base
   # will return :requires_upgrade if the course was added, but user needs to upgrade to enable specified notifiers
   # or an error message string if there was an error
   # or nil if course was added with no errors
-  def self.add(user, term_id, input_1, params)
-    course = Course.where("term_id = ? and input_1 = ?", term_id, input_1).first
+  def self.add(user, term_id, input_1, input_2, input_3, params)
+    criteria = {
+      :term_id => term_id,
+      :input_1 => input_1
+    }
+    criteria[:input_2] = input_2 if input_2
+    criteria[:input_3] = input_3 if input_3
+    course = Course.where(criteria).first
     if course == nil then
       term = Term.find term_id
       course = Course.new
       course.term = term
       course.input_1 = input_1
+      course.input_2 = input_2
+      course.input_3 = input_3
       # check if the course exists, then save it
       if course.get_class_status != nil
         course.save
@@ -59,20 +67,26 @@ class Course < ActiveRecord::Base
         inputs.push input_1
         inputs.push input_2 if input_2
         inputs.push input_3 if input_3
-        info = scraper.get_class_info(term.term_code, *inputs)
-        info
+        scraper.get_class_info(term.term_code, *inputs)
       end
     end
   end
 
   def get_class_status
-    Rails.cache.fetch("class_status_#{term.term_code}_#{input_1}", :expires_in => 5.minutes) do
+    cache_key = "class_status_#{term.term_code}_#{input_1}"
+    cache_key << "_#{input_2}" if input_2
+    cache_key << "_#{input_3}" if input_3
+    Rails.cache.fetch(cache_key, :expires_in => 5.minutes) do
       scraper = Scrapers[term.school.scraper_type]
       if scraper.nil?
         logger.error("Missing scraper: #{term.school.scraper_type}");
         nil
       else
-        scraper.get_class_status term.term_code, input_1
+        inputs = Array.new
+        inputs.push input_1
+        inputs.push input_2 if input_2
+        inputs.push input_3 if input_3
+        scraper.get_class_status(term.term_code, *inputs)
       end
     end
   end
