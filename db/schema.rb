@@ -20,8 +20,6 @@ ActiveRecord::Schema.define(:version => 20130604202826) do
     t.string  "input_3"
   end
 
-  add_index "course", ["term_id", "input_1"], :name => "index_course_on_term_id_and_course_number", :unique => true
-
   create_table "course_status", :force => true do |t|
     t.datetime "status_timestamp"
     t.string   "status"
