@@ -1,14 +1,14 @@
 "use strict";
 
 $(document).ready(function () {
-  $("#course_course_number").keyup(function (event) {
+  $("#course_input_1").keyup(function (event) {
     if (event.target.value.length == 5) {
       $("#spinner").show();
       var term = $("#course_term_id").val();
       var lookupUrl = event.target.attributes["lookup-url"].value;
       lookupUrl = lookupUrl.replace(":school_id", "1");
       lookupUrl = lookupUrl.replace(":term_id", term);
-      lookupUrl = lookupUrl.replace(":course_number", event.target.value);
+      lookupUrl = lookupUrl.replace(":inputs", event.target.value);
       $.ajax({url: lookupUrl,
         dataType: "json",
         success: function(classInfo) {
@@ -33,7 +33,7 @@ $(document).ready(function () {
     }
   });
   $("course_term_code").change(function (event) {
-    $("#course_course_number").val("");
+    $("#course_input_1").val("");
     $("#courseName").html("");
   });
 
@@ -70,10 +70,10 @@ $(document).ready(function () {
           } else {
             $("#schedule-link").hide();
           }
-          if (data['school'].course_number_name) {
-            $("#course-number-name").html(data['school'].course_number_name);
+          if (data['school'].input_1_name) {
+            $("#input-1-name").html(data['school'].input_1_name);
           } else {
-            $("#course-number-name").html("Course Number");
+            $("#input-1-name").html("Course Number");
           }
           if (data['school'].help_file) {
             $("#course-number-help-content").load("/help/"+data['school'].help_file+".html");
