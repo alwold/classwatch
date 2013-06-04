@@ -25,6 +25,12 @@ GIT
     yc-schedule-scraper (0.1)
       nokogiri
 
+PATH
+  remote: /Users/alwold/projects/csusb-schedule-scraper
+  specs:
+    csusb-schedule-scraper (0.1)
+      nokogiri
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -213,6 +219,7 @@ DEPENDENCIES
   asu-schedule-scraper!
   capistrano
   coffee-rails (~> 3.2.1)
+  csusb-schedule-scraper!
   daemons-rails
   debugger
   devise

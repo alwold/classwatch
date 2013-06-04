@@ -11,14 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130604041312) do
+ActiveRecord::Schema.define(:version => 20130604202826) do
 
   create_table "course", :primary_key => "course_id", :force => true do |t|
-    t.string  "course_number", :limit => 15, :null => false
+    t.string  "input_1", :limit => 15, :null => false
     t.integer "term_id"
+    t.string  "input_2"
+    t.string  "input_3"
   end
 
-  add_index "course", ["term_id", "course_number"], :name => "index_course_on_term_id_and_course_number", :unique => true
+  add_index "course", ["term_id", "input_1"], :name => "index_course_on_term_id_and_course_number", :unique => true
 
   create_table "course_status", :force => true do |t|
     t.datetime "status_timestamp"
