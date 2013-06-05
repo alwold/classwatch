@@ -6,6 +6,13 @@ GIT
       nokogiri
 
 GIT
+  remote: git://github.com/alwold/csusb-schedule-scraper.git
+  revision: 435c969bd748d5c8f8c35e1d069bc9a143785fa7
+  specs:
+    csusb-schedule-scraper (0.1)
+      nokogiri
+
+GIT
   remote: git://github.com/alwold/mock-schedule-scraper.git
   revision: 7aa81d8b4179b8b29e555bb80595922061b5bd45
   specs:
@@ -23,12 +30,6 @@ GIT
   revision: be330ac7356e0d104f461af2c51675fdb7d82283
   specs:
     yc-schedule-scraper (0.1)
-      nokogiri
-
-PATH
-  remote: /Users/alwold/projects/csusb-schedule-scraper
-  specs:
-    csusb-schedule-scraper (0.1)
       nokogiri
 
 GEM
