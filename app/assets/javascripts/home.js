@@ -64,69 +64,16 @@ $(document).ready(function () {
   });
 
   $("#school_id").change(function (event) {
+    // TODO this is clearing out the data on initial load
     $("#course_input_1").val("");
     $("#course_input_2").val("");
     $("#course_input_3").val("");
     $("#courseName").html("");
-    // remove existing terms
-    var select = $("#course_term_id")[0];
-    while (select.length > 0) {
-      select.remove(0);
-    }
-    if (event.target.value != "") {
-      var lookupUrl = event.target.attributes["get-terms-url"].value;
-      lookupUrl = lookupUrl.replace(":school_id", event.target.value);
-      $.ajax({url: lookupUrl,
-        dataType: "json",
-        success: function(data) {
-          for (var i = 0; i < data['terms'].length; i++) {
-            var option = document.createElement("option");
-            option.value = data['terms'][i].term_id;
-            option.text = data['terms'][i].name;
-            select.add(option, null);
-          }
-          if (data['school'].schedule_link) {
-            $("#schedule-link").attr("href", data['school'].schedule_link);
-            $("#schedule-link").show();
-          } else {
-            $("#schedule-link").hide();
-          }
-          if (data['school'].input_1_name) {
-            $("#input-1-name").html(data['school'].input_1_name);
-          } else {
-            $("#input-1-name").html("Course Number");
-          }
-          if (data['school'].input_2_name) {
-            $("#input-2-container").show();
-            $("#input-2-name").html(data['school'].input_2_name);
-          } else {
-            $("#input-2-container").hide();
-          }
-          if (data['school'].input_3_name) {
-            $("#input-3-container").show();
-            $("#input-3-name").html(data['school'].input_3_name);
-          } else {
-            $("#input-3-container").hide();
-          }
-          if (data['school'].help_file) {
-            $("#course-number-help-content").load("/help/"+data['school'].help_file+".html");
-            $("#course-number-help-button").show();
-          } else {
-            $("#course-number-help-button").hide();
-          }
-          $("#school-specific").show();
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-          alert("Error looking up terms: "+errorThrown.toString());
-        }
-      });
-    } else {
-      $("#school-specific").hide();
-    }
+    loadTerms(event.target.value, event.target.attributes["get-terms-url"].value);
   });
 
-  // trigger the change event in case school is already populated, to set up the term select
-  $("#school_id").change();
+  // load terms in case school is already populated, to set up the term select
+  loadTerms($("#school_id").val(), $("#school_id").attr("get-terms-url"));
 });
 
 /**
@@ -143,5 +90,62 @@ function formatPhoneNumber(phoneNumber) {
     } else {
       throw new Error("The phone number is not valid");
     }
+  }
+}
+
+function loadTerms(schoolId, lookupUrl) {
+  // remove existing terms
+  var select = $("#course_term_id")[0];
+  while (select.length > 0) {
+    select.remove(0);
+  }
+  if (schoolId != "") {
+    lookupUrl = lookupUrl.replace(":school_id", schoolId);
+    $.ajax({url: lookupUrl,
+      dataType: "json",
+      success: function(data) {
+        for (var i = 0; i < data['terms'].length; i++) {
+          var option = document.createElement("option");
+          option.value = data['terms'][i].term_id;
+          option.text = data['terms'][i].name;
+          select.add(option, null);
+        }
+        if (data['school'].schedule_link) {
+          $("#schedule-link").attr("href", data['school'].schedule_link);
+          $("#schedule-link").show();
+        } else {
+          $("#schedule-link").hide();
+        }
+        if (data['school'].input_1_name) {
+          $("#input-1-name").html(data['school'].input_1_name);
+        } else {
+          $("#input-1-name").html("Course Number");
+        }
+        if (data['school'].input_2_name) {
+          $("#input-2-container").show();
+          $("#input-2-name").html(data['school'].input_2_name);
+        } else {
+          $("#input-2-container").hide();
+        }
+        if (data['school'].input_3_name) {
+          $("#input-3-container").show();
+          $("#input-3-name").html(data['school'].input_3_name);
+        } else {
+          $("#input-3-container").hide();
+        }
+        if (data['school'].help_file) {
+          $("#course-number-help-content").load("/help/"+data['school'].help_file+".html");
+          $("#course-number-help-button").show();
+        } else {
+          $("#course-number-help-button").hide();
+        }
+        $("#school-specific").show();
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        alert("Error looking up terms: "+errorThrown.toString());
+      }
+    });
+  } else {
+    $("#school-specific").hide();
   }
 }
