@@ -73,7 +73,7 @@ $(document).ready(function () {
   });
 
   // load terms in case school is already populated, to set up the term select
-  loadTerms($("#school_id").val(), $("#school_id").attr("get-terms-url"));
+  loadTerms($("#school_id").val(), $("#school_id").attr("get-terms-url"), $("#current_term_id").val());
 });
 
 /**
@@ -93,7 +93,7 @@ function formatPhoneNumber(phoneNumber) {
   }
 }
 
-function loadTerms(schoolId, lookupUrl) {
+function loadTerms(schoolId, lookupUrl, currentTermId) {
   // remove existing terms
   var select = $("#course_term_id")[0];
   while (select.length > 0) {
@@ -108,6 +108,9 @@ function loadTerms(schoolId, lookupUrl) {
           var option = document.createElement("option");
           option.value = data['terms'][i].term_id;
           option.text = data['terms'][i].name;
+          if (currentTermId && currentTermId == option.value) {
+            option.selected = true;
+          }
           select.add(option, null);
         }
         if (data['school'].schedule_link) {

@@ -5,6 +5,7 @@
     <a id="schedule-link" href="#" target="_blank">Find a Course</a>
 
     <%= f.label :term_id, "Term" %>
+    <%= hidden_field_tag :current_term_id, course.term_id %>
     <%= f.select :term_id, Term.get_active_terms.map { |term| [term.name, term.id] } %>
 
     <label for="course_input_1">
