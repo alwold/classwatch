@@ -13,16 +13,16 @@ class Course < ActiveRecord::Base
       :term_id => term_id,
       :input_1 => input_1
     }
-    criteria[:input_2] = input_2 if input_2
-    criteria[:input_3] = input_3 if input_3
+    criteria[:input_2] = input_2 if !input_2.blank?
+    criteria[:input_3] = input_3 if !input_3.blank?
     course = Course.where(criteria).first
     if course == nil then
       term = Term.find term_id
       course = Course.new
       course.term = term
       course.input_1 = input_1
-      course.input_2 = input_2
-      course.input_3 = input_3
+      course.input_2 = input_2 if !input_2.blank?
+      course.input_3 = input_3 if !input_3.blank?
       # check if the course exists, then save it
       if course.get_class_status != nil
         course.save
