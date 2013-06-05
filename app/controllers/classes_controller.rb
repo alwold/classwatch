@@ -72,11 +72,30 @@ class ClassesController < ApplicationController
   end
 
   def update
+    # TODO check to make sure course is valid?
     @course = Course.find(params[:id])
     user_course = UserCourse.joins(:course).where("user_id = ? and course.course_id = ?", current_user, @course).first(:readonly => false)
     if params[:course][:term_id] != user_course.course.term_id || params[:course][:course_number] != user_course.course.course_number then
       logger.debug "course was changed, updating it"
-      course = Course.find_or_initialize_by_course_number_and_term_id(params[:course][:course_number], params[:course][:term_id])
+      criteria = {
+        :term_id => params[:course][:term_id],
+        :input_1 => params[:course][:input_1]
+      }
+      criteria[:input_2] = params[:course][:input_2] if !params[:course][:input_2].blank?
+      criteria[:input_3] = params[:course][:input_3] if !params[:course][:input_3].blank?
+      courses = Course.where(criteria)
+      if courses.empty?
+        logger.debug("Course not found, creating it")
+        course = Course.new
+        course.term = Term.find(params[:course][:term_id])
+        course.input_1 = params[:course][:input_1]
+        course.input_2 = params[:course][:input_2] unless params[:course][:input_2].blank?
+        course.input_3 = params[:course][:input_3] unless params[:course][:input_3].blank?
+        course.save!
+        logger.debug("course id is #{course.id}")
+      else
+        course = courses.first
+      end
       user_course.course = course
       user_course.save
     end
