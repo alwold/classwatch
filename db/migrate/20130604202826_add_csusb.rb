@@ -9,6 +9,7 @@ class AddCsusb < ActiveRecord::Migration
     s.input_1_name = "Course Abbreviation"
     s.input_2_name = "Course Number"
     s.input_3_name = "Class Number"
+    s.help_file = "csusb"
     s.save!
 
     t = Term.new
