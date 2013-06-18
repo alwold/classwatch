@@ -6,3 +6,4 @@ end
 Scrapers["YC"] = YcScheduleScraper.new
 Scrapers["UOREGON"] = UoregonScheduleScraper.new
 Scrapers["CSUSB"] = CsusbScheduleScraper.new
+Scrapers["SADDLEBACK"] = SaddlebackScheduleScraper.new
