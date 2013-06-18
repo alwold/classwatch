@@ -32,6 +32,12 @@ GIT
     yc-schedule-scraper (0.1)
       nokogiri
 
+PATH
+  remote: /Users/alwold/projects/saddleback-schedule-scraper
+  specs:
+    saddleback-schedule-scraper (0.1)
+      nokogiri
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -233,6 +239,7 @@ DEPENDENCIES
   mock-schedule-scraper!
   pg
   rails (= 3.2.13)
+  saddleback-schedule-scraper!
   sass-rails (~> 3.2.5)
   stripe
   therubyracer
