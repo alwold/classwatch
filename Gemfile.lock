@@ -19,6 +19,13 @@ GIT
     mock-schedule-scraper (0.1)
 
 GIT
+  remote: git://github.com/alwold/saddleback-schedule-scraper.git
+  revision: 2a83dd97b8883002a9406cac6423fa622db7b731
+  specs:
+    saddleback-schedule-scraper (0.1)
+      nokogiri
+
+GIT
   remote: git://github.com/alwold/uoregon-schedule-scraper.git
   revision: 1ff0c0fbf73f792d7711ff520a13aaa56159e1a2
   specs:
@@ -233,6 +240,7 @@ DEPENDENCIES
   mock-schedule-scraper!
   pg
   rails (= 3.2.13)
+  saddleback-schedule-scraper!
   sass-rails (~> 3.2.5)
   stripe
   therubyracer
