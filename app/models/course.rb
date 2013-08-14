@@ -67,7 +67,12 @@ class Course < ActiveRecord::Base
         inputs.push input_1
         inputs.push input_2 if input_2
         inputs.push input_3 if input_3
-        scraper.get_class_info(term.term_code, *inputs)
+        if scraper.method(:get_class_info).arity > inputs.length+1
+          # TODO some sort of error
+          nil
+        else
+          scraper.get_class_info(term.term_code, *inputs)
+        end
       end
     end
   end
@@ -86,7 +91,12 @@ class Course < ActiveRecord::Base
         inputs.push input_1
         inputs.push input_2 if input_2
         inputs.push input_3 if input_3
-        scraper.get_class_status(term.term_code, *inputs)
+        if scraper.method(:get_class_status).arity > inputs.length+1
+          # TODO some sort of error
+          nil
+        else
+          scraper.get_class_status(term.term_code, *inputs)
+        end
       end
     end
   end
