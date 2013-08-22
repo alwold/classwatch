@@ -34,7 +34,7 @@ GIT
 
 GIT
   remote: git://github.com/alwold/uwest-schedule-scraper.git
-  revision: c6adbc67cf15fa0aeb03c0c7c110ae5d9f2b9308
+  revision: 153271c0ee5e21df74242d0052a6687b05dcfa20
   specs:
     uwest-schedule-scraper (0.1)
       phantomjs.rb
