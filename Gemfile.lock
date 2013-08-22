@@ -33,6 +33,13 @@ GIT
       nokogiri
 
 GIT
+  remote: git://github.com/alwold/uwest-schedule-scraper.git
+  revision: c6adbc67cf15fa0aeb03c0c7c110ae5d9f2b9308
+  specs:
+    uwest-schedule-scraper (0.1)
+      phantomjs.rb
+
+GIT
   remote: git://github.com/alwold/yc-schedule-scraper.git
   revision: be330ac7356e0d104f461af2c51675fdb7d82283
   specs:
@@ -151,6 +158,7 @@ GEM
     nokogiri (1.5.9-java)
     orm_adapter (0.4.0)
     pg (0.15.1)
+    phantomjs.rb (1.0.1)
     polyglot (0.3.3)
     rack (1.4.5)
     rack-cache (1.2)
@@ -249,4 +257,5 @@ DEPENDENCIES
   twitter-bootstrap-rails (= 2.0.8)
   uglifier (>= 1.0.3)
   uoregon-schedule-scraper!
+  uwest-schedule-scraper!
   yc-schedule-scraper!
