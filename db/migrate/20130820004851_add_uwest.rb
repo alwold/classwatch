@@ -5,7 +5,7 @@ class AddUwest < ActiveRecord::Migration
     s = School.new
     s.name = "University of the West"
     s.scraper_type = "UWEST"
-    s.schedule_link = "http://uwest.edu/"
+    s.schedule_link = "https://myportal.uwest.edu/Common/CourseSchedule.aspx"
     s.help_file = "uwest"
     s.input_1_name = "Course"
     s.save!
