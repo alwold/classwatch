@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '2.0.0'
+
 gem 'rails', '3.2.13'
 
 gem 'pg'
@@ -31,6 +33,7 @@ end
 gem 'devise'
 gem 'stripe'
 gem 'asu-schedule-scraper', :git => 'git://github.com/alwold/asu-schedule-scraper.git', :require => 'asu_schedule_scraper'
+# gem 'asu-schedule-scraper', :path => '/Users/alwold/projects/asu-schedule-scraper', :require => 'asu_schedule_scraper'
 gem 'yc-schedule-scraper', :git => 'git://github.com/alwold/yc-schedule-scraper.git', :require => 'yc_schedule_scraper'
 #gem 'yc-schedule-scraper', :path => '/Users/alwold/yc-schedule-scraper', :require => 'yc_schedule_scraper'
 gem 'uoregon-schedule-scraper', :git => 'git://github.com/alwold/uoregon-schedule-scraper.git', :require => 'uoregon_schedule_scraper'
@@ -45,3 +48,5 @@ gem 'csusb-schedule-scraper', :git => 'git://github.com/alwold/csusb-schedule-sc
 # gem 'csusb-schedule-scraper', :path => '/Users/alwold/projects/csusb-schedule-scraper', :require => 'csusb_schedule_scraper'
 # gem 'saddleback-schedule-scraper', :path => '/Users/alwold/projects/saddleback-schedule-scraper', :require => 'saddleback_schedule_scraper'
 gem 'saddleback-schedule-scraper', :git => 'git://github.com/alwold/saddleback-schedule-scraper.git', :require => 'saddleback_schedule_scraper'
+# gem 'uwest-schedule-scraper', :path => '/Users/alwold/projects/uwest-schedule-scraper', :require => 'uwest_schedule_scraper'
+gem 'uwest-schedule-scraper', :git => 'git://github.com/alwold/uwest-schedule-scraper.git', :require => 'uwest_schedule_scraper'
