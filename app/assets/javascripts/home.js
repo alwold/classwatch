@@ -3,7 +3,6 @@
 $(document).ready(function () {
   // TODO the change event only triggers when the person goes out of field, etc. - not ideal
   $("#course_input_1,#course_input_2,#course_input_3").change(function (event) {
-    var complete = true;
     var inputs;
     $("#course_input_1,#course_input_2,#course_input_3").each(function(index, element) {
       if (element.parentElement.style.display !== "none") {
@@ -12,40 +11,33 @@ $(document).ready(function () {
         } else {
           inputs = element.value;
         }
-        if (!element.value) {
-          complete = false;
-        }
       }
     });
-    if (complete) {
-      $("#spinner").show();
-      var term = $("#course_term_id").val();
-      var lookupUrl = $("#course_input_1").attr("lookup-url");
-      lookupUrl = lookupUrl.replace(":school_id", "1");
-      lookupUrl = lookupUrl.replace(":term_id", term);
-      lookupUrl = lookupUrl.replace(":inputs", inputs);
-      $.ajax({url: lookupUrl,
-        dataType: "json",
-        success: function(classInfo) {
-          if (classInfo.name) {
-            $("#courseName").html(classInfo.name);
-          } else if (classInfo.error) {
-            $("#courseName").html(classInfo.error);
-          }
-          $("#spinner").hide();
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-          if (jqXHR.status == 404) {
-            $("#courseName").html("Class not found");
-          } else {
-            $("#courseName").html("Error loading class title");
-          }
-          $("#spinner").hide();
+    $("#spinner").show();
+    var term = $("#course_term_id").val();
+    var lookupUrl = $("#course_input_1").attr("lookup-url");
+    lookupUrl = lookupUrl.replace(":school_id", "1");
+    lookupUrl = lookupUrl.replace(":term_id", term);
+    lookupUrl = lookupUrl.replace(":inputs", inputs);
+    $.ajax({url: lookupUrl,
+      dataType: "json",
+      success: function(classInfo) {
+        if (classInfo.name) {
+          $("#courseName").html(classInfo.name);
+        } else if (classInfo.error) {
+          $("#courseName").html(classInfo.error);
         }
-      });
-    } else {
-      $("#courseName").html("");
-    }
+        $("#spinner").hide();
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        if (jqXHR.status == 404) {
+          $("#courseName").html("Class not found");
+        } else {
+          $("#courseName").html("Error loading class title");
+        }
+        $("#spinner").hide();
+      }
+    });
   });
   $("course_term_code").change(function (event) {
     $("#course_input_1").val("");
