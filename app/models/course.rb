@@ -65,14 +65,19 @@ class Course < ActiveRecord::Base
       else
         inputs = Array.new
         inputs.push input_1
-        inputs.push input_2 if input_2
-        inputs.push input_3 if input_3
-        if scraper.method(:get_class_info).arity > inputs.length+1
-          # TODO some sort of error
-          nil
+        if input_2
+          inputs.push input_2
         else
-          scraper.get_class_info(term.term_code, *inputs)
+          inputs.push ""
         end
+        if input_3
+          inputs.push input_3
+        else
+          inputs.push ""
+        end
+        arity = scraper.method(:get_class_info).arity
+        inputs.slice!(arity-1, (inputs.length-arity)+2)
+        scraper.get_class_info(term.term_code, *inputs)
       end
     end
   end
@@ -89,14 +94,19 @@ class Course < ActiveRecord::Base
       else
         inputs = Array.new
         inputs.push input_1
-        inputs.push input_2 if input_2
-        inputs.push input_3 if input_3
-        if scraper.method(:get_class_status).arity > inputs.length+1
-          # TODO some sort of error
-          nil
+        if input_2
+          inputs.push input_2
         else
-          scraper.get_class_status(term.term_code, *inputs)
+          inputs.push ""
         end
+        if input_3
+          inputs.push input_3
+        else
+          inputs.push ""
+        end
+        arity = scraper.method(:get_class_info).arity
+        inputs.slice!(arity-1, (inputs.length-arity)+2)
+        scraper.get_class_status(term.term_code, *inputs)
       end
     end
   end
