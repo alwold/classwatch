@@ -20,7 +20,7 @@ GIT
 
 GIT
   remote: git://github.com/alwold/saddleback-schedule-scraper.git
-  revision: 2a83dd97b8883002a9406cac6423fa622db7b731
+  revision: d0299f07398ed517e47201d4ee63990a80d18b38
   specs:
     saddleback-schedule-scraper (0.1)
       nokogiri
