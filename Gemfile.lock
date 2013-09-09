@@ -27,7 +27,7 @@ GIT
 
 GIT
   remote: git://github.com/alwold/uoregon-schedule-scraper.git
-  revision: 1ff0c0fbf73f792d7711ff520a13aaa56159e1a2
+  revision: fff11578efa7749ead7137406c2d3f5db0d947ca
   specs:
     uoregon-schedule-scraper (0.1)
       nokogiri
@@ -146,6 +146,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.23)
+    mini_portile (0.5.1)
     multi_json (1.7.6)
     net-scp (1.1.0)
       net-ssh (>= 2.6.5)
@@ -154,8 +155,10 @@ GEM
     net-ssh (2.6.7)
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
-    nokogiri (1.5.9)
-    nokogiri (1.5.9-java)
+    nokogiri (1.6.0)
+      mini_portile (~> 0.5.0)
+    nokogiri (1.6.0-java)
+      mini_portile (~> 0.5.0)
     orm_adapter (0.4.0)
     pg (0.15.1)
     phantomjs.rb (1.0.1)
