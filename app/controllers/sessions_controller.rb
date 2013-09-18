@@ -3,4 +3,9 @@ class SessionsController < Devise::SessionsController
     @schools = School.order(:name)
     super
   end
+
+  def create
+    flash[:event] = "login"
+    super
+  end
 end
