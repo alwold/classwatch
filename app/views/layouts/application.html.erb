@@ -7,7 +7,7 @@
   <%= csrf_meta_tags %>
   <%= yield :head %>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <% if Rails.env == "production" %>
+  <%# <% if Rails.env == "production" %>
     <script type="text/javascript">
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-32986122-1']);
@@ -18,8 +18,17 @@
         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
+      <% if flash[:event] == "register" %>
+        _gaq.push(['_trackEvent', 'User', 'Register', '<%= current_user.email %>']);
+      <% elsif flash[:event] == "login" %>
+        _gaq.push(['_trackEvent', 'User', 'Login', '<%= current_user.email %>']);
+      <% elsif flash[:event] == "addClass" %>
+        _gaq.push(['_trackEvent', 'User', 'AddClass', '<%= current_user.email %>']);
+      <% elsif flash[:event] == "upgrade" %>
+        _gaq.push(['_trackEvent', 'User', 'Upgrade', '<%= current_user.email %>']);
+      <% end %>
     </script>
-  <% end %>
+  <%# <% end %>
 </head>
 <body>
   <div class="navbar navbar-fixed-top">

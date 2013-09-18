@@ -32,6 +32,7 @@ class ClassesController < ApplicationController
         flash[:error] = error
         redirect_to :root
       else
+        flash[:event] = "addClass"
         redirect_to :root
       end
   end
@@ -136,6 +137,7 @@ class ClassesController < ApplicationController
       )
       user_course.paid = true
       user_course.save
+      flash[:event] = "upgrade"
       # turn on premium notifiers
       # TODO keep track of which ones they wanted instead of turning them all on?
       Notifiers.each do |key, notifier|
