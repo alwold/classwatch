@@ -88,59 +88,61 @@ function formatPhoneNumber(phoneNumber) {
 function loadTerms(schoolId, lookupUrl, currentTermId) {
   // remove existing terms
   var select = $("#course_term_id")[0];
-  while (select.length > 0) {
-    select.remove(0);
-  }
-  if (schoolId != "") {
-    lookupUrl = lookupUrl.replace(":school_id", schoolId);
-    $.ajax({url: lookupUrl,
-      dataType: "json",
-      success: function(data) {
-        for (var i = 0; i < data['terms'].length; i++) {
-          var option = document.createElement("option");
-          option.value = data['terms'][i].term_id;
-          option.text = data['terms'][i].name;
-          if (currentTermId && currentTermId == option.value) {
-            option.selected = true;
+  if (select) {
+    while (select.length > 0) {
+      select.remove(0);
+    }
+    if (schoolId != "") {
+      lookupUrl = lookupUrl.replace(":school_id", schoolId);
+      $.ajax({url: lookupUrl,
+        dataType: "json",
+        success: function(data) {
+          for (var i = 0; i < data['terms'].length; i++) {
+            var option = document.createElement("option");
+            option.value = data['terms'][i].term_id;
+            option.text = data['terms'][i].name;
+            if (currentTermId && currentTermId == option.value) {
+              option.selected = true;
+            }
+            select.add(option, null);
           }
-          select.add(option, null);
+          if (data['school'].schedule_link) {
+            $("#schedule-link").attr("href", data['school'].schedule_link);
+            $("#schedule-link").show();
+          } else {
+            $("#schedule-link").hide();
+          }
+          if (data['school'].input_1_name) {
+            $("#input-1-name").html(data['school'].input_1_name);
+          } else {
+            $("#input-1-name").html("Course Number");
+          }
+          if (data['school'].input_2_name) {
+            $("#input-2-container").show();
+            $("#input-2-name").html(data['school'].input_2_name);
+          } else {
+            $("#input-2-container").hide();
+          }
+          if (data['school'].input_3_name) {
+            $("#input-3-container").show();
+            $("#input-3-name").html(data['school'].input_3_name);
+          } else {
+            $("#input-3-container").hide();
+          }
+          if (data['school'].help_file) {
+            $("#course-number-help-content").load("/help/"+data['school'].help_file+".html");
+            $("#course-number-help-button").show();
+          } else {
+            $("#course-number-help-button").hide();
+          }
+          $("#school-specific").show();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          alert("Error looking up terms: "+errorThrown.toString());
         }
-        if (data['school'].schedule_link) {
-          $("#schedule-link").attr("href", data['school'].schedule_link);
-          $("#schedule-link").show();
-        } else {
-          $("#schedule-link").hide();
-        }
-        if (data['school'].input_1_name) {
-          $("#input-1-name").html(data['school'].input_1_name);
-        } else {
-          $("#input-1-name").html("Course Number");
-        }
-        if (data['school'].input_2_name) {
-          $("#input-2-container").show();
-          $("#input-2-name").html(data['school'].input_2_name);
-        } else {
-          $("#input-2-container").hide();
-        }
-        if (data['school'].input_3_name) {
-          $("#input-3-container").show();
-          $("#input-3-name").html(data['school'].input_3_name);
-        } else {
-          $("#input-3-container").hide();
-        }
-        if (data['school'].help_file) {
-          $("#course-number-help-content").load("/help/"+data['school'].help_file+".html");
-          $("#course-number-help-button").show();
-        } else {
-          $("#course-number-help-button").hide();
-        }
-        $("#school-specific").show();
-      },
-      error: function(jqXHR, textStatus, errorThrown) {
-        alert("Error looking up terms: "+errorThrown.toString());
-      }
-    });
-  } else {
-    $("#school-specific").hide();
+      });
+    } else {
+      $("#school-specific").hide();
+    }
   }
 }
