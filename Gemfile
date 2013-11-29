@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.13'
+gem 'rails', '3.2.15'
 
 gem 'pg'
 gem 'json'
@@ -48,3 +48,4 @@ gem 'csusb-schedule-scraper', :git => 'git://github.com/alwold/csusb-schedule-sc
 gem 'saddleback-schedule-scraper', :git => 'git://github.com/alwold/saddleback-schedule-scraper.git', :require => 'saddleback_schedule_scraper'
 # gem 'uwest-schedule-scraper', :path => '/Users/alwold/projects/uwest-schedule-scraper', :require => 'uwest_schedule_scraper'
 gem 'uwest-schedule-scraper', :git => 'git://github.com/alwold/uwest-schedule-scraper.git', :require => 'uwest_schedule_scraper'
+gem 'wellesley-schedule-scraper', :git => 'git://github.com/alwold/wellesley-schedule-scraper.git', :require => 'wellesley_schedule_scraper'
