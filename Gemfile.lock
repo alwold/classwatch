@@ -101,6 +101,7 @@ GEM
       execjs
     coffee-script-source (1.6.2)
     columnize (0.3.6)
+    commonjs (0.2.7)
     daemons (1.1.9)
     daemons-rails (1.1.2)
       daemons
@@ -141,6 +142,11 @@ GEM
     json (1.8.1-java)
     jwt (0.1.8)
       multi_json (>= 1.5)
+    less (2.3.2)
+      commonjs (~> 0.2.6)
+    less-rails (2.3.3)
+      actionpack (>= 3.1)
+      less (~> 2.3.1)
     libv8 (3.16.14.3)
     mail (2.5.4)
       mime-types (~> 1.16)
@@ -250,6 +256,7 @@ DEPENDENCIES
   immigrant
   jquery-rails
   json
+  less-rails
   mock-schedule-scraper!
   pg
   rails (= 3.2.15)
