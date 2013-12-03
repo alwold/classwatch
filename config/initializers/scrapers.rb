@@ -9,3 +9,4 @@ Scrapers["CSUSB"] = CsusbScheduleScraper.new
 Scrapers["SADDLEBACK"] = SaddlebackScheduleScraper.new
 Scrapers["UWEST"] = UwestScheduleScraper.new
 Scrapers['WELLESLEY'] = WellesleyScheduleScraper.new
+Scrapers['ELAC'] = ElacScheduleScraper.new

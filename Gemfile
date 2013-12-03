@@ -50,3 +50,4 @@ gem 'saddleback-schedule-scraper', :git => 'git://github.com/alwold/saddleback-s
 # gem 'uwest-schedule-scraper', :path => '/Users/alwold/projects/uwest-schedule-scraper', :require => 'uwest_schedule_scraper'
 gem 'uwest-schedule-scraper', :git => 'git://github.com/alwold/uwest-schedule-scraper.git', :require => 'uwest_schedule_scraper'
 gem 'wellesley-schedule-scraper', :git => 'git://github.com/alwold/wellesley-schedule-scraper.git', :require => 'wellesley_schedule_scraper'
+gem 'elac-schedule-scraper', :git => 'git://github.com/alwold/elac-schedule-scraper.git'

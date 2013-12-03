@@ -13,6 +13,12 @@ GIT
       nokogiri
 
 GIT
+  remote: git://github.com/alwold/elac-schedule-scraper.git
+  revision: f198486ece4069979a81e7a423c8e2846a20a21d
+  specs:
+    elac-schedule-scraper (1.0)
+
+GIT
   remote: git://github.com/alwold/mock-schedule-scraper.git
   revision: 7aa81d8b4179b8b29e555bb80595922061b5bd45
   specs:
@@ -250,6 +256,7 @@ DEPENDENCIES
   daemons-rails
   debugger
   devise
+  elac-schedule-scraper!
   exception_notification
   foreigner
   high_voltage
