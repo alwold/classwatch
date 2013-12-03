@@ -5,7 +5,9 @@ class SessionsController < Devise::SessionsController
   end
 
   def create
-    flash[:event] = "login"
     super
+    if current_user
+      flash[:event] = "login"
+    end
   end
 end
