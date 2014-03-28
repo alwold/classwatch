@@ -1,0 +1,46 @@
+<h1>Terms</h1>
+<table class="table">
+  <thead>
+    <tr>
+     <th>School</th>
+     <th>Term Name</th>
+     <th>Term Code</th>
+     <th>Start</th>
+     <th>End</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @terms.each do |term| %>
+      <tr>
+        <td><%= term.school.name %></td>
+        <td><%= term.name %></td>
+        <td><%= term.term_code %></td>
+        <td><%= term.start_date %></td>
+        <td><%= term.end_date %></td>
+        <td><%= link_to 'Delete', term_path(term), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2>Add a Term</h2>
+<%= form_for Term.new, class: 'form' do |f| %>
+  <%= f.label :school_id %>
+  <%= f.select :school_id, options_from_collection_for_select(School.all, :id, :name) %>
+
+  <%= f.label :term_code %>
+  <%= f.text_field :term_code %>
+
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+
+  <%= f.label :start_date %>
+  <%= f.text_field :start_date, class: 'datepicker' %>
+
+  <%= f.label :end_date %>
+  <%= f.text_field :end_date, class: 'datepicker' %>
+
+  <div>
+    <%= f.submit 'Add', class: 'btn btn-primary' %>
+  </div>
+<% end %>

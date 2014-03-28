@@ -17,6 +17,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 
   gem 'twitter-bootstrap-rails'
+  gem 'bootstrap-datepicker-rails'
   gem 'less-rails'
 end
 
@@ -31,6 +32,8 @@ end
 
 gem 'devise'
 gem 'stripe'
+gem 'cancan'
+
 gem 'asu-schedule-scraper', :git => 'git://github.com/alwold/asu-schedule-scraper.git', :require => 'asu_schedule_scraper'
 # gem 'asu-schedule-scraper', :path => '/Users/alwold/projects/asu-schedule-scraper', :require => 'asu_schedule_scraper'
 gem 'yc-schedule-scraper', :git => 'git://github.com/alwold/yc-schedule-scraper.git', :require => 'yc_schedule_scraper'

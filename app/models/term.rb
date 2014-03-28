@@ -8,6 +8,8 @@ class Term < ActiveRecord::Base
 
   validates_presence_of :school
 
+  attr_accessible :school_id, :name, :term_code, :start_date, :end_date
+
   def self.get_active_terms(school_id = nil)
     if school_id.nil?
       Term.where("start_date <= :now and end_date >= :now", { :now => Date.today })
