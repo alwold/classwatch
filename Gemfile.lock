@@ -93,6 +93,7 @@ GEM
     bcrypt-ruby (3.0.1)
     bcrypt-ruby (3.0.1-java)
     builder (3.0.4)
+    cancan (1.6.10)
     capistrano (2.15.4)
       highline
       net-scp (>= 1.0.0)
@@ -250,6 +251,7 @@ PLATFORMS
 
 DEPENDENCIES
   asu-schedule-scraper!
+  cancan
   capistrano
   coffee-rails (~> 3.2.1)
   csusb-schedule-scraper!
