@@ -1,3 +1,4 @@
+<h1>Terms</h1>
 <table class="table">
   <thead>
     <tr>
@@ -16,6 +17,7 @@
         <td><%= term.term_code %></td>
         <td><%= term.start_date %></td>
         <td><%= term.end_date %></td>
+        <td><%= link_to 'Delete', term_path(term), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

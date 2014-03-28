@@ -18,4 +18,11 @@ class TermsController < ApplicationController
 
     redirect_to terms_path
   end
+
+  def destroy
+    term = Term.find(params[:id])
+    term.destroy
+
+    redirect_to terms_path
+  end
 end
