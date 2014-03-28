@@ -35,10 +35,10 @@
   <%= f.text_field :name %>
 
   <%= f.label :start_date %>
-  <%= f.text_field :start_date %>
+  <%= f.text_field :start_date, class: 'datepicker' %>
 
   <%= f.label :end_date %>
-  <%= f.text_field :end_date %>
+  <%= f.text_field :end_date, class: 'datepicker' %>
 
   <div>
     <%= f.submit 'Add', class: 'btn btn-primary' %>
