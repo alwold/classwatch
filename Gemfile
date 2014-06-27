@@ -30,6 +30,10 @@ group :development do
   gem 'mock-schedule-scraper', :git => 'git://github.com/alwold/mock-schedule-scraper.git', :require => 'mock_schedule_scraper'
 end
 
+group :development, :test do
+  gem 'rspec-rails'
+end
+
 gem 'devise'
 gem 'stripe'
 gem 'cancan'
