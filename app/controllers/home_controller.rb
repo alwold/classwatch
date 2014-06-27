@@ -10,7 +10,7 @@ class HomeController < ApplicationController
       # if they hit the home page unauthenticated, clear out any old courses they were gonna add
       session[:course_to_add] = nil
     end
-    @schools = School.order(:name)
+    @schools = School.active.order(:name)
     @terms = Term.get_active_terms.map { |term| [term.name, term.id] }
     # the _course.html.erb needs this dummy array, since a new course will have no enabled notifiers
     @enabled_notifiers = Notifiers.keys
