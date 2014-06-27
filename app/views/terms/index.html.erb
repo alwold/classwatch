@@ -26,7 +26,7 @@
 <h2>Add a Term</h2>
 <%= form_for Term.new, class: 'form' do |f| %>
   <%= f.label :school_id %>
-  <%= f.select :school_id, options_from_collection_for_select(School.all, :id, :name) %>
+  <%= f.select :school_id, options_from_collection_for_select(School.active, :id, :name) %>
 
   <%= f.label :term_code %>
   <%= f.text_field :term_code %>

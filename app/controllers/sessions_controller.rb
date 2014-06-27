@@ -1,6 +1,6 @@
 class SessionsController < Devise::SessionsController
   def new
-    @schools = School.order(:name)
+    @schools = School.active.order(:name)
     super
   end
 
