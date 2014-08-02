@@ -54,7 +54,7 @@ GIT
 
 GIT
   remote: git://github.com/alwold/yc-schedule-scraper.git
-  revision: be330ac7356e0d104f461af2c51675fdb7d82283
+  revision: 4c4e68b8051132e09a1ef5c7530b894b2fd4a27e
   specs:
     yc-schedule-scraper (0.1)
       nokogiri
@@ -174,7 +174,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.25.1)
-    mini_portile (0.5.2)
+    mini_portile (0.6.0)
     multi_json (1.8.2)
     net-scp (1.1.0)
       net-ssh (>= 2.6.5)
@@ -183,10 +183,9 @@ GEM
     net-ssh (2.6.7)
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
-    nokogiri (1.6.1)
-      mini_portile (~> 0.5.0)
-    nokogiri (1.6.1-java)
-      mini_portile (~> 0.5.0)
+    nokogiri (1.6.3.1)
+      mini_portile (= 0.6.0)
+    nokogiri (1.6.3.1-java)
     orm_adapter (0.4.0)
     pg (0.15.1)
     phantomjs.rb (1.0.1)
@@ -276,6 +275,7 @@ GEM
     warden (1.2.1)
       rack (>= 1.0)
     websocket-driver (0.3.1)
+    websocket-driver (0.3.1-java)
     xpath (2.0.0)
       nokogiri (~> 1.3)
 
