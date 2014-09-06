@@ -1,16 +1,43 @@
 class ClassesController < ApplicationController
   before_filter :authenticate_user!, :except => [:lookup, :create]
-  def create
-    if user_signed_in?
-      do_create(params[:course][:term_id], params[:course][:input_1], params[:course][:input_2], params[:course][:input_3], params)
+  def pay
+    # create or look up course object
+    criteria = {
+      :term_id => params[:course][:term_id],
+      :input_1 => params[:course][:input_1]
+    }
+    criteria[:input_2] = params[:course][:input_2] if !params[:course][:input_2].blank?
+    criteria[:input_3] = params[:course][:input_3] if !params[:course][:input_3].blank?
+    @course = Course.where(criteria).first
+    if !@course
+      term = Term.find params[:course][:term_id]
+      @course = Course.new
+      @course.term = term
+      @course.input_1 = params[:course][:input_1]
+      @course.input_2 = params[:course][:input_2] if !params[:course][:input_2].blank?
+      @course.input_3 = params[:course][:input_3] if !params[:course][:input_3].blank?
+      # check if the course exists, then save it
+      @class_info = @course.get_class_info
+      if @class_info
+        @course.save!
+      else
+        @course = nil
+      end
     else
+      @class_info = @course.get_class_info
+    end
+    @notifier_settings = Hash.new
+    params.each do |param, value|
+      if param.start_with?('notifier_')
+        name = param['notifier_'.length..-1]
+        @notifier_settings[name] = (value == 'on')
+      end
+    end
+    if !user_signed_in?
       # stash in the session for later
       session[:course_to_add] = {
-        :term_id => params[:course][:term_id],
-        :input_1 => params[:course][:input_1],
-        :input_2 => params[:course][:input_2],
-        :input_3 => params[:course][:input_3],
-        :params => params
+        course_id: @course.id,
+        notifier_settings: @notifier_settings
       }
       redirect_to new_user_session_path
     end
@@ -19,7 +46,10 @@ class ClassesController < ApplicationController
   def create_from_session
     course = session[:course_to_add]
     session[:course_to_add] = nil
-    do_create(course[:term_id], course[:input_1], course[:input_2], course[:input_3], course[:params])
+    @course = Course.find(course[:course_id])
+    @notifier_settings = course[:notifier_settings]
+
+    render :pay
   end
 
   def do_create(term_id, input_1, input_2, input_3, params)
@@ -121,44 +151,25 @@ class ClassesController < ApplicationController
     end
   end
 
-  def pay
-    @course = Course.find(params[:id])
-    user_course = UserCourse.joins(:course).where("user_id = ? and course.course_id = ?", current_user, @course).first(:readonly => false)
-    if user_course.paid then
-      render "already_paid"
-    else
-      Stripe.api_key = STRIPE_CONFIG['secret_key']
-      token = params[:stripeToken]
-      charge = Stripe::Charge.create(
-        :amount => 299,
-        :currency => "usd",
-        :card => token,
-        :description => "classwatch - " << current_user.email << " - user_course id " << user_course.id.to_s
-      )
-      user_course.paid = true
-      user_course.save
-      flash[:event] = "upgrade"
-      # turn on premium notifiers
-      # TODO keep track of which ones they wanted instead of turning them all on?
-      Notifiers.each do |key, notifier|
-        if notifier.premium
-          found_notifier = false
-          user_course.notifier_settings.each do |setting|
-            if setting.type == key
-              found_notifier = true
-              setting.enabled = true
-              setting.save
-            end
-          end
-          if !found_notifier
-            setting = NotifierSetting.new
-            setting.type = key
-            setting.user_course = user_course
-            setting.enabled = true
-            setting.save
-          end
-        end
-      end
-    end
+  def create
+    @course = Course.find(params[:course_id])
+    Stripe.api_key = STRIPE_CONFIG['secret_key']
+    token = params[:stripeToken]
+    charge = Stripe::Charge.create(
+      :amount => 299,
+      :currency => "usd",
+      :card => token,
+      :description => "classwatch - " << current_user.email << " - course id " << @course.id.to_s
+    )
+    user_course = UserCourse.new
+    user_course.user = current_user
+    user_course.course = @course
+    user_course.notified = false
+    user_course.paid = true
+    user_course.save!
+    # TODO change this to paid or something?
+    flash[:event] = "upgrade"
+    Course.reconcile_notifiers(params, user_course)
+    redirect_to :root
   end
 end

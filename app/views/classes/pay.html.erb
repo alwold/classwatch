@@ -1,4 +1,111 @@
-You have successfully upgraded your course notifications!
+<% content_for(:head) do %>
+  <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+  <script type="text/javascript">
+    Stripe.setPublishableKey("<%= STRIPE_CONFIG['publishable_key'] %>");
 
-<%= link_to "Home", root_url %>
+    $(document).ready(function() {
+      $("#payment-form").submit(function(event) {
+        $(".payment-errors").hide();
+        // disable the submit button to prevent repeated clicks
+        $(".submit-button").attr("disabled", "disabled");
 
+        Stripe.createToken(this, stripeResponseHandler);
+
+        // prevent the form from submitting with the default action
+        return false;
+      });
+    });
+
+    function stripeResponseHandler(status, response) {
+      if (response.error) {
+          //show the errors on the form
+          $(".payment-errors").html(response.error.message);
+          $(".payment-errors").show();
+          $(".submit-button").removeAttr("disabled");
+      } else {
+          var form$ = $("#payment-form");
+          // token contains id, last4, and card type
+          var token = response['id'];
+          // insert the token into the form so it gets submitted to the server
+          form$.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
+          // and submit
+          form$.get(0).submit();
+      }
+    }
+  </script>
+<% end %>
+
+<h2>Payment</h2>
+<p><%= @class_info.name %> <%= @class_info.schedule %></p>
+<h4>Total: $2.99</h4>
+<div class="alert alert-error payment-errors" style="display:none;"></div>
+<%= form_tag classes_path, method: :post, id: "payment-form" do %>
+  <%= hidden_field_tag :course_id, @course.id %>
+  <% @notifier_settings.each do |notifier, value| %>
+    <%= hidden_field_tag "notifier_#{notifier}", value %>
+  <% end %>
+  <div class="form-row">
+    <label>Card Number</label>
+    <input type="text" size="20" autocomplete="off" class="card-number" data-stripe="number" value="<%= "4242424242424242" if Rails.env == "development" %>"/>
+  </div>
+  <div class="form-row">
+    <label>CVC <a id="cvc-help" data-toggle="modal" href="#cvc-help-content" title="CVC Help">?</a></label>
+    <input type="text" size="4" autocomplete="off" class="input-small card-cvc" data-stripe="cvc" value="<%= "123" if Rails.env == "development" %>"/>
+  </div>
+  <div class="form-row">
+    <label>Expiration (MM/YYYY)</label>
+    <input type="text" size="2" class="input-small card-expiry-month" data-stripe="exp-month" value="<%= Date.today.month if Rails.env == "development" %>"/>
+    <span> / </span>
+    <input type="text" size="4" class="input-small card-expiry-year" data-stripe="exp-year" value="<%= Date.today.year+1 if Rails.env == "development" %>"/>
+  </div>
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary submit-button">Submit Payment</button>
+    <%= link_to "Cancel", root_url, class: "btn" %>
+  </div>
+<% end %>
+<div class="modal hide" id="cvc-help-content">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">×</button>
+    <h3>CVC Help</h3>
+  </div>
+  <div class="modal-body">
+    <p>
+      The CVC is a code on your credit card used as an additional security measure to protect against
+      fraud.  It can be found in one of the following locations:
+    </p>
+    <table>
+      <tbody>
+        <tr>
+          <td>
+            <strong>Visa/Mastercard</strong>
+            <p>On the back of the card, on or near the signature panel.</p>
+            <p>
+              <img src="<%= asset_path "upgrade/CVC2SampleVisaNew.png" %>"/>
+            </p>
+            <p class="attribution">
+              <a href="http://creativecommons.org/licenses/by-sa/3.0/deed.en" target="_blank">
+                <img src="<%= asset_path "upgrade/creativecommons.png" %>"/>
+              </a>
+              by <a href="http://en.wikipedia.org/wiki/User:Airodyssey" target="_blank">Sergio Ortega</a>
+            </p>
+          </td>
+          <td>
+            <strong>American Express</strong>
+            <p>On the front of the card, towards the right hand side, above the card number.</p>
+            <p>
+              <img src="<%= asset_path "upgrade/CIDSampleAmex.png" %>"/>
+            </p>
+            <p class="attribution">
+            <a href="http://creativecommons.org/licenses/by-sa/3.0/deed.en" target="_blank">
+              <img src="<%= asset_path "upgrade/creativecommons.png" %>"/>
+            </a>
+            by <a href="http://en.wikipedia.org/wiki/User:Airodyssey" target="_blank">Sergio Ortega</a>
+          </p>
+        </td>
+      </tbody>
+    </table>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal">Close</a>
+  </div>
+</div>
