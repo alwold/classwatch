@@ -5,6 +5,11 @@ class Course < ActiveRecord::Base
   self.table_name = "course"
   self.primary_key = "course_id"
 
+  # Add the specified course for the specified user. This method will attempt to look up the course,
+  # in case it already exists in the system. If it doesn't exist it will create it. If the course is not
+  # currently open, a UserCourse will be created for the user and the given course. Finally, it will
+  # enable the notifiers specified in the params hash.
+  #
   # will return :requires_upgrade if the course was added, but user needs to upgrade to enable specified notifiers
   # or an error message string if there was an error
   # or nil if course was added with no errors
@@ -111,7 +116,11 @@ class Course < ActiveRecord::Base
     end
   end
 
-  # return true if the modification requires an upgrade
+  # reconcile the list of enabled notifiers in params with the currently enabled ones in params
+  # when done, the notifier settings on user_course will match what's in params
+  #
+  # if premium notifiers are selected, but the course is not paid, they will not be enabled, but
+  # the method will return true, indicating that the course requires an upgrade
   def self.reconcile_notifiers(params, user_course)
     requires_upgrade = false
     # look for notifier settings
