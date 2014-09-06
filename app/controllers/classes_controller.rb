@@ -1,5 +1,5 @@
 class ClassesController < ApplicationController
-  before_filter :authenticate_user!, :except => [:lookup, :create]
+  before_filter :authenticate_user!, :except => [:lookup, :pay]
   def pay
     # create or look up course object
     criteria = {
@@ -47,6 +47,7 @@ class ClassesController < ApplicationController
     course = session[:course_to_add]
     session[:course_to_add] = nil
     @course = Course.find(course[:course_id])
+    @class_info = @course.get_class_info
     @notifier_settings = course[:notifier_settings]
 
     render :pay
