@@ -17,6 +17,7 @@ class RegistrationsController < Devise::RegistrationsController
         sign_in(resource_name, resource)
         # begin custom code
         redirected = false
+        # TODO can this be removed?
         if !params[:course].nil? && params[:course][:course_number] && !params[:course][:course_number].empty? then
           logger.debug "Found a class, adding"
           user = User.where("email = ?", current_user.email).first
