@@ -46,6 +46,8 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
+    UserCourse.destroy_all
+    Course.destroy_all
     Term.destroy_all
     School.destroy_all
     User.destroy_all
