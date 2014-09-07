@@ -16,7 +16,6 @@ class ClassesController < ApplicationController
       @course.input_1 = params[:course][:input_1]
       @course.input_2 = params[:course][:input_2] if !params[:course][:input_2].blank?
       @course.input_3 = params[:course][:input_3] if !params[:course][:input_3].blank?
-      # check if the course exists, then save it
       @class_info = @course.get_class_info
       if @class_info
         @course.save!
@@ -51,21 +50,6 @@ class ClassesController < ApplicationController
     @notifier_settings = course[:notifier_settings]
 
     render :pay
-  end
-
-  def do_create(term_id, input_1, input_2, input_3, params)
-      error = Course.add(current_user, term_id, input_1, input_2, input_3, params)
-      if error == :requires_upgrade
-        user_course = UserCourse.joins(:course).where("user_id =? and course.term_id = ? and course.input_1 = ?", 
-          current_user, params[:course][:term_id], params[:course][:input_1]).first
-        redirect_to upgrade_class_path(user_course.course.id)
-      elsif error
-        flash[:error] = error
-        redirect_to :root
-      else
-        flash[:event] = "addClass"
-        redirect_to :root
-      end
   end
 
   def destroy
@@ -132,24 +116,8 @@ class ClassesController < ApplicationController
       user_course.save
     end
 
-    if Course.reconcile_notifiers params, user_course then
-      redirect_to upgrade_class_path(@course)
-    else
-      redirect_to :root
-    end
-  end
-
-  def upgrade
-    @course = Course.find(params[:id])
-    @class_info = @course.get_class_info
-    user_course = UserCourse.joins(:course).where("user_id = ? and course.course_id = ?", current_user, @course).first
-    if user_course.paid then
-      render "already_paid"
-    elsif @class_info.nil?
-      render "class_not_found"
-    else
-      render
-    end
+    Course.reconcile_notifiers params, user_course
+    redirect_to :root
   end
 
   def create

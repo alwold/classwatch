@@ -5,58 +5,6 @@ class Course < ActiveRecord::Base
   self.table_name = "course"
   self.primary_key = "course_id"
 
-  # Add the specified course for the specified user. This method will attempt to look up the course,
-  # in case it already exists in the system. If it doesn't exist it will create it. If the course is not
-  # currently open, a UserCourse will be created for the user and the given course. Finally, it will
-  # enable the notifiers specified in the params hash.
-  #
-  # will return :requires_upgrade if the course was added, but user needs to upgrade to enable specified notifiers
-  # or an error message string if there was an error
-  # or nil if course was added with no errors
-  def self.add(user, term_id, input_1, input_2, input_3, params)
-    criteria = {
-      :term_id => term_id,
-      :input_1 => input_1
-    }
-    criteria[:input_2] = input_2 if !input_2.blank?
-    criteria[:input_3] = input_3 if !input_3.blank?
-    course = Course.where(criteria).first
-    if course == nil then
-      term = Term.find term_id
-      course = Course.new
-      course.term = term
-      course.input_1 = input_1
-      course.input_2 = input_2 if !input_2.blank?
-      course.input_3 = input_3 if !input_3.blank?
-      # check if the course exists, then save it
-      if course.get_class_status != nil
-        course.save
-      else
-        course = nil
-      end
-    end
-    if course != nil && !course.get_class_status.nil?
-      if course.get_class_status != :open
-        existing = UserCourse.where("course_id = ? and user_id = ?", course.id, user.id).first
-        if existing
-          "You are already watching this course"
-        else 
-          user_course = UserCourse.new
-          user_course.user = user
-          user_course.course = course
-          user_course.notified = false
-          user_course.paid = false
-          user_course.save
-          reconcile_notifiers params, user_course
-        end
-      else
-        "Course (#{course.get_class_info.nil? ? "unknown" : course.get_class_info.name}) is already open"
-      end
-    else
-      "Course was not found"
-    end
-  end
-
   def get_class_info
     logger.debug("get_class_info: #{term.term_code}, #{input_1}, #{input_2}, #{input_3}")
     cache_key = "class_info_#{term.term_code}_#{input_1}"
