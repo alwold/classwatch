@@ -8,7 +8,10 @@ describe Course do
       expect(class_info.name).to eq('Fake Course')
       expect(class_info.schedule).to eq('MWF')
     end
-    it "returns nil if class doesn't exist"
+    it "returns nil if class doesn't exist" do
+      course = create(:invalid_course)
+      expect(course.get_class_info).to be_nil
+    end
     it "caches class info"
   end
 
