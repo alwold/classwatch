@@ -18,4 +18,9 @@ FactoryGirl.define do
     end_date Date.new(2014, 11, 1)
     school
   end
+
+  factory :course do
+    term 
+    input_1 '12345'
+  end
 end
