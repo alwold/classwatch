@@ -2,18 +2,19 @@ require 'spec_helper'
 
 feature 'class management', js: true do
   scenario 'adding a class' do
-    user = FactoryGirl.create(:user)
-    term = FactoryGirl.create(:term)
+    user = create(:user)
+    course = build(:closed_course)
 
     sign_in user
 
     visit root_path
     expect(page).to have_content('not currently watching any classes')
 
-    select term.school.name, from: 'School'
+    select course.term.school.name, from: 'School'
     find_field 'Term'
-    select term.name, from: 'Term'
-    fill_in 'Course Number', with: '12345'
+    select course.term.name, from: 'Term'
+    fill_in 'Course Number', with: course.input_1
+    page.save_screenshot('screenshot.png')
     click_button 'Add'
 
     expect(current_path).to eq pay_classes_path
@@ -29,18 +30,18 @@ feature 'class management', js: true do
   end
 
   scenario 'adding a class with invalid credit card' do
-    user = FactoryGirl.create(:user)
-    term = FactoryGirl.create(:term)
+    user = create(:user)
+    course = build(:closed_course)
 
     sign_in user
 
     visit root_path
     expect(page).to have_content('not currently watching any classes')
 
-    select term.school.name, from: 'School'
+    select course.term.school.name, from: 'School'
     find_field 'Term'
-    select term.name, from: 'Term'
-    fill_in 'Course Number', with: '12345'
+    select course.term.name, from: 'Term'
+    fill_in 'Course Number', with: course.input_1
     click_button 'Add'
 
     expect(current_path).to eq pay_classes_path
@@ -54,14 +55,14 @@ feature 'class management', js: true do
   end
 
   scenario 'new user adds class and signs up in process' do
-    term = FactoryGirl.create(:term)
+    course = build(:closed_course)
 
     visit root_path
     expect(page).to have_content('To get started')
-    select term.school.name, from: 'School'
+    select course.term.school.name, from: 'School'
     find_field 'Term'
-    select term.name, from: 'Term'
-    fill_in 'Course Number', with: '12345'
+    select course.term.name, from: 'Term'
+    fill_in 'Course Number', with: course.input_1
     click_button 'Add'
 
     # create acct
@@ -88,16 +89,16 @@ feature 'class management', js: true do
   end
 
   scenario 'existing user adds class and logs in in process' do
-    user = FactoryGirl.create(:user)
-    term = FactoryGirl.create(:term)
+    user = create(:user)
+    course = build(:closed_course)
 
     visit root_path
     expect(page).to have_content('To get started')
 
-    select term.school.name, from: 'School'
+    select course.term.school.name, from: 'School'
     find_field 'Term'
-    select term.name, from: 'Term'
-    fill_in 'Course Number', with: '12345'
+    select course.term.name, from: 'Term'
+    fill_in 'Course Number', with: course.input_1
     click_button 'Add'
 
     expect(current_path).to eq new_user_session_path
@@ -117,4 +118,25 @@ feature 'class management', js: true do
     expect(page).to have_content('Fake Course')
     expect(current_path).to eq root_path  
   end
+
+  scenario 'user attempts to add invalid class' do
+    user = create(:user)
+    course = build(:invalid_course)
+
+    sign_in user
+
+    visit root_path
+    expect(page).to have_content('not currently watching any classes')
+
+    select course.term.school.name, from: 'School'
+    find_field 'Term'
+    select course.term.name, from: 'Term'
+    fill_in 'Course Number', with: course.input_1
+    click_button 'Add'
+
+    expect(current_path).to eq root_path
+    expect(page).to have_content('The course was not found')
+  end
+
+  scenario 'user attempts to add closed class'
 end

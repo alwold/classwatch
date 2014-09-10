@@ -1,7 +1,7 @@
 class ClassesController < ApplicationController
   before_filter :authenticate_user!, :except => [:lookup, :pay]
+
   def pay
-    # create or look up course object
     criteria = {
       :term_id => params[:course][:term_id],
       :input_1 => params[:course][:input_1]
@@ -19,26 +19,32 @@ class ClassesController < ApplicationController
       @class_info = @course.get_class_info
       if @class_info
         @course.save!
-      else
-        @course = nil
       end
     else
       @class_info = @course.get_class_info
     end
-    @notifier_settings = Hash.new
-    params.each do |param, value|
-      if param.start_with?('notifier_')
-        name = param['notifier_'.length..-1]
-        @notifier_settings[name] = (value == 'on')
+    if @class_info && @course.get_class_status != :open
+      @notifier_settings = Hash.new
+      params.each do |param, value|
+        if param.start_with?('notifier_')
+          name = param['notifier_'.length..-1]
+          @notifier_settings[name] = (value == 'on')
+        end
       end
-    end
-    if !user_signed_in?
-      # stash in the session for later
-      session[:course_to_add] = {
-        course_id: @course.id,
-        notifier_settings: @notifier_settings
-      }
-      redirect_to new_user_session_path
+      if !user_signed_in?
+        # stash in the session for later
+        session[:course_to_add] = {
+          course_id: @course.id,
+          notifier_settings: @notifier_settings
+        }
+        redirect_to new_user_session_path
+      end
+    elsif @course.get_class_status == :open
+      flash[:error] = 'The class is already open'
+      redirect_to root_path
+    else
+      flash[:error] = 'The course was not found'
+      redirect_to root_path
     end
   end
 
