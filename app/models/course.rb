@@ -6,11 +6,7 @@ class Course < ActiveRecord::Base
   self.primary_key = "course_id"
 
   def get_class_info
-    logger.debug("get_class_info: #{term.term_code}, #{input_1}, #{input_2}, #{input_3}")
-    cache_key = "class_info_#{term.term_code}_#{input_1}"
-    cache_key << "_#{input_2}" if input_2
-    cache_key << "_#{input_3}" if input_3
-    Rails.cache.fetch(cache_key, :expires_in => 5.minutes) do
+    Rails.cache.fetch(info_cache_key, :expires_in => 5.minutes) do
       scraper = Scrapers[term.school.scraper_type]
       if scraper.nil?
         logger.error("Missing scraper: #{term.school.scraper_type}");
@@ -62,6 +58,13 @@ class Course < ActiveRecord::Base
         scraper.get_class_status(term.term_code, *inputs)
       end
     end
+  end
+
+  def info_cache_key
+    cache_key = "class_info_#{term.term_code}_#{input_1}"
+    cache_key << "_#{input_2}" if input_2
+    cache_key << "_#{input_3}" if input_3
+    cache_key
   end
 
   # reconcile the list of enabled notifiers in params with the currently enabled ones in params
