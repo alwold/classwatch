@@ -40,7 +40,10 @@ describe Course do
   end
 
   describe "#status_cache_key" do
-    it "computes correct cache key"
+    it "computes correct cache key" do
+      course = create(:course)
+      expect(course.status_cache_key).to eq("class_status_#{course.term.term_code}_#{course.input_1}")
+    end
   end
 
   describe "#get_class_status" do
@@ -72,5 +75,6 @@ describe Course do
   end
 
   describe "#reconcile_notifiers" do
+    it 'works'
   end
 end
