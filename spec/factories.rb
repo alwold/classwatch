@@ -22,5 +22,10 @@ FactoryGirl.define do
   factory :course do
     term 
     input_1 '12345'
+    
+    factory :invalid_course do
+      term
+      input_1 '123456'
+    end
   end
 end
