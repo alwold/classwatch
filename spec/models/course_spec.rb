@@ -1,9 +1,22 @@
 require 'spec_helper'
 
 describe Course do
+
   describe '#info_cache_key' do
-    it 'computes correct cache key'
+    context 'course with only input_1 defined' do
+      it 'computes correct cache key' do
+        course = create(:course)
+        expect(course.info_cache_key).to eq("class_info_#{course.term.term_code}_#{course.input_1}")
+      end
+    end
+    context 'course with input_1 and input_2 defined' do
+      it 'computes correct cache key'
+    end
+    context 'course with input_1, input_2 and input_3 defined' do
+      it 'computes correct cache key'
+    end
   end
+
   describe '#get_class_info' do
     before :each do
       Rails.cache.clear
