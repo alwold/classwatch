@@ -32,10 +32,7 @@ class Course < ActiveRecord::Base
   end
 
   def get_class_status
-    cache_key = "class_status_#{term.term_code}_#{input_1}"
-    cache_key << "_#{input_2}" if input_2
-    cache_key << "_#{input_3}" if input_3
-    Rails.cache.fetch(cache_key, :expires_in => 5.minutes) do
+    Rails.cache.fetch(status_cache_key, :expires_in => 5.minutes) do
       scraper = Scrapers[term.school.scraper_type]
       if scraper.nil?
         logger.error("Missing scraper: #{term.school.scraper_type}");
@@ -62,6 +59,13 @@ class Course < ActiveRecord::Base
 
   def info_cache_key
     cache_key = "class_info_#{term.term_code}_#{input_1}"
+    cache_key << "_#{input_2}" if input_2
+    cache_key << "_#{input_3}" if input_3
+    cache_key
+  end
+
+  def status_cache_key
+    cache_key = "class_status_#{term.term_code}_#{input_1}"
     cache_key << "_#{input_2}" if input_2
     cache_key << "_#{input_3}" if input_3
     cache_key

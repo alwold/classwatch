@@ -39,7 +39,14 @@ describe Course do
     end
   end
 
+  describe "#status_cache_key" do
+    it "computes correct cache key"
+  end
+
   describe "#get_class_status" do
+    before :each do
+      Rails.cache.clear
+    end
     context 'closed course' do
       it 'gets class status' do
         course = create(:closed_course)
@@ -52,8 +59,16 @@ describe Course do
         expect(course.get_class_status).to eq(:open)
       end
     end
-    it "returns nil for class that doesn't exist"
-    it "caches status"
+    it "returns nil for class that doesn't exist" do
+      course = create(:invalid_course)
+      expect(course.get_class_status).to be_nil
+    end
+    it "caches status" do
+      course = create(:course)
+      expect(Rails.cache.exist? course.status_cache_key).to be_false
+      course.get_class_status
+      expect(Rails.cache.exist? course.status_cache_key).to be_true
+    end
   end
 
   describe "#reconcile_notifiers" do
