@@ -113,7 +113,7 @@ class ClassesController < ApplicationController
         course = courses.first
       end
       user_course.course = course
-      user_course.save
+      user_course.save!
     end
 
     Course.reconcile_notifiers params, user_course
