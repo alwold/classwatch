@@ -2,13 +2,12 @@ require 'spec_helper'
 
 feature 'class management', js: true do
   scenario 'adding a class' do
-  user = FactoryGirl.create(:user)
-  term = FactoryGirl.create(:term)
+    user = FactoryGirl.create(:user)
+    term = FactoryGirl.create(:term)
+    
+    sign_in user
 
-  visit new_user_session_path
-    fill_in 'Email', with: user.email
-    fill_in 'Password', with: 'abc123'
-    click_button 'Sign in'
+    visit root_path
     expect(page).to have_content('not currently watching any classes')
 
     select term.school.name, from: 'School'
@@ -30,4 +29,6 @@ feature 'class management', js: true do
   end
 
   scenario 'adding a class with invalid credit card'
+  scenario 'new user adds class and signs up in process'
+  scenario 'existing user adds class and logs in in process'
 end
