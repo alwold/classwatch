@@ -47,7 +47,10 @@ RSpec.configure do |config|
     Capybara.javascript_driver = :poltergeist
   end
 
+  Capybara.default_wait_time = 10
+
   config.before(:each) do
+    NotifierSetting.destroy_all
     UserCourse.destroy_all
     Course.destroy_all
     Term.destroy_all
