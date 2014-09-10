@@ -27,5 +27,13 @@ FactoryGirl.define do
       term
       input_1 '123456'
     end
+
+    factory :open_course do
+      input_1 '12345'
+    end
+
+    factory :closed_course do
+      input_1 '52345'
+    end
   end
 end

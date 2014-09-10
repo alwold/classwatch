@@ -40,7 +40,18 @@ describe Course do
   end
 
   describe "#get_class_status" do
-    it 'gets class status'
+    context 'closed course' do
+      it 'gets class status' do
+        course = create(:closed_course)
+        expect(course.get_class_status).to eq(:closed)
+      end
+    end
+    context 'open course' do
+      it 'gets class status' do
+        course = create(:open_course)
+        expect(course.get_class_status).to eq(:open)
+      end
+    end
     it "returns nil for class that doesn't exist"
     it "caches status"
   end
