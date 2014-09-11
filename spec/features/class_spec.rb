@@ -29,31 +29,6 @@ feature 'class management', js: true do
     expect(current_path).to eq root_path
   end
 
-  scenario 'adding a class with invalid credit card' do
-    user = create(:user)
-    course = build(:closed_course)
-
-    sign_in user
-
-    visit root_path
-    expect(page).to have_content('not currently watching any classes')
-
-    select course.term.school.name, from: 'School'
-    find_field 'Term'
-    select course.term.name, from: 'Term'
-    fill_in 'Course Number', with: course.input_1
-    click_button 'Add'
-
-    expect(current_path).to eq pay_classes_path
-    fill_in 'Card Number', with: '4242424242424241'
-    fill_in 'CVC', with: '123'
-    fill_in 'exp-month', with: '12'
-    fill_in 'exp-year', with: '2016'
-    click_button 'Submit Payment'
-    expect(page).to have_content('Your card number is incorrect.')
-    expect(current_path).to eq pay_classes_path
-  end
-
   scenario 'new user adds class and signs up in process' do
     course = build(:closed_course)
 
