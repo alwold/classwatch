@@ -27,7 +27,6 @@ group :development do
   gem 'debugger'
   gem 'thin'
   gem 'capistrano'
-  gem 'mock-schedule-scraper', :git => 'git://github.com/alwold/mock-schedule-scraper.git', :require => 'mock_schedule_scraper'
 end
 
 group :development, :test do
@@ -35,6 +34,8 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'capybara'
   gem 'poltergeist'
+  gem 'mock-schedule-scraper', :git => 'git://github.com/alwold/mock-schedule-scraper.git', :require => 'mock_schedule_scraper'
+  # gem 'mock-schedule-scraper', path: '/Users/alwold/projects/mock-schedule-scraper', require: 'mock_schedule_scraper'
 end
 
 gem 'devise'

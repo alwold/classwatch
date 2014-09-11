@@ -61,7 +61,10 @@ $(document).ready(function () {
     $("#course_input_2").val("");
     $("#course_input_3").val("");
     $("#courseName").html("");
-    loadTerms(event.target.value, event.target.attributes["get-terms-url"].value);
+    // event.target is set to the option element on poltergeist, so re-query for #school_id
+    // TOOD figure out why that is happening
+    // loadTerms(event.target.value, event.target.attributes["get-terms-url"].value);
+    loadTerms($("#school_id").val(), $("#school_id").attr("get-terms-url"));
   });
 
   // load terms in case school is already populated, to set up the term select

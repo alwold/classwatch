@@ -48,7 +48,7 @@
   <% end %>
   <h2>Add a class</h2>
   <% if @terms.length > 0 %>
-    <%= render(partial: "classes/course", object: Course.new, locals: { button_name: "Add", action: :create }) %>
+    <%= render(partial: "classes/course", object: Course.new, locals: { button_name: "Add", action: :pay }) %>
   <% else %>
     There are no terms available right now.  Terms become available as soon as the schedule is published.
   <% end %>
@@ -65,7 +65,7 @@
   </div>
   <h2>Add a class</h2>
   <% if @terms.length > 0 %>
-    <%= render(partial: "classes/course", object: Course.new, locals: { button_name: "Add", action: :create }) %>
+    <%= render(partial: "classes/course", object: Course.new, locals: { button_name: "Add", action: :pay }) %>
   <% else %>
     There are no terms available right now.  Terms become available as soon as the schedule is published.
   <% end %>

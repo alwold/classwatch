@@ -1,5 +1,5 @@
 <%= form_for course, :url => { :controller => "classes", :action => action } do |f| %>
-  <%= f.label :school_id, "School" %>
+  <%= label_tag :school_id, "School" %>
   <%= select_tag(:school_id, options_from_collection_for_select(School.active, :id, :name, @course.nil? ? nil : @course.term.school.id), :include_blank => true, "get-terms-url" => get_terms_url(":school_id")) %>
   <div id="school-specific">
     <a id="schedule-link" href="#" target="_blank">Find a Course</a>
@@ -36,9 +36,6 @@
       <p>
         <label id="notifier_<%= notifier.type %>" class="checkbox">
           <%= notifier.description %>
-          <% if notifier.premium %>
-            <a href="#" rel="tooltip" title="This type of notification is a premium feature and will require you to upgrade the course for $2.99">$</a>
-          <% end %>
           <%= check_box_tag "notifier_"+notifier.type, :on, @enabled_notifiers.include?(notifier.type) %>
         </label>
       </p>

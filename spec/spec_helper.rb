@@ -12,6 +12,10 @@ require 'capybara/poltergeist'
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 RSpec.configure do |config|
+  config.include FactoryGirl::Syntax::Methods
+  config.include Capybara::DSL
+  config.include LoginHelper, type: :feature
+
   # ## Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
@@ -43,7 +47,12 @@ RSpec.configure do |config|
     Capybara.javascript_driver = :poltergeist
   end
 
+  Capybara.default_wait_time = 10
+
   config.before(:each) do
+    NotifierSetting.destroy_all
+    UserCourse.destroy_all
+    Course.destroy_all
     Term.destroy_all
     School.destroy_all
     User.destroy_all

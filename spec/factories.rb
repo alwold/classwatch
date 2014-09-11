@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :school do
     name 'Bla School'
-    scraper_type 'BLA'
+    scraper_type 'MOCK'
     disable_adding false
     disable_watching false
   end
@@ -17,5 +17,23 @@ FactoryGirl.define do
     start_date Date.new(2014, 6, 1)
     end_date Date.new(2014, 11, 1)
     school
+  end
+
+  factory :course do
+    term 
+    input_1 '12345'
+    
+    factory :invalid_course do
+      term
+      input_1 '123456'
+    end
+
+    factory :open_course do
+      input_1 '12345'
+    end
+
+    factory :closed_course do
+      input_1 '52345'
+    end
   end
 end

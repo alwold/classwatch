@@ -2,8 +2,7 @@ Classwatch::Application.routes.draw do
   devise_for :users, :controllers => { :sessions => "sessions", :registrations => "registrations" }
 
   resources :classes, :except => [ :new, :index, :show ] do
-    get :upgrade, on: :member
-    post :pay, on: :member
+    post :pay, on: :collection
   end
 
   get "classes/create_from_session" => "classes#create_from_session", as: "create_class_from_session"
