@@ -7,7 +7,7 @@ GIT
 
 GIT
   remote: git://github.com/alwold/csusb-schedule-scraper.git
-  revision: 82c80d5dcb812a2a529e8bdfd3bb6261144b21b8
+  revision: ad5d5077453c0745164aeb6a0013b76c970e6604
   specs:
     csusb-schedule-scraper (0.1)
       nokogiri
