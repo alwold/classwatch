@@ -2,6 +2,7 @@ require 'bundler/capistrano'
 
 set :application, "classwatch"
 set :repository,  "git://github.com/alwold/classwatch.git"
+set :branch, 'production-20140801-patches'
 
 set :scm, :git
 
